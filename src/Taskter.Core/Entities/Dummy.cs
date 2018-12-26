@@ -4,7 +4,7 @@ namespace Taskter.Core.Entities
 {
     public class Dummy: BaseEntity
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public string Status { get; private set; }
 
         public Dummy(string name)

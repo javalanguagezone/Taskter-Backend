@@ -6,6 +6,12 @@ namespace Taskter.Tests.Helpers.EntityBuilders
     {
         private readonly Dummy _dummy = new Dummy("Test");
 
+        public DummyBuilder WithName(string name)
+        {
+            _dummy.Name = name;
+            return this;
+        }
+
         public Dummy Build() => _dummy;
     }
 }

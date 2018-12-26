@@ -6,6 +6,7 @@ using Taskter.Api.Config;
 
 namespace Taskter.Tests.Structural
 {
+    [TestFixture]
     public class TaskterApiAssemblyShould
     {
         private Assembly _assembly;
@@ -17,21 +18,21 @@ namespace Taskter.Tests.Structural
         }
 
         [Test]
-        public void NotHaveApiAssemblyReference()
+        public void HaveInfrastructureAssemblyReference()
         {
             var referencedAssemblies = _assembly.GetReferencedAssemblies();
-            var apiAssembly = referencedAssemblies.FirstOrDefault(x => x.Name == "Taskter.Infrastructure");
+            var infrastructureAssembly = referencedAssemblies.FirstOrDefault(x => x.Name == "Taskter.Infrastructure");
 
-            apiAssembly.Should().NotBeNull();
+            infrastructureAssembly.Should().NotBeNull();
         }
 
         [Test]
         public void HaveCoreAssemblyReference()
         {
             var referencedAssemblies = _assembly.GetReferencedAssemblies();
-            var apiAssembly = referencedAssemblies.FirstOrDefault(x => x.Name == "Taskter.Core");
+            var coreAssembly = referencedAssemblies.FirstOrDefault(x => x.Name == "Taskter.Core");
 
-            apiAssembly.Should().NotBeNull();
+            coreAssembly.Should().NotBeNull();
         }
     }
 }

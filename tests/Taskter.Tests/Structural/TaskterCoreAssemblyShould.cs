@@ -18,16 +18,16 @@ namespace Taskter.Tests.Structural
         }
 
         [Test]
-        public void NotHaveApiAssemblyReference()
+        public void NotHaveInfrastructureAssemblyReference()
         {
             var referencedAssemblies = _assembly.GetReferencedAssemblies();
-            var apiAssembly = referencedAssemblies.FirstOrDefault(x => x.Name == "Taskter.Infrastructure");
+            var infrastructureAssembly = referencedAssemblies.FirstOrDefault(x => x.Name == "Taskter.Infrastructure");
 
-            apiAssembly.Should().BeNull();
+            infrastructureAssembly.Should().BeNull();
         }
 
         [Test]
-        public void HaveCoreAssemblyReference()
+        public void NotHaveApiAssemblyReference()
         {
             var referencedAssemblies = _assembly.GetReferencedAssemblies();
             var apiAssembly = referencedAssemblies.FirstOrDefault(x => x.Name == "Taskter.Api");

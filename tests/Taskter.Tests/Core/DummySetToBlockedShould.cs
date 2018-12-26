@@ -10,7 +10,7 @@ namespace Taskter.Tests.Core
         [Test]
         public void HaveStatusEqualsToBlocked()
         {
-            var dummy = new DummyBuilder().Build();
+            var dummy = new DummyBuilder().WithName("Tarik").Build();
 
             dummy.SetToBlocked();
 
