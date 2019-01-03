@@ -24,7 +24,7 @@ namespace Taskter.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<TaskterDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("TaskterDbConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("MyTaskterDbConnection")));
 
             services.RegisterIoCDependencies();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "Taskter API", Version = "v1" }); });
@@ -33,6 +33,13 @@ namespace Taskter.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                    var context = serviceScope.ServiceProvider.GetRequiredService<TaskterDbContext>();
+                    context.Database.Migrate();
+            }
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
