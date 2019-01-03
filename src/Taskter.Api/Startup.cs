@@ -28,6 +28,16 @@ namespace Taskter.Api
 
             services.RegisterIoCDependencies();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "Taskter API", Version = "v1" }); });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials() );
+            });
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +60,8 @@ namespace Taskter.Api
                 app.UseHsts();
             }
 
+
+            app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseMvc();
 
@@ -58,6 +70,7 @@ namespace Taskter.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Taskter API V1");
             });
+
         }
     }
 }
