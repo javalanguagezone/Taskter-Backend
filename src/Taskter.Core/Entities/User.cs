@@ -10,7 +10,7 @@ namespace Taskter.Core.Entities
         public string LastName {get; set;}
         public string Role {get; set;}
         public string AvatarURL {get; set;}
-        //Da li napraviti builder pattern?
+
         public User (string username, string avatarURL, string firstName, string lastName, string role){
             Username = username;
             AvatarURL=avatarURL; 

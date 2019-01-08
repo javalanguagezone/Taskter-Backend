@@ -7,7 +7,7 @@ using Taskter.Core.Interfaces;
 
 namespace Taskter.Api.Controllers
 {
-    [Route("/api/users")]
+    [Route("/api/user")]
     [ApiController]
     public class UserController:ControllerBase
     {
@@ -16,10 +16,10 @@ namespace Taskter.Api.Controllers
         public UserController(IUserRepository repository){
             _repository = repository;
         }
-        [Route("currentUser")]
+        [Route("current")]
         [HttpGet]
         public ActionResult<User> Get(){
-            User currentUser = _repository.getCurrentUser(); 
+            User currentUser = _repository.GetCurrentUser(); 
 
             return Ok(currentUser);
         }
