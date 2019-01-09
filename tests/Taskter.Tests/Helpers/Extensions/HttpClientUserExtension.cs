@@ -13,7 +13,7 @@ namespace Taskter.Tests.Helpers.Extensions
     {
         public static async Task<User> GetCurrentUser(this HttpClient client)
         {
-            var response = await client.GetAsync("/api/user/current");
+            var response = await client.GetAsync("/api/users/current");
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadAsStringAsync();
             
