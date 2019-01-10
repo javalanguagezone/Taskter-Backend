@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Taskter.Infrastructure.Data;
 
 namespace Taskter.Infrastructure.Migrations
 {
     [DbContext(typeof(TaskterDbContext))]
-    partial class TaskterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190110162404_AddedCompositeTable")]
+    partial class AddedCompositeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,7 +92,7 @@ namespace Taskter.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProjectUsers");
+                    b.ToTable("ProjectUser");
                 });
 
             modelBuilder.Entity("Taskter.Core.Entities.User", b =>

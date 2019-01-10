@@ -1,0 +1,16 @@
+﻿
+  {
+    "Logging": {
+      "LogLevel": {
+        "Default": "Debug",
+        "System": "Information",
+        "Microsoft": "Information"
+      }
+    },
+    "AllowedHosts": "*",
+    "ConnectionStrings": {
+      "TaskterDbConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Taskter;Trusted_Connection=True;;MultipleActiveResultSets=True"
+    }
+  }
+
+

@@ -11,5 +11,10 @@ namespace Taskter.Infrastructure.Data
         }
 
         public DbSet<Dummy> Dummies { get; set; }
+        public DbSet<ProjectTask> ProjectTasks { get; set; }
+        public DbSet<Project> Projects { get; set;}
+        public DbSet<User> Users { get; set; }
+        public DbSet<ProjectUser> ProjectUsers { get; set; }
+        
     }
 }
