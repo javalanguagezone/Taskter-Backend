@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Taskter.Infrastructure.Data;
 
 namespace Taskter.Infrastructure.Migrations
 {
     [DbContext(typeof(TaskterDbContext))]
-    partial class TaskterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190111214734_ProjectsAndTasks_v1")]
+    partial class ProjectsAndTasks_v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

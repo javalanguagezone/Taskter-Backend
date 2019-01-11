@@ -8,22 +8,22 @@ using Taskter.Infrastructure.Data;
 
 namespace Taskter.Infrastructure.Repositories
 {
-    public class ProjectTaskRepository : IProjectTaskRepository
-    {
-        private readonly TaskterDbContext _context;
-        public ProjectTaskRepository(TaskterDbContext context)
-        {
-            _context = context;
-        }
-        public void AddProjectTask(ProjectTask task)
-        { 
-            _context.ProjectTasks.Add(task);
-            _context.SaveChanges();
-        }
+    // public class ProjectTaskRepository : IProjectTaskRepository
+    // {
+    //     private readonly TaskterDbContext _context;
+    //     public ProjectTaskRepository(TaskterDbContext context)
+    //     {
+    //         _context = context;
+    //     }
+    //     public void AddProjectTask(ProjectTask task)
+    //     { 
+    //         _context.ProjectTasks.Add(task);
+    //         _context.SaveChanges();
+    //     }
 
       
 
         
 
-    }
+    // }
 }

@@ -10,11 +10,36 @@ namespace Taskter.Infrastructure.Data
 
         }
 
-        public DbSet<Dummy> Dummies { get; set; }
-        public DbSet<ProjectTask> ProjectTasks { get; set; }
         public DbSet<Project> Projects { get; set;}
-        public DbSet<User> Users { get; set; }
-        public DbSet<ProjectUser> ProjectUsers { get; set; }
+        public DbSet<ProjectTask> ProjectTasks {get; set;}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Project
+            //Client
+            modelBuilder.Entity<Project>()
+                        .Property(p => p.Client)
+                        .IsRequired();
+            //Name
+            modelBuilder.Entity<Project>()
+                        .Property(p => p.Name)
+                        .IsRequired();
+            //Code
+            modelBuilder.Entity<Project>()
+                        .Property(p => p.Code)
+                        .HasMaxLength(15);
+                        
+            //ProjectTask
+            //Name
+            modelBuilder.Entity<ProjectTask>()
+                        .Property(pt => pt.Name)
+                        .IsRequired();
+            //Billable
+            modelBuilder.Entity<ProjectTask>()
+                        .Property(pt => pt.Billable)
+                        .IsRequired();                                                           
+        }
         
+
     }
 }
