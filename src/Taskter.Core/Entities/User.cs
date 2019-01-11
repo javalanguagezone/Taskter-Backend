@@ -6,18 +6,14 @@ namespace Taskter.Core.Entities
 {
     public class User : BaseEntity
     {
-        [Required]
         public string Username {get; set;}
-        [Required]
         public string FirstName {get; set;}
-        [Required]
         public string LastName {get; set;}
-        [Required]
+
         public string Role {get; set;}
         public string AvatarURL {get; set;}
-        public int ProjectUserId { get; set; }
-
-        public ICollection<ProjectUser> ProjectUsers { get; set; }
+        
+        public ICollection<UserProject> UsersProjects {get; set;}
 
 
 

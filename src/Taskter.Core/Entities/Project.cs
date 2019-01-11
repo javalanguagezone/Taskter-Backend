@@ -13,14 +13,15 @@ namespace Taskter.Core.Entities {
                 Code = value.Trim();
             }
         }
-        public string Client { get; set; }
-        public ICollection<ProjectTask> Tasks { get; set; }
-        // public int ProjectUserId { get; set; }
-        // public ICollection<ProjectUser> ProjectUsers { get; set; }
+        public Client Client { get; set; }
 
-        public Project (string name, string client, string code = "") {
+        public ICollection<ProjectTask> Tasks { get; set; }
+        public ICollection<UserProject> UsersProjects {get; set;}
+
+
+        public Project (string name, string code = "") {
+            Tasks = new List<ProjectTask>();
             Name = name;
-            Client = client;
             Code = code.Trim();
         }
     }
