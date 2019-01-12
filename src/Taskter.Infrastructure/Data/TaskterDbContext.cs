@@ -19,32 +19,42 @@ namespace Taskter.Infrastructure.Data
         public DbSet<UserProject> UsersProjects {get; set;}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Client
+            //Name
+            modelBuilder.Entity<Client>().Property(c => c.Name).IsRequired();
+            
+
             //Project
                 //Name
             modelBuilder.Entity<Project>().Property(p => p.Name).IsRequired();
                 //Code
             modelBuilder.Entity<Project>().Property(p => p.Code).HasMaxLength(15);
-                        
+            //Client relationship
+            modelBuilder.Entity<Project>();
+            
+                 
             //ProjectTask
                 //Name
             modelBuilder.Entity<ProjectTask>().Property(pt => pt.Name).IsRequired();
                 //Billable
             modelBuilder.Entity<ProjectTask>().Property(pt => pt.Billable).IsRequired();
+                   
+        
 
             //User
                 //Username
-            modelBuilder.Entity<User>().Property(u => u.Username).IsRequired();
+            modelBuilder.Entity<User>().Property(u => u.UserName).IsRequired();
                 //Role
             modelBuilder.Entity<User>().Property(u => u.Role).IsRequired();
                 //AvatarURL
             modelBuilder.Entity<User>().Property(u => u.AvatarURL).IsRequired();
 
-            //Client
-                //Name
-            modelBuilder.Entity<Client>().Property(c => c.Name).IsRequired();
+                                         
 
-            //UserProject
-            modelBuilder.Entity<UserProject>()
+           
+
+           //UserProject
+           modelBuilder.Entity<UserProject>()
                         .HasKey(up => new { up.UserId, up.ProjectId});
             
             modelBuilder.Entity<UserProject>()
@@ -57,8 +67,11 @@ namespace Taskter.Infrastructure.Data
                         .WithMany(p => p.UsersProjects)
                         .HasForeignKey(up => up.ProjectId);
 
-        }
-        
 
+            ModelBuilderExtensions.Seed(modelBuilder);
+
+        }
+
+        
     }
 }

@@ -7,20 +7,21 @@ using Taskter.Core.SharedKernel;
 namespace Taskter.Core.Entities {
     public class Project : BaseEntity {
         public string Name { get; set; }
-        public string Code {
-            get { return Code; }
-            set {
-                Code = value.Trim();
-            }
-        }
+        public string Code { get ; set; }
+        
+
+        public IEnumerable<ProjectTask> Tasks { get; set; } = new List<ProjectTask>();
+        public IEnumerable<UserProject> UsersProjects {get; set;} = new List<UserProject>();
+
+        public int ClientId { get; set; }
         public Client Client { get; set; }
 
-        public ICollection<ProjectTask> Tasks { get; set; }
-        public ICollection<UserProject> UsersProjects {get; set;}
-
-
+        public Project()
+        {
+                
+        }
         public Project (string name, string code = "") {
-            Tasks = new List<ProjectTask>();
+           
             Name = name;
             Code = code.Trim();
         }

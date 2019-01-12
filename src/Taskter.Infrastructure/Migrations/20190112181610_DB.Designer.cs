@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Taskter.Infrastructure.Data;
 
 namespace Taskter.Infrastructure.Migrations
 {
     [DbContext(typeof(TaskterDbContext))]
-    partial class TaskterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190112181610_DB")]
+    partial class DB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,13 +32,6 @@ namespace Taskter.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Tacta"
-                        });
                 });
 
             modelBuilder.Entity("Taskter.Core.Entities.Project", b =>
@@ -58,22 +53,6 @@ namespace Taskter.Infrastructure.Migrations
                     b.HasIndex("ClientId");
 
                     b.ToTable("Projects");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClientId = 1,
-                            Code = "TA10001",
-                            Name = "Tracker"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ClientId = 1,
-                            Code = "TA10002",
-                            Name = "Tracker2"
-                        });
                 });
 
             modelBuilder.Entity("Taskter.Core.Entities.ProjectTask", b =>
@@ -94,64 +73,6 @@ namespace Taskter.Infrastructure.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectTasks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Billable = true,
-                            Name = "Design",
-                            ProjectId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Billable = true,
-                            Name = "Implementation",
-                            ProjectId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Billable = false,
-                            Name = "Review",
-                            ProjectId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Billable = true,
-                            Name = "Marketing",
-                            ProjectId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Billable = true,
-                            Name = "UI",
-                            ProjectId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Billable = true,
-                            Name = "Backend",
-                            ProjectId = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Billable = true,
-                            Name = "Deployment",
-                            ProjectId = 2
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Billable = false,
-                            Name = "Audit",
-                            ProjectId = 2
-                        });
                 });
 
             modelBuilder.Entity("Taskter.Core.Entities.User", b =>
@@ -176,26 +97,6 @@ namespace Taskter.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AvatarURL = "https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg",
-                            FirstName = "Nermin",
-                            LastName = "Selim",
-                            Role = "Administrator",
-                            UserName = "Nermin.Selim"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AvatarURL = "https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg",
-                            FirstName = "Selim",
-                            LastName = "Nermin",
-                            Role = "User",
-                            UserName = "Selim.Nermin"
-                        });
                 });
 
             modelBuilder.Entity("Taskter.Core.Entities.UserProject", b =>
@@ -209,18 +110,6 @@ namespace Taskter.Infrastructure.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("UsersProjects");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            ProjectId = 2
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            ProjectId = 1
-                        });
                 });
 
             modelBuilder.Entity("Taskter.Core.Entities.Project", b =>

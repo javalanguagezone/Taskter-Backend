@@ -9,19 +9,27 @@ namespace Taskter.Api.Controllers
 {
     [Route("/api/users")]
     [ApiController]
-    public class UserController:ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserRepository _repository;
 
-        public UserController(IUserRepository repository){
+        public UserController(IUserRepository repository) {
             _repository = repository;
         }
         [Route("current")]
         [HttpGet]
-        public ActionResult<User> Get(){
-            User currentUser = _repository.GetCurrentUser(); 
+        public ActionResult<User> GetCurrentUser() {
+            User currentUser = _repository.GetCurrentUser();
 
             return Ok(currentUser);
+        }
+        [Route("current/projects")]
+        [HttpGet]
+        public ActionResult<Project> GetProjectsForUser()
+        {
+            IEnumerable<Project> Projects = _repository.GetProjectsForUser();
+
+            return Ok(Projects);
         }
     }
 }

@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190112163744_InitialSeedingDB.cs" />
+    <Compile Remove="Migrations\20190112164132_InitialSeedingDB.cs" />
+    <Compile Remove="Migrations\20190112170031_InitialSeeding2.cs" />
+    <Compile Remove="Migrations\20190112170253_InitialSeeding2.cs" />
+    <Compile Remove="Migrations\20190112180431_DB.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />

@@ -10,7 +10,10 @@ namespace Taskter.Core.Entities
 
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+        public ProjectTask()
+        {
 
+        }
         public ProjectTask(string name, bool billable)
         {
             Name = name;
