@@ -26,7 +26,7 @@ namespace Taskter.Api.Controllers
 
         [Route("current/projects")]
         [HttpGet]
-        public ActionResult<List<Project>> GetProjectsForCurrentUser()
+        public ActionResult<IEnumerable<ProjectGetDTO>> GetProjectsForCurrentUser()
         {
             var projs = _repository.GetProjectsForCurrentUser();
             return Ok(projs);

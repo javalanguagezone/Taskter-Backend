@@ -14,19 +14,16 @@ namespace Taskter.Infrastructure.Repositories {
             _context = context;
         }
         public User GetCurrentUser () {
-            return _context.Users.Find(1);
+            return _context.Users.First();
         }
 
-         public List<Project> GetProjectsForCurrentUser()
+         public IEnumerable<Project> GetProjectsForCurrentUser()
          {
             var user = GetCurrentUser();
-            var USER_PROJECTS = _context.UsersProjects.Where(up => up.UserId == user.Id ).Include(up => up.Project).ToList();
-            var currentUserProjects = new List<Project>();
-            foreach (var item in USER_PROJECTS)
-            {
-               currentUserProjects.Add(item.Project);
-            }
-            return currentUserProjects;
+            var USER_PROJECTS = _context.UsersProjects.Where(up => up.UserId == user.Id).Select(up => up.Project)
+            .Include(s => s.Client).Include(s => s.Tasks).ToList();
+            
+            return USER_PROJECTS;
          }
     }
 }

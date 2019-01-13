@@ -6,7 +6,7 @@ namespace Taskter.Core.Interfaces
 {
     public interface IUserRepository: IRepository<User>
     {
-        List<Project> GetProjectsForCurrentUser();
+        IEnumerable<Project> GetProjectsForCurrentUser();
         User GetCurrentUser();
     }
 }
