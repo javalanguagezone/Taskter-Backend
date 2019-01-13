@@ -23,13 +23,13 @@ namespace Taskter.Api.Controllers
 
             return Ok(currentUser);
         }
+
         [Route("current/projects")]
         [HttpGet]
-        public ActionResult<Project> GetProjectsForUser()
+        public ActionResult<List<Project>> GetProjectsForCurrentUser()
         {
-            IEnumerable<Project> Projects = _repository.GetProjectsForUser();
-
-            return Ok(Projects);
+            var projs = _repository.GetProjectsForCurrentUser();
+            return Ok(projs);
         }
     }
 }
