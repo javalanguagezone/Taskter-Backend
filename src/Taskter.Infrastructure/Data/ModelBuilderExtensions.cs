@@ -43,8 +43,19 @@ namespace Taskter.Infrastructure.Data
                     new UserProject { UserId = 1, ProjectId = 2 },
                     new UserProject { UserId = 2, ProjectId = 1 });
 
-            
-           
+            //ProjectTaskEntries
+
+            modelBuilder.Entity<ProjectTaskEntry>().HasData(
+                new ProjectTaskEntry { Id = 1,  UserId = 1, ProjectTaskId = 1, Date = DateTime.Now, durationInMin = 30, Note=" Lorem ipsum dolor sit amet" },
+                new ProjectTaskEntry { Id = 2, UserId = 1, ProjectTaskId = 2, Date = DateTime.Now, durationInMin = 90, Note = " Lorem ipsum dolor sit amet" },
+                new ProjectTaskEntry { Id = 3, UserId = 1, ProjectTaskId = 3, Date = DateTime.Now, durationInMin = 60, Note = " Lorem ipsum dolor sit amet" },
+                new ProjectTaskEntry { Id = 4, UserId = 1, ProjectTaskId = 4, Date = DateTime.Now, durationInMin = 90, Note = " Lorem ipsum dolor sit amet" }
+
+                );
+
+
+
+
 
         }
 

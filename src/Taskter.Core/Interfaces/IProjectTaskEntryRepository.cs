@@ -7,7 +7,7 @@ namespace Taskter.Core.Interfaces
 {
     public interface IProjectTaskEntryRepository : IRepository<ProjectTaskEntry>
     {
-        IEnumerable<ProjectTaskEntry> GetByDateForUser(int userId, DateTime date);
 
+        IEnumerable<ProjectTaskEntry> GetProjectTaskEntriesByDate(int userId, DateTime date);
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Taskter.Core.SharedKernel;
 
 namespace Taskter.Core.Entities
 {
-    class ProjectTaskEntry
+    public class ProjectTaskEntry : BaseEntity
     {
         public int ProjectTaskId { get; set; }
         public ProjectTask ProjectTask { get; set; }
@@ -15,5 +16,7 @@ namespace Taskter.Core.Entities
         public int durationInMin { get; set; }
 
         public DateTime Date { get; set; }
+
+        public string Note { get; set; }
     }
 }

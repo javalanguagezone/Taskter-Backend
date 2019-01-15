@@ -25,5 +25,13 @@ namespace Taskter.Infrastructure.Repositories
             
             return USER_PROJECTS;
          }
+
+        public IEnumerable<ProjectTaskEntry> GetProjectTaskEntriesByDate(int year,int month, int day)
+        {
+            var user = GetCurrentUser();
+            var USER_TASK_ENTRIES = _context.ProjectTaskEntres.Where(pr => pr.UserId == user.Id).Where(p => p.Date.Year == year && p.Date.Month==month && p.Date.Day==day).Include(pt=>pt.ProjectTask).ThenInclude(pr=>pr.Project).ThenInclude(c=>c.Client).ToList();
+
+            return USER_TASK_ENTRIES;
+        }
     }
 }
