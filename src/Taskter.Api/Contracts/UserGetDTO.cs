@@ -8,6 +8,5 @@ namespace Taskter.Api.Contracts {
         public string LastName { get; set; }
         public string Role { get; set; }
         public string AvatarURL { get; set; }
-
     }
 }

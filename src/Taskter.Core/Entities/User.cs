@@ -11,11 +11,8 @@ namespace Taskter.Core.Entities
         public string LastName {get; set;}
 
         public string Role {get; set;}
-        public string AvatarURL {get; set;}
-        
+        public string AvatarURL {get; set;}        
         public ICollection<UserProject> UsersProjects {get; set;} = new List<UserProject>();
-
-
 
         public User (string username, string firstName, string lastName, string role, string avatarURL)
         {
