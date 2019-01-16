@@ -14,10 +14,10 @@ namespace Taskter.Infrastructure.Repositories
             _context = context;
         }
         public User GetCurrentUser () {
-            return _context.Users.First();
+            return _context.Users.FirstOrDefault();
         }
 
-         public IEnumerable<Project> GetProjectsForCurrentUser()
+        public IEnumerable<Project> GetProjectsForCurrentUser()
          {
             var user = GetCurrentUser();
             var USER_PROJECTS = _context.UsersProjects.Where(up => up.UserId == user.Id).Select(up => up.Project)
