@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Taskter.Core.SharedKernel;
 
 namespace Taskter.Core.Entities
@@ -10,6 +11,10 @@ namespace Taskter.Core.Entities
 
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+
+        public ICollection<ProjectTaskEntry> ProjectsTaskEntries { get; set; } = new List<ProjectTaskEntry>();
+
+
         public ProjectTask()
         {
 

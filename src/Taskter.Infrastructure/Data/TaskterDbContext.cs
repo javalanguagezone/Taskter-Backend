@@ -17,6 +17,9 @@ namespace Taskter.Infrastructure.Data
         public DbSet<Client> Clients {get; set;}
 
         public DbSet<UserProject> UsersProjects {get; set;}
+
+        public DbSet<ProjectTaskEntry> ProjectTaskEntres { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Client
@@ -49,12 +52,29 @@ namespace Taskter.Infrastructure.Data
                 //AvatarURL
             modelBuilder.Entity<User>().Property(u => u.AvatarURL).IsRequired();
 
-                                         
 
-           
+            //ProjecTaskEntry
+            modelBuilder.Entity<ProjectTaskEntry>().Property(p => p.durationInMin).IsRequired();
+            modelBuilder.Entity<ProjectTaskEntry>().Property(p => p.Date).IsRequired();
+            modelBuilder.Entity<ProjectTaskEntry>().HasKey(p => p.Id);
 
-           //UserProject
-           modelBuilder.Entity<UserProject>()
+            modelBuilder.Entity<ProjectTaskEntry>()
+                       .HasKey(up => up.Id);
+
+            modelBuilder.Entity<ProjectTaskEntry>()
+                        .HasOne(up => up.ProjectTask)
+                        .WithMany(u => u.ProjectsTaskEntries)
+                        .HasForeignKey(up => up.ProjectTaskId);
+
+            modelBuilder.Entity<ProjectTaskEntry>()
+                        .HasOne(up => up.User)
+                        .WithMany(p => p.UsersProjectsTaskEntries)
+                        .HasForeignKey(up => up.UserId);
+
+
+
+            //UserProject
+            modelBuilder.Entity<UserProject>()
                         .HasKey(up => new { up.UserId, up.ProjectId});
             
             modelBuilder.Entity<UserProject>()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Taskter.Api.Contracts;
@@ -31,6 +32,14 @@ namespace Taskter.Api.Controllers
         {
             var projectsRepo = _repository.GetProjectsForCurrentUser();
             return Ok(projectsRepo.ToDTOList());
+        }
+
+        [Route("current/entries/{y}/{m}/{d}")]
+        [HttpGet]
+        public ActionResult<IEnumerable<ProjectTaskEntryGetDTO>> GetProjectTaskEntriesByDate(int y, int m, int d)
+        {
+            var projectTasksRepo = _repository.GetProjectTaskEntriesByDate(y,m,d);
+            return Ok(projectTasksRepo.ToDTOList());
         }
     }
 }
