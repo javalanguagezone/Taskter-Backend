@@ -34,11 +34,11 @@ namespace Taskter.Api.Controllers
             return Ok(projectsRepo.ToDTOList());
         }
 
-        [Route("current/entries/{y}/{m}/{d}")]
+        [Route("current/entries/{year}/{month}/{day}")]
         [HttpGet]
-        public ActionResult<IEnumerable<ProjectTaskEntryGetDTO>> GetProjectTaskEntriesByDate(int y, int m, int d)
+        public ActionResult<IEnumerable<ProjectTaskEntryGetDTO>> GetProjectTaskEntriesByDate(int year, int month, int day)
         {
-            var projectTasksRepo = _repository.GetProjectTaskEntriesByDate(y,m,d);
+            var projectTasksRepo = _repository.GetProjectTaskEntriesByDate(year,month, day);
             return Ok(projectTasksRepo.ToDTOList());
         }
     }
