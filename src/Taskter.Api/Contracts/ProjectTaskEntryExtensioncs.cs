@@ -12,6 +12,7 @@ namespace Taskter.Api.Contracts
         {
             return new ProjectTaskEntryGetDTO()
             {
+                Id = pte.Id,
                 ProjectName = pte.ProjectTask.Project.Name,
                 ProjectCode = pte.ProjectTask.Project.Code,
                 ProjectTask = pte.ProjectTask.Name,
