@@ -9,10 +9,12 @@ namespace Taskter.Api.Contracts
         {
             return new ProjectGetDTO() 
                 {
-                    Name = project.Name,
+                    ProjectID = project.Id,
+                    ProjectName = project.Name,
                     ClientName = project.Client.Name,
-                    Code = project.Code
-                }.AppendTasks(project.Tasks);
+                    ProjectCode = project.Code,
+                    Tasks = project.Tasks.ToDTOList()
+                };
         }
 
         public static IEnumerable<ProjectGetDTO> ToDTOList (this IEnumerable<Project> projects) 
