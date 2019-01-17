@@ -16,7 +16,7 @@ namespace Taskter.Api.Contracts
                 ProjectCode = pte.ProjectTask.Project.Code,
                 ProjectTask = pte.ProjectTask.Name,
                 ClientName = pte.ProjectTask.Project.Client.Name,
-                durationInMin = pte.durationInMin,
+                durationInMin = pte.DurationInMin,
                 Note=pte.Note
             };
         }
@@ -31,5 +31,14 @@ namespace Taskter.Api.Contracts
             return projectsTaskEntriesDTO;
         }
 
+        public static ProjectTaskEntry ToEntity( this ProjectTaskEntryInsertDTO pte){
+            return new ProjectTaskEntry(){
+                ProjectTaskId = pte.ProjectTaskId,
+                UserId = pte.UserId,
+                DurationInMin = pte.DurationInMin,
+                Date = new DateTime(pte.Year, pte.Month, pte.Day),
+                Note = pte.Note
+            };
+        }
     }
 }

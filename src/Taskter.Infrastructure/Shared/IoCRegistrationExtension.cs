@@ -14,6 +14,7 @@ namespace Taskter.Infrastructure.Shared
         public static void RegisterIoCDependencies(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProjectTaskEntryRepository, ProjectTaskEntryRepository>();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Taskter.Core.Entities
         public int UserId { get; set; }
         public User User { get; set; }
 
-        public int durationInMin { get; set; }
+        public int DurationInMin { get; set; }
 
         public DateTime Date { get; set; }
 

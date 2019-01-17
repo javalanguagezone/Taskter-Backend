@@ -25,5 +25,11 @@ namespace Taskter.Infrastructure.Repositories
 
         }
 
+        public ProjectTaskEntry AddTimeEntry(ProjectTaskEntry newProjectTaskEntry){
+            _context.Add(newProjectTaskEntry);
+            _context.SaveChanges();
+
+            return newProjectTaskEntry;
+        }
     }
 }
