@@ -17,9 +17,9 @@ namespace Taskter.Api.Controllers
             _repository = repository;
         }
 
-        [Route("api/eneries")]
+        [Route("api/entries")]
         [HttpPost]
-        public ActionResult<ProjectTaskEntryGetDTO> PostProjectTaskEntry(ProjectTaskEntryInsertDTO entry){
+        public ActionResult PostProjectTaskEntry(ProjectTaskEntryInsertDTO entry){
 
             _repository.AddTimeEntry(entry.ToEntity());
 

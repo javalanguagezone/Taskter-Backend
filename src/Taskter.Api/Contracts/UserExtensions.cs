@@ -8,11 +8,12 @@ namespace Taskter.Api.Contracts
         {
             return new UserGetDTO()
             {
+                UserId = user.Id,
                 Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Role = user.Role,
-                AvatarURL = user.AvatarURL,
+                AvatarURL = user.AvatarURL
             };
         }
     }
