@@ -20,26 +20,10 @@ namespace Taskter.Api.Controllers
         }
         [Route("current")]
         [HttpGet]
-        public ActionResult<UserGetDTO> GetCurrentUser() 
+        public ActionResult<UserDTO> GetCurrentUser() 
         {
             User currentUser = _repository.GetCurrentUser();
             return Ok(currentUser.ToDTO());
-        }
-
-        [Route("current/projects")]
-        [HttpGet]
-        public ActionResult<IEnumerable<ProjectGetDTO>> GetProjectsForCurrentUser()
-        {
-            var projectsRepo = _repository.GetProjectsForCurrentUser();
-            return Ok(projectsRepo.ToDTOList());
-        }
-
-        [Route("current/entries/{year}/{month}/{day}")]
-        [HttpGet]
-        public ActionResult<IEnumerable<ProjectTaskEntryGetDTO>> GetProjectTaskEntriesByDate(int year, int month, int day)
-        {
-            var projectTasksRepo = _repository.GetProjectTaskEntriesByDate(year,month, day);
-            return Ok(projectTasksRepo.ToDTOList());
         }
     }
 }

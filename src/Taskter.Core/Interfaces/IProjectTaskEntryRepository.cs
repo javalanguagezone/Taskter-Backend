@@ -9,5 +9,6 @@ namespace Taskter.Core.Interfaces
     {
         ProjectTaskEntry AddTimeEntry(ProjectTaskEntry newProjectTaskEntry);
         IEnumerable<ProjectTaskEntry> GetProjectTaskEntriesByDate(int userId, DateTime date);
+        IEnumerable<ProjectTaskEntry> GetProjectTaskEntriesByDate (int year, int month, int day);
     }
 }

@@ -3,13 +3,13 @@ using Taskter.Core.Entities;
 
 namespace Taskter.Api.Contracts
 {
-    public class ProjectGetDTO {
+    public class ProjectDTO {
         public int ProjectID {get; set;}
         public string ProjectName { get; set; }
         public string ClientName { get; set; }
 
         public string ProjectCode { get; set; }
-        public List<ProjectTaskGetDTO> Tasks { get; set; } = new List<ProjectTaskGetDTO> ();
+        public List<ProjectTaskDTO> Tasks { get; set; } = new List<ProjectTaskDTO> ();
 
     }
 }
