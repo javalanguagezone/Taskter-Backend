@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Taskter.Api;
+using Taskter.Infrastructure.UserContext;
 using Taskter.Tests.Helpers.Extensions;
 using Taskter.Tests.Helpers.Factories;
 
@@ -18,7 +20,19 @@ namespace Taskter.Tests.Integration.Api
         [SetUp]
         public void SetUp()
         {
-            _client = new IntegrationWebApplicationFactory<Startup>().CreateClient();
+            _client = new IntegrationWebApplicationFactory<Startup>()
+                .WithWebHostBuilder(builder =>
+                {
+                    builder.ConfigureServices(services =>
+                    {
+                        var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
+                        services.Remove(serviceDesc);
+
+                        var userContext = new CurrentUserContext() { UserId = 2 };
+                        services.AddTransient<ICurrentUserContext>(x => userContext);
+                    });
+                })
+                .CreateClient();
         }
 
         [Test]
