@@ -7,6 +7,7 @@ namespace Taskter.Core.Entities
 {
     public class ProjectTaskEntry : BaseEntity
     {
+
         public int ProjectTaskId { get; set; }
         public ProjectTask ProjectTask { get; set; }
 
@@ -18,5 +19,11 @@ namespace Taskter.Core.Entities
         public DateTime Date { get; set; }
 
         public string Note { get; set; }
+
+
+        public ProjectTaskEntry()
+        {
+
+        }
     }
 }

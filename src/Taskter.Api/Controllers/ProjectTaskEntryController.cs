@@ -8,7 +8,7 @@ using Taskter.Core.Interfaces;
 
 namespace Taskter.Api.Controllers
 {
-    [Route("api/entries")]
+   
     [ApiController]
     public class ProjectTaskEntryController: ApplicationControllerBase
     {
@@ -17,7 +17,7 @@ namespace Taskter.Api.Controllers
         {
             _repository = repository;
         }
-
+        [Route("api/entries")]
         [HttpPost]
         public ActionResult PostProjectTaskEntry(ProjectTaskEntryInsertDTO entry){
 
@@ -26,7 +26,7 @@ namespace Taskter.Api.Controllers
             return NoContent();
         }
 
-        [Route("{year}/{month}/{day}")]
+        [Route("api/users/current/entries/{year}/{month}/{day}")]
         [HttpGet]
         public ActionResult<IEnumerable<ProjectTaskEntryDTO>> GetProjectTaskEntriesByDate(int year, int month, int day)
         {

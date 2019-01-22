@@ -8,7 +8,7 @@ using Taskter.Core.Interfaces;
 
 namespace Taskter.Api.Controllers
 {
-    [Route("/api/users")]
+    [Route("api/users")]
     [ApiController]
     public class UserController : ApplicationControllerBase
     {
