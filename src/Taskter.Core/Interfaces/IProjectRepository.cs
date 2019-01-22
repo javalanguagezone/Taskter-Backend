@@ -9,5 +9,6 @@ namespace Taskter.Core.Interfaces
     {
         void AddProject(Project prj);
         IEnumerable<Project> GetAllProjectsForUser(int userId);
+
     }
 }

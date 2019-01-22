@@ -5,9 +5,9 @@ namespace Taskter.Api.Contracts
 {
     public static class ProjectTaskExtensions 
     {
-        public static ProjectTaskGetDTO ToDTO (this ProjectTask task)
+        public static ProjectTaskDTO ToDTO (this ProjectTask task)
         {
-            return new ProjectTaskGetDTO() 
+            return new ProjectTaskDTO() 
                 {
                     TaskID = task.Id,
                     Name = task.Name,
@@ -15,9 +15,9 @@ namespace Taskter.Api.Contracts
                  };
         }
 
-        public static List<ProjectTaskGetDTO> ToDTOList (this IEnumerable<ProjectTask> tasks) 
+        public static List<ProjectTaskDTO> ToDTOList (this IEnumerable<ProjectTask> tasks) 
         {
-            var tasksDTO = new List<ProjectTaskGetDTO>();
+            var tasksDTO = new List<ProjectTaskDTO>();
             foreach (var tsk in tasks)
             {
                 tasksDTO.Add(tsk.ToDTO());

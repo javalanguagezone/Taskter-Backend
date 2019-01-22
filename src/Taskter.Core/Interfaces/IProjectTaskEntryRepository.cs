@@ -7,7 +7,8 @@ namespace Taskter.Core.Interfaces
 {
     public interface IProjectTaskEntryRepository : IRepository<ProjectTaskEntry>
     {
-
+        ProjectTaskEntry AddTimeEntry(ProjectTaskEntry newProjectTaskEntry);
         IEnumerable<ProjectTaskEntry> GetProjectTaskEntriesByDate(int userId, DateTime date);
+        IEnumerable<ProjectTaskEntry> GetProjectTaskEntriesByDate (int userId, int year, int month, int day);
     }
 }

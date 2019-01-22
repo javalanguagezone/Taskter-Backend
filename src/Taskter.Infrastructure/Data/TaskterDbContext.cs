@@ -54,7 +54,7 @@ namespace Taskter.Infrastructure.Data
 
 
             //ProjecTaskEntry
-            modelBuilder.Entity<ProjectTaskEntry>().Property(p => p.durationInMin).IsRequired();
+            modelBuilder.Entity<ProjectTaskEntry>().Property(p => p.DurationInMin).IsRequired();
             modelBuilder.Entity<ProjectTaskEntry>().Property(p => p.Date).IsRequired();
             modelBuilder.Entity<ProjectTaskEntry>().HasKey(p => p.Id);
 
