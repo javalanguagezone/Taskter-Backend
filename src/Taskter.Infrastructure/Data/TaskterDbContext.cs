@@ -27,7 +27,6 @@ namespace Taskter.Infrastructure.Data
             UserMapper.AddUserMapping(modelBuilder);
             ClientMapper.AddClientMapping(modelBuilder);
             ProjectMapper.AddProjectMapping(modelBuilder);
-            ProjectMapper.AddProjectMapping(modelBuilder);
             ProjectTaskEntryMapper.AddProjectTaskEntryMapping(modelBuilder);
             ProjectTaskMapper.AddProjectTask(modelBuilder);
             UserProjectMapper.AddUserProjectMapping(modelBuilder);
