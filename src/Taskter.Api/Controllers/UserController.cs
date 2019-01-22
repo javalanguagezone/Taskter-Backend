@@ -10,7 +10,7 @@ namespace Taskter.Api.Controllers
 {
     [Route("/api/users")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : ApplicationControllerBase
     {
         private readonly IUserRepository _repository;
 
@@ -20,9 +20,9 @@ namespace Taskter.Api.Controllers
         }
         [Route("current")]
         [HttpGet]
-        public ActionResult<UserDTO> GetCurrentUser() 
+        public ActionResult<UserDTO> GetUser() 
         {
-            User currentUser = _repository.GetCurrentUser();
+            User currentUser = _repository.GetUser(this.UserID);
             return Ok(currentUser.ToDTO());
         }
     }

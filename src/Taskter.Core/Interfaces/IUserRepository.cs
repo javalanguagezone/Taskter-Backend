@@ -7,6 +7,6 @@ namespace Taskter.Core.Interfaces
 {
     public interface IUserRepository: IRepository<User>
     {
-        User GetCurrentUser();
+        User GetUser(int userId);
     }
 }

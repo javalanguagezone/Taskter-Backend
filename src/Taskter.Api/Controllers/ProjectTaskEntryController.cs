@@ -10,7 +10,7 @@ namespace Taskter.Api.Controllers
 {
     [Route("api/entries")]
     [ApiController]
-    public class ProjectTaskEntryController: ControllerBase
+    public class ProjectTaskEntryController: ApplicationControllerBase
     {
         private readonly IProjectTaskEntryRepository _repository;
         public ProjectTaskEntryController(IProjectTaskEntryRepository repository)
@@ -30,7 +30,7 @@ namespace Taskter.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ProjectTaskEntryDTO>> GetProjectTaskEntriesByDate(int year, int month, int day)
         {
-            var projectTasksRepo = _repository.GetProjectTaskEntriesByDate(year,month, day);
+            var projectTasksRepo = _repository.GetProjectTaskEntriesByDate(this.UserID,year,month, day);
             return Ok(projectTasksRepo.ToDTOList());
         }
     }

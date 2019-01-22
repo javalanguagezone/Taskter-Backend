@@ -13,8 +13,8 @@ namespace Taskter.Infrastructure.Repositories
         public UserRepository (TaskterDbContext context) {
             _context = context;
         }
-        public User GetCurrentUser () {
-            return _context.Users.FirstOrDefault();
+        public User GetUser (int userId) {
+            return _context.Users.Find(userId);
         }
 
     }

@@ -8,9 +8,8 @@ using Taskter.Core.Interfaces;
 
 namespace Taskter.Api.Controllers
 {
-    [Route("/api/projects")]
     [ApiController]
-    public class ProjectController: ControllerBase
+    public class ProjectController: ApplicationControllerBase
     {
     
         private readonly IProjectRepository _repository;
@@ -18,11 +17,11 @@ namespace Taskter.Api.Controllers
         {
             _repository = repository;
         }
-
+        [Route("/api/users/current/projects")]
         [HttpGet]
         public ActionResult<IEnumerable<ProjectDTO>> GetProjectsForCurrentUser()
         {
-            var projectsRepo = _repository.GetProjectsForCurrentUser();
+            var projectsRepo = _repository.GetAllProjectsForUser(this.UserID);
             return Ok(projectsRepo.ToDTOList());
         }
     }
