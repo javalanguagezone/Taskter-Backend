@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Taskter.Api.Contracts;
 using Taskter.Core.Entities;
@@ -11,10 +12,12 @@ namespace Taskter.Api.Controllers
     public class DummyController : ControllerBase
     {
         private readonly IDummyRepository _repository;
+        private readonly IMapper _mapper;
 
-        public DummyController(IDummyRepository repository)
+        public DummyController(IDummyRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -40,7 +43,7 @@ namespace Taskter.Api.Controllers
         [HttpPost]
         public ActionResult Add(DummyInsertDto dummy)
         {
-            _repository.AddDummy(dummy.ToEntity());
+            _repository.AddDummy(_mapper.Map<Dummy>(dummy));
             return NoContent();
         }
 
