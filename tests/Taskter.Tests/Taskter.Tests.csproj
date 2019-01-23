@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Taskter.Api\Taskter.Api.csproj" />
     <ProjectReference Include="..\..\src\Taskter.Core\Taskter.Core.csproj" />
+    <ProjectReference Include="..\..\src\Taskter.Infrastructure\Taskter.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

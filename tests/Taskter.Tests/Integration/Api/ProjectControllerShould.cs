@@ -10,6 +10,8 @@ using Taskter.Api;
 using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
 using Taskter.Tests.Helpers.Factories;
+using FluentAssertions;
+using Taskter.Tests.Helpers.Extensions;
 
 namespace Taskter.Tests.Integration.Api
 {
@@ -48,6 +50,18 @@ namespace Taskter.Tests.Integration.Api
             var result = JsonConvert.DeserializeObject<IEnumerable<Project>>(jsonResponse).ToList();
 
             result.Count().Should().NotBe(0);
+        }
+
+        [Test]
+        public async Task ReturnProjectsOnlyForCurrentUser()
+        {
+            var result = await _client.GetProjectsForCurrentUser();
+
+            result.Should().NotBeNull();
+            result.ProjectID.Should().Be(1);
+            result.ProjectName.Should().Be("Tracker2");
+            result.Tasks.Count.Should().Be(4);
+
         }
     }
 }
