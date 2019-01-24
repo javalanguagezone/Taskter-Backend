@@ -52,16 +52,18 @@ namespace Taskter.Tests.Integration.Api
             result.Count().Should().NotBe(0);
         }
 
+       
         [Test]
-        public async Task ReturnProjectsOnlyForCurrentUser()
+        public async Task GetProjectsForCurrentUser()
         {
             var result = await _client.GetProjectsForCurrentUser();
-
             result.Should().NotBeNull();
-            result.ProjectID.Should().Be(1);
-            result.ProjectName.Should().Be("Tracker2");
-            result.Tasks.Count.Should().Be(4);
+            result.Count().Should().Be(1);
 
+            result[0].ProjectName.Should().Be("Tracker2");
+            result[0].ProjectCode.Should().Be("TA10002");
+            result[0].ClientName.Should().Be("Tacta");
+            result[0].Tasks.Count().Should().Be(4);
         }
     }
 }

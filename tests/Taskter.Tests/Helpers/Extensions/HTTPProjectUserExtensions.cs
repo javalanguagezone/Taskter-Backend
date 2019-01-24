@@ -6,22 +6,23 @@ using Taskter.Api.Contracts;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Taskter.Core.Entities;
+using System.Linq;
 
 namespace Taskter.Tests.Helpers.Extensions
 {
     static class HTTPProjectUserExtensions
     {
-        public static async Task<ProjectDTO> GetProjectsForCurrentUser(this HttpClient client)
+        public static async Task<List<ProjectDTO>> GetProjectsForCurrentUser(this HttpClient client)
         {
             var response = await client.GetAsync("/api/users/current/projects");
 
             response.EnsureSuccessStatusCode();
-
-            var jsonResponse = await response.Content.ReadAsAsync<ProjectDTO>();
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<IEnumerable<ProjectDTO>>(jsonResponse).ToList();
 
             //var result = JsonConvert.DeserializeObject<ProjectDTO>(jsonResponse);
 
-            return jsonResponse;
+            return result;
         }
     }
 }
