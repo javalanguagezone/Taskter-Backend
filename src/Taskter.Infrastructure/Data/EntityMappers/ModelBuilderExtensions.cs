@@ -41,11 +41,11 @@ namespace Taskter.Infrastructure.Data {
 
             //ProjectTaskEntries
 
-            modelBuilder.Entity<ProjectTaskEntry> ().HasData (
-                new ProjectTaskEntry { Id = 1, UserId = 1, ProjectTaskId = 1, Date = DateTime.Now, DurationInMin = 30, Note = " Lorem ipsum dolor sit amet" },
-                new ProjectTaskEntry { Id = 2, UserId = 1, ProjectTaskId = 2, Date = DateTime.Now, DurationInMin = 90, Note = " Lorem ipsum dolor sit amet" },
-                new ProjectTaskEntry { Id = 3, UserId = 1, ProjectTaskId = 3, Date = DateTime.Now, DurationInMin = 60, Note = " Lorem ipsum dolor sit amet" },
-                new ProjectTaskEntry { Id = 4, UserId = 1, ProjectTaskId = 4, Date = DateTime.Now, DurationInMin = 90, Note = " Lorem ipsum dolor sit amet" }
+            modelBuilder.Entity<ProjectTaskEntry>().HasData(
+                new ProjectTaskEntry(1, 1,1, 30, DateTime.Now, " Lorem ipsum dolor sit amet"),
+                new ProjectTaskEntry(2, 1, 2,90, DateTime.Now, " Lorem ipsum dolor sit amet"),
+                new ProjectTaskEntry(3, 1, 3,60, DateTime.Now, " Lorem ipsum dolor sit amet"),
+                new ProjectTaskEntry(4, 1, 4,90, DateTime.Now, " Lorem ipsum dolor sit amet")
 
             );
 
