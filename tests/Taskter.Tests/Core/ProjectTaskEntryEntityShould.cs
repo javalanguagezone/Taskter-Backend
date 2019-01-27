@@ -9,7 +9,7 @@ using NSubstitute.ExceptionExtensions;
 namespace Taskter.Tests.Core
 {
     [TestFixture]
-    public class ProjectTaskEntryConstructorShould
+    public class ProjectTaskEntryEntityShould
     {
         ProjectTaskEntry _entry = new ProjectTaskEntry(1, 1, 20, DateTime.Now, "Notee");
 
@@ -17,27 +17,21 @@ namespace Taskter.Tests.Core
         [Test]
         public void NotAcceptsNegativeDurationInMinOnSetting()
         {
-
             Action act = () => _entry.SetDuratinInMin(-1);
             act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
 
         }
-
         [Test]
         public void NotAcceptsNegativeDurationInMinOnCreating()
         {
-
             ProjectTaskEntry _entry1;
 
             Action act = () => _entry1 = new ProjectTaskEntry(1, 1, -1, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
-
         }
-
         [Test]
         public void NotAcceptsZeroDurationInMinOnSetting()
         {
-      
             Action act = () => _entry.SetDuratinInMin(0);
             act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
 
@@ -59,19 +53,13 @@ namespace Taskter.Tests.Core
 
             Action act = () => _entry1 = new ProjectTaskEntry(1, 1, 2000, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>();
-
         }
-
         [Test]
         public void NotAcceptsOverOneDayDurationInMinOnSetting()
         {
-
-
             Action act = () => _entry.SetDuratinInMin(2000);
             act.Should().Throw<ArgumentException>();
-
         }
-
         [Test]
         public void NotAcceptsNullParametersForUserIdOnCreating()
         {
@@ -79,7 +67,6 @@ namespace Taskter.Tests.Core
 
             Action act = () => _entry1 = new ProjectTaskEntry(0,1, 20, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>();
-
         }
         [Test]
         public void NotAcceptsNegativeParametersForUserIdOnCreating()
@@ -88,41 +75,28 @@ namespace Taskter.Tests.Core
 
             Action act = () => _entry1 = new ProjectTaskEntry(-1, 1, 20, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>();
-
         }
-
         [Test]
         public void NotAcceptsNegativeParametersForUserIdOnSetting()
         {
-            
-
-            Action act = () => _entry.UserId = -1;
-            act.Should().Throw<ArgumentException>();
-
+            Action act = () => _entry.SetUserId(-1);
+            act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
         }
-
         [Test]
-        public void NotAcceptsNullParametersForProjectTaskIdOnCreating()
+        public void NotAcceptsZeroIdForProjectTaskIdOnCreating()
         {
             ProjectTaskEntry _entry1;
 
             Action act = () => _entry1 = new ProjectTaskEntry(1, 0, 20, DateTime.Now, "Notee");
-            act.Should().Throw<ArgumentException>().WithMessage("Project task can not be null! ");
-
+            act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
         }
 
         [Test]
         public void NotAcceptsNegativeParametersForPprojectTaskIdOnSetting()
         {
-
-
-            Action act = () => _entry.ProjectTaskId = -1;
-            act.Should().Throw<ArgumentException>();
+            Action act = () => _entry.SetProjectTaskId(-1);
+            act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
 
         }
-
-
-
-
     }
 }
