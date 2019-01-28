@@ -33,21 +33,21 @@ namespace Taskter.Tests.Integration.Api
 
         }
 
-        [Test]
-        public async Task ReturnOnlyProjects()
-        {
-            _repo.AddProject(new Project()
-            {
-                Id = 3,
-                Name = "Tada"
-            });
+        // [Test]
+        // public async Task ReturnOnlyProjects()
+        // {
+        //     _repo.AddProject(new Project()
+        //     {
+        //         Id = 3,
+        //         Name = "Tada"
+        //     });
 
-            var response = await _client.GetAsync("/api/users/current/projects");
-            response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<Project>>(jsonResponse).ToList();
+        //     var response = await _client.GetAsync("/api/users/current/projects");
+        //     response.EnsureSuccessStatusCode();
+        //     var jsonResponse = await response.Content.ReadAsStringAsync();
+        //     var result = JsonConvert.DeserializeObject<IEnumerable<Project>>(jsonResponse).ToList();
 
-            result.Count().Should().NotBe(0);
-        }
+        //     result.Count().Should().NotBe(0);
+        // }
     }
 }
