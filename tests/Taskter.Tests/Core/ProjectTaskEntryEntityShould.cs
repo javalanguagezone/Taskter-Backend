@@ -77,12 +77,6 @@ namespace Taskter.Tests.Core
             act.Should().Throw<ArgumentException>();
         }
         [Test]
-        public void NotAcceptsNegativeParametersForUserIdOnSetting()
-        {
-            Action act = () => _entry.SetUserId(-1);
-            act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
-        }
-        [Test]
         public void NotAcceptsZeroIdForProjectTaskIdOnCreating()
         {
             ProjectTaskEntry _entry1;
@@ -90,7 +84,6 @@ namespace Taskter.Tests.Core
             Action act = () => _entry1 = new ProjectTaskEntry(1, 0, 20, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
         }
-
         [Test]
         public void NotAcceptsNegativeParametersForPprojectTaskIdOnSetting()
         {

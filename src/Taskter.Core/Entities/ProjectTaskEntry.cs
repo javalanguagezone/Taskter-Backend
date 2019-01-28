@@ -21,11 +21,6 @@ namespace Taskter.Core.Entities
             ValidateDurationInMinutes(duration);
             this.DurationInMin = duration;
         }
-        public void SetUserId(int id) {
-            ValidateId(id);
-            this.UserId = id;
-        }
-
         public void SetProjectTaskId(int id){
             ValidateId(id);
             this.UserId = id;
@@ -42,7 +37,6 @@ namespace Taskter.Core.Entities
 
             }
         }
-
         private void ValidateId( int id){
             if (id <= 0 )
             {
