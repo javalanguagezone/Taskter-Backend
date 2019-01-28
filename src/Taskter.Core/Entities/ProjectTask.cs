@@ -15,14 +15,15 @@ namespace Taskter.Core.Entities
         public ICollection<ProjectTaskEntry> ProjectsTaskEntries { get; set; } = new List<ProjectTaskEntry>();
 
 
-        public ProjectTask()
+        private ProjectTask()
         {
 
         }
-        public ProjectTask(string name, bool billable)
+        public ProjectTask(string name, int projectId, bool billable)
         {
             Name = name;
             Billable = billable;
+            ProjectId = projectId;
         }
     }
 }

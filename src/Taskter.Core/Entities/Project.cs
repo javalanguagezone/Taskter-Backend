@@ -6,8 +6,8 @@ using Taskter.Core.SharedKernel;
 
 namespace Taskter.Core.Entities {
     public class Project : BaseEntity {
-        public string Name { get; set; }
-        public string Code { get ; set; }
+        public string Name { get; private set; }
+        public string Code { get ; private set; }
         
 
         public IEnumerable<ProjectTask> Tasks { get; set; } = new List<ProjectTask>();
@@ -16,14 +16,16 @@ namespace Taskter.Core.Entities {
         public int ClientId { get; set; }
         public Client Client { get; set; }
 
-        public Project()
+        private Project()
         {
                 
         }
-        public Project (string name, string code = "") {
+        public Project (string name, int clientId, string code = null) {
            
+           //todo validacija
             Name = name;
-            Code = code.Trim();
+            Code = code;
+            ClientId = clientId;
         }
     }
 }

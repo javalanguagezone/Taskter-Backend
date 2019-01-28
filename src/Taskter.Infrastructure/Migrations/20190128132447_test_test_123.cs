@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Taskter.Infrastructure.Migrations
 {
-    public partial class ProjectTaskEntries1 : Migration
+    public partial class test_test_123 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -112,7 +112,7 @@ namespace Taskter.Infrastructure.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ProjectTaskId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
-                    durationInMin = table.Column<int>(nullable: false),
+                    DurationInMin = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Note = table.Column<string>(nullable: true)
                 },
@@ -141,31 +141,31 @@ namespace Taskter.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AvatarURL", "FirstName", "LastName", "Role", "UserName" },
-                values: new object[] { 1, "https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg", "Nermin", "Selim", "Administrator", "Nermin.Selim" });
+                values: new object[] { 1, "https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg", "Nermin", "Milisic", "Domar", "nermin.milisic" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AvatarURL", "FirstName", "LastName", "Role", "UserName" },
-                values: new object[] { 2, "https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg", "Selim", "Nermin", "User", "Selim.Nermin" });
+                values: new object[] { 2, "https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg", "Selim", "Huskic", "Kotlovnicar", "selim.huskic" });
 
             migrationBuilder.InsertData(
                 table: "Projects",
                 columns: new[] { "Id", "ClientId", "Code", "Name" },
-                values: new object[] { 1, 1, "TA10001", "Tracker" });
+                values: new object[] { 1, 1, "OU742", "Tracker" });
 
             migrationBuilder.InsertData(
                 table: "Projects",
                 columns: new[] { "Id", "ClientId", "Code", "Name" },
-                values: new object[] { 2, 1, "TA10002", "Tracker2" });
+                values: new object[] { 2, 1, "MOL001", "Moleraj" });
 
             migrationBuilder.InsertData(
                 table: "ProjectTasks",
                 columns: new[] { "Id", "Billable", "Name", "ProjectId" },
                 values: new object[,]
                 {
-                    { 1, true, "Design", 1 },
-                    { 2, true, "Implementation", 1 },
-                    { 3, false, "Review", 1 },
+                    { 1, true, "Development", 1 },
+                    { 2, true, "Review", 1 },
+                    { 3, false, "Marketing", 1 },
                     { 4, true, "Marketing", 1 },
                     { 5, true, "UI", 2 },
                     { 6, true, "Backend", 2 },
@@ -178,19 +178,19 @@ namespace Taskter.Infrastructure.Migrations
                 columns: new[] { "UserId", "ProjectId" },
                 values: new object[,]
                 {
-                    { 2, 1 },
-                    { 1, 2 }
+                    { 1, 1 },
+                    { 2, 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "ProjectTaskEntres",
-                columns: new[] { "Id", "Date", "Note", "ProjectTaskId", "UserId", "durationInMin" },
+                columns: new[] { "Id", "Date", "DurationInMin", "Note", "ProjectTaskId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 1, 15, 15, 30, 25, 952, DateTimeKind.Local).AddTicks(4940), " Lorem ipsum dolor sit amet", 1, 1, 30 },
-                    { 2, new DateTime(2019, 1, 15, 15, 30, 25, 957, DateTimeKind.Local).AddTicks(6687), " Lorem ipsum dolor sit amet", 2, 1, 90 },
-                    { 3, new DateTime(2019, 1, 15, 15, 30, 25, 957, DateTimeKind.Local).AddTicks(6744), " Lorem ipsum dolor sit amet", 3, 1, 60 },
-                    { 4, new DateTime(2019, 1, 15, 15, 30, 25, 957, DateTimeKind.Local).AddTicks(6758), " Lorem ipsum dolor sit amet", 4, 1, 90 }
+                    { 1, new DateTime(2019, 1, 28, 14, 24, 46, 917, DateTimeKind.Local).AddTicks(4827), 30, " Lorem ipsum dolor sit amet", 1, 1 },
+                    { 2, new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3926), 90, " Lorem ipsum dolor sit amet", 2, 1 },
+                    { 3, new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3954), 60, " Lorem ipsum dolor sit amet", 3, 1 },
+                    { 4, new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3959), 90, " Lorem ipsum dolor sit amet", 4, 1 }
                 });
 
             migrationBuilder.CreateIndex(

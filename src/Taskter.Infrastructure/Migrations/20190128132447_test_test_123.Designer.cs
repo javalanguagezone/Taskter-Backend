@@ -10,8 +10,8 @@ using Taskter.Infrastructure.Data;
 namespace Taskter.Infrastructure.Migrations
 {
     [DbContext(typeof(TaskterDbContext))]
-    [Migration("20190115143026_ProjectTaskEntries1")]
-    partial class ProjectTaskEntries1
+    [Migration("20190128132447_test_test_123")]
+    partial class test_test_123
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,15 +67,15 @@ namespace Taskter.Infrastructure.Migrations
                         {
                             Id = 1,
                             ClientId = 1,
-                            Code = "TA10001",
+                            Code = "OU742",
                             Name = "Tracker"
                         },
                         new
                         {
                             Id = 2,
                             ClientId = 1,
-                            Code = "TA10002",
-                            Name = "Tracker2"
+                            Code = "MOL001",
+                            Name = "Moleraj"
                         });
                 });
 
@@ -103,21 +103,21 @@ namespace Taskter.Infrastructure.Migrations
                         {
                             Id = 1,
                             Billable = true,
-                            Name = "Design",
+                            Name = "Development",
                             ProjectId = 1
                         },
                         new
                         {
                             Id = 2,
                             Billable = true,
-                            Name = "Implementation",
+                            Name = "Review",
                             ProjectId = 1
                         },
                         new
                         {
                             Id = 3,
                             Billable = false,
-                            Name = "Review",
+                            Name = "Marketing",
                             ProjectId = 1
                         },
                         new
@@ -165,13 +165,13 @@ namespace Taskter.Infrastructure.Migrations
 
                     b.Property<DateTime>("Date");
 
+                    b.Property<int>("DurationInMin");
+
                     b.Property<string>("Note");
 
                     b.Property<int>("ProjectTaskId");
 
                     b.Property<int>("UserId");
-
-                    b.Property<int>("durationInMin");
 
                     b.HasKey("Id");
 
@@ -185,38 +185,38 @@ namespace Taskter.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2019, 1, 15, 15, 30, 25, 952, DateTimeKind.Local).AddTicks(4940),
+                            Date = new DateTime(2019, 1, 28, 14, 24, 46, 917, DateTimeKind.Local).AddTicks(4827),
+                            DurationInMin = 30,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 1,
-                            UserId = 1,
-                            durationInMin = 30
+                            UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2019, 1, 15, 15, 30, 25, 957, DateTimeKind.Local).AddTicks(6687),
+                            Date = new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3926),
+                            DurationInMin = 90,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 2,
-                            UserId = 1,
-                            durationInMin = 90
+                            UserId = 1
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2019, 1, 15, 15, 30, 25, 957, DateTimeKind.Local).AddTicks(6744),
+                            Date = new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3954),
+                            DurationInMin = 60,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 3,
-                            UserId = 1,
-                            durationInMin = 60
+                            UserId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2019, 1, 15, 15, 30, 25, 957, DateTimeKind.Local).AddTicks(6758),
+                            Date = new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3959),
+                            DurationInMin = 90,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 4,
-                            UserId = 1,
-                            durationInMin = 90
+                            UserId = 1
                         });
                 });
 
@@ -249,18 +249,18 @@ namespace Taskter.Infrastructure.Migrations
                             Id = 1,
                             AvatarURL = "https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg",
                             FirstName = "Nermin",
-                            LastName = "Selim",
-                            Role = "Administrator",
-                            UserName = "Nermin.Selim"
+                            LastName = "Milisic",
+                            Role = "Domar",
+                            UserName = "nermin.milisic"
                         },
                         new
                         {
                             Id = 2,
                             AvatarURL = "https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg",
                             FirstName = "Selim",
-                            LastName = "Nermin",
-                            Role = "User",
-                            UserName = "Selim.Nermin"
+                            LastName = "Huskic",
+                            Role = "Kotlovnicar",
+                            UserName = "selim.huskic"
                         });
                 });
 
@@ -280,19 +280,19 @@ namespace Taskter.Infrastructure.Migrations
                         new
                         {
                             UserId = 1,
-                            ProjectId = 2
+                            ProjectId = 1
                         },
                         new
                         {
                             UserId = 2,
-                            ProjectId = 1
+                            ProjectId = 2
                         });
                 });
 
             modelBuilder.Entity("Taskter.Core.Entities.Project", b =>
                 {
                     b.HasOne("Taskter.Core.Entities.Client", "Client")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
