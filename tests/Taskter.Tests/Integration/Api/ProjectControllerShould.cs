@@ -10,6 +10,8 @@ using Taskter.Api;
 using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
 using Taskter.Tests.Helpers.Factories;
+using FluentAssertions;
+using Taskter.Tests.Helpers.Extensions;
 
 namespace Taskter.Tests.Integration.Api
 {
@@ -49,5 +51,19 @@ namespace Taskter.Tests.Integration.Api
 
         //     result.Count().Should().NotBe(0);
         // }
+
+       
+        [Test]
+        public async Task GetProjectsForCurrentUser()
+        {
+            var result = await _client.GetProjectsForCurrentUser();
+            result.Should().NotBeNull();
+            result.Count().Should().Be(1);
+
+            result[0].ProjectName.Should().Be("Tracker2");
+            result[0].ProjectCode.Should().Be("TA10002");
+            result[0].ClientName.Should().Be("Tacta");
+            result[0].Tasks.Count().Should().Be(4);
+        }
     }
 }

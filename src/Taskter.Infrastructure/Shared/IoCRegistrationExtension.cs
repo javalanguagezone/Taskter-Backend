@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Taskter.Core.Interfaces;
 using Taskter.Infrastructure.Repositories;
+using Taskter.Infrastructure.UserContext;
 
 namespace Taskter.Infrastructure.Shared
 {
@@ -16,6 +12,9 @@ namespace Taskter.Infrastructure.Shared
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProjectTaskEntryRepository, ProjectTaskEntryRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
+
+
+            services.AddTransient<ICurrentUserContext, CurrentUserContext>();
         }
     }
 }

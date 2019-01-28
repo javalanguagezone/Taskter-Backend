@@ -9,7 +9,7 @@ namespace Taskter.Api.Contracts
         public string ClientName { get; set; }
 
         public string ProjectCode { get; set; }
-        public List<ProjectTaskDTO> Tasks { get; set; } = new List<ProjectTaskDTO> ();
+        public ICollection<ProjectTaskDTO> Tasks { get; set; } = new List<ProjectTaskDTO> ();
 
     }
 }
