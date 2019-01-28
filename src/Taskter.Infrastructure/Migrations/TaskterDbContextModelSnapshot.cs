@@ -40,6 +40,21 @@ namespace Taskter.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Taskter.Core.Entities.Dummy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Status");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Dummies");
+                });
+
             modelBuilder.Entity("Taskter.Core.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -183,7 +198,7 @@ namespace Taskter.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2019, 1, 28, 14, 24, 46, 917, DateTimeKind.Local).AddTicks(4827),
+                            Date = new DateTime(2019, 1, 28, 22, 30, 40, 265, DateTimeKind.Local).AddTicks(8704),
                             DurationInMin = 30,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 1,
@@ -192,7 +207,7 @@ namespace Taskter.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3926),
+                            Date = new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5565),
                             DurationInMin = 90,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 2,
@@ -201,7 +216,7 @@ namespace Taskter.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3954),
+                            Date = new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5613),
                             DurationInMin = 60,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 3,
@@ -210,7 +225,7 @@ namespace Taskter.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3959),
+                            Date = new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5620),
                             DurationInMin = 90,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 4,

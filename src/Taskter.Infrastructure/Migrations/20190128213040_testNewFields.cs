@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Taskter.Infrastructure.Migrations
 {
-    public partial class test_test_123 : Migration
+    public partial class testNewFields : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,20 @@ namespace Taskter.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clients", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Dummies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dummies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,10 +201,10 @@ namespace Taskter.Infrastructure.Migrations
                 columns: new[] { "Id", "Date", "DurationInMin", "Note", "ProjectTaskId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 1, 28, 14, 24, 46, 917, DateTimeKind.Local).AddTicks(4827), 30, " Lorem ipsum dolor sit amet", 1, 1 },
-                    { 2, new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3926), 90, " Lorem ipsum dolor sit amet", 2, 1 },
-                    { 3, new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3954), 60, " Lorem ipsum dolor sit amet", 3, 1 },
-                    { 4, new DateTime(2019, 1, 28, 14, 24, 46, 918, DateTimeKind.Local).AddTicks(3959), 90, " Lorem ipsum dolor sit amet", 4, 1 }
+                    { 1, new DateTime(2019, 1, 28, 22, 30, 40, 265, DateTimeKind.Local).AddTicks(8704), 30, " Lorem ipsum dolor sit amet", 1, 1 },
+                    { 2, new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5565), 90, " Lorem ipsum dolor sit amet", 2, 1 },
+                    { 3, new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5613), 60, " Lorem ipsum dolor sit amet", 3, 1 },
+                    { 4, new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5620), 90, " Lorem ipsum dolor sit amet", 4, 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -221,6 +235,9 @@ namespace Taskter.Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Dummies");
+
             migrationBuilder.DropTable(
                 name: "ProjectTaskEntres");
 

@@ -7,7 +7,7 @@ using Taskter.Core.Entities;
 namespace Taskter.Tests.Core
 {
     [TestFixture]
-    public class ProjectEntity
+    public class ProjectEntityTests
     {
 
         [TestCase(null)]
