@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Taskter.Api.Contracts;
 using Taskter.Core.Entities;
@@ -20,9 +21,9 @@ namespace Taskter.Api.Controllers
         }
         [Route("current")]
         [HttpGet]
-        public ActionResult<UserDTO> GetUser() 
+        public async Task<ActionResult<UserDTO>> GetUser() 
         {
-            User currentUser = _repository.GetUser(this.UserID);
+            User currentUser = await _repository.GetUser(this.UserID);
             return Ok(currentUser.ToDTO());
         }
     }
