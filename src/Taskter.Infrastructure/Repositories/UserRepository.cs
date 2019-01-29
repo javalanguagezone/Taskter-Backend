@@ -8,13 +8,16 @@ using Taskter.Infrastructure.Data;
 
 namespace Taskter.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository {
+    public class UserRepository : IUserRepository
+    {
 
         private readonly TaskterDbContext _context;
-        public UserRepository (TaskterDbContext context) {
+        public UserRepository(TaskterDbContext context)
+        {
             _context = context;
         }
-        public async Task<User> GetUser (int userId) {
+        public async Task<User> GetUser(int userId)
+        {
             return await _context.Users.FindAsync(userId);
         }
 
