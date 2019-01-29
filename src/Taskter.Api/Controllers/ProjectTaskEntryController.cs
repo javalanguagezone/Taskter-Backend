@@ -19,18 +19,18 @@ namespace Taskter.Api.Controllers
         }
         [Route("api/entries")]
         [HttpPost]
-        public ActionResult PostProjectTaskEntry(ProjectTaskEntryInsertDTO entry){
+        public async Task<ActionResult> PostProjectTaskEntry(ProjectTaskEntryInsertDTO entry){
 
-            _repository.AddTimeEntry(entry.ToEntity());
+            await _repository.AddTimeEntry(entry.ToEntity());
 
             return NoContent();
         }
 
         [Route("api/users/current/entries/{year}/{month}/{day}")]
         [HttpGet]
-        public ActionResult<IEnumerable<ProjectTaskEntryDTO>> GetProjectTaskEntriesByDate(int year, int month, int day)
+        public async Task<ActionResult<IEnumerable<ProjectTaskEntryDTO>>> GetProjectTaskEntriesByDate(int year, int month, int day)
         {
-            var projectTasksRepo = _repository.GetProjectTaskEntriesByDate(this.UserID,year,month, day);
+            var projectTasksRepo = await _repository.GetProjectTaskEntriesByDate(this.UserID,year,month, day);
             return Ok(projectTasksRepo.ToDTOList());
         }
     }

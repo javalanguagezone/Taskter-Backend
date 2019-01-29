@@ -32,25 +32,26 @@ namespace Taskter.Tests.Integration.Api
         }
 
         [Test]
-        public void GetProjectTaskEntriesByDate_AddedTimeEntryForGivenDate_ReturnNonEmptyResult()
+        public async Task GetProjectTaskEntriesByDate_AddedTimeEntryForGivenDate_ReturnNonEmptyResult()
         {
             var newEntry = new ProjectTaskEntry(50, 2, 1, 50, new DateTime(2019, 2, 10), "Nasa nota");
 
-            _repository.AddTimeEntry(newEntry);
+            await _repository.AddTimeEntry(newEntry);
 
-            var result = _repository.GetProjectTaskEntriesByDate(2, 2019, 2, 10);
+            var result = await _repository.GetProjectTaskEntriesByDate(2, 2019, 2, 10);
             result.Should().NotBeEmpty();
         }
 
         [Test]
-        public void GetProjectTaskEntriesByDate_AddedTimeEntryForGivenDate_ShouldAddOnlyOneEntry()
+        public async Task GetProjectTaskEntriesByDate_AddedTimeEntryForGivenDate_ShouldAddOnlyOneEntry()
         {
-            int numOfEnries = _repository.GetProjectTaskEntriesByDate(2, 2019, 2, 10).ToList().Count;
-
+            var firstResult = await _repository.GetProjectTaskEntriesByDate(2, 2019, 2, 10);
+            int numOfEnries = firstResult.ToList().Count;
+            
             var newEntry = new ProjectTaskEntry(50, 2, 1, 50, new DateTime(2019, 2, 10), "Nasa nota");
-            _repository.AddTimeEntry(newEntry);
+            await _repository.AddTimeEntry(newEntry);
 
-            var result = _repository.GetProjectTaskEntriesByDate(2, 2019, 2, 10);
+            var result = await _repository.GetProjectTaskEntriesByDate(2, 2019, 2, 10);
             result.ToList().Count.Should().Be(numOfEnries + 1);
         }
     }
