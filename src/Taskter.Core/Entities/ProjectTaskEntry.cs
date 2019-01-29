@@ -8,23 +8,43 @@ namespace Taskter.Core.Entities
 {
     public class ProjectTaskEntry : BaseEntity
     {
-        public int ProjectTaskId { get; private set; }
+        private int _projectTaskId;
+        public int ProjectTaskId 
+        {
+            get=>_projectTaskId;
+            set
+            {
+                ValidateId(value);
+                _projectTaskId = value;
+            }
+        }
         public ProjectTask ProjectTask { get; set; }
-        public int UserId { get; private set; }
+
+        private int _userId;
+        public int UserId 
+        { 
+            get=>_userId; 
+            private set
+            {
+                ValidateId(value);
+                _userId = value;
+            }
+        }
         public User User { get; set; }
-        public int DurationInMin { get;  private set; }
+
+        private int _durationInMin;
+        public int DurationInMin 
+        { 
+            get => _durationInMin;  
+            set
+            {
+                ValidateDurationInMinutes(value);
+                _durationInMin = value;
+            } 
+        }
         public DateTime Date { get; set; }
         public string Note { get; set; }
 
-        public void SetDuratinInMin(int duration)
-        {
-            ValidateDurationInMinutes(duration);
-            this.DurationInMin = duration;
-        }
-        public void SetProjectTaskId(int id){
-            ValidateId(id);
-            this.UserId = id;
-        }
         private void ValidateDurationInMinutes(int duration)
         {
             if (duration <= 0  )
@@ -37,7 +57,7 @@ namespace Taskter.Core.Entities
 
             }
         }
-        private void ValidateId( int id){
+        private void ValidateId(int id){
             if (id <= 0 )
             {
                 throw new ArgumentException("Id field can not be set to negative value or zero!");
@@ -46,29 +66,21 @@ namespace Taskter.Core.Entities
 
         public ProjectTaskEntry( int id, int userId,  int projectTaskId, int durationInMin, DateTime date, string note)
         {
-            ValidateDurationInMinutes(durationInMin);
-            ValidateId(userId);
-            ValidateId(projectTaskId);
-
-            this.Id = id;
-            this.UserId = userId;
-            this.ProjectTaskId = projectTaskId;
-            this.DurationInMin = durationInMin;
-            this.Date = date;
-            this.Note = note;
+            Id = id;
+            UserId = userId;
+            ProjectTaskId = projectTaskId;
+            DurationInMin = durationInMin;
+            Date = date;
+            Note = note;
         }
 
         public ProjectTaskEntry( int userId, int projectTaskId, int durationInMin, DateTime date, string note)
         {
-            ValidateDurationInMinutes(durationInMin);
-            ValidateId(userId);
-            ValidateId(projectTaskId);
-            
-            this.UserId = userId;
-            this.ProjectTaskId = projectTaskId;
-            this.DurationInMin = durationInMin;
-            this.Date = date;
-            this.Note = note;
+            UserId = userId;
+            ProjectTaskId = projectTaskId;
+            DurationInMin = durationInMin;
+            Date = date;
+            Note = note;
         }
         private ProjectTaskEntry()
         {
