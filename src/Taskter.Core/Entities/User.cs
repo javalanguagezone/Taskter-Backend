@@ -6,9 +6,9 @@ namespace Taskter.Core.Entities
 {
     public class User : BaseEntity
     {
-        public string UserName {get; set;}
-        public string FirstName {get; set;}
-        public string LastName {get; set;}
+        public string UserName {get; private set;}
+        public string FirstName {get; private set;}
+        public string LastName {get; private set;}
 
         public string Role {get; set;}
         public string AvatarURL {get; set;}        
@@ -24,7 +24,7 @@ namespace Taskter.Core.Entities
             Role = role; 
         }
 
-        public User() { 
+        private User() { 
            
         }
     }

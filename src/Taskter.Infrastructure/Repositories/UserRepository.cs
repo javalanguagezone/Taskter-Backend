@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
@@ -13,8 +14,8 @@ namespace Taskter.Infrastructure.Repositories
         public UserRepository (TaskterDbContext context) {
             _context = context;
         }
-        public User GetUser (int userId) {
-            return _context.Users.Find(userId);
+        public async Task<User> GetUser (int userId) {
+            return await _context.Users.FindAsync(userId);
         }
 
     }
