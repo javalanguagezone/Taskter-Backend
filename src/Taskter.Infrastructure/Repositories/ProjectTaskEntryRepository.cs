@@ -9,7 +9,7 @@ using Taskter.Infrastructure.Data;
 
 namespace Taskter.Infrastructure.Repositories
 {
-    class ProjectTaskEntryRepository : IProjectTaskEntryRepository
+    public class ProjectTaskEntryRepository : IProjectTaskEntryRepository
     {
         private readonly TaskterDbContext _context;
 
