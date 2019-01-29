@@ -17,13 +17,6 @@ namespace Taskter.Infrastructure.Repositories
         {
             _context = context;
         }
-
-        public void AddProject(Project prj)
-        {
-            _context.Projects.Add(prj);
-            _context.SaveChanges();
-        }
-
         public IEnumerable<Project> GetAllProjectsForUser(int userId)
         {
             var USER_PROJECTS = _context.UsersProjects.Where(up => up.UserId == userId)

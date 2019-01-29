@@ -17,6 +17,7 @@ namespace Taskter.Tests.Core
             Action result = () => new Client(clientName);
             result.Should().Throw<ArgumentException>().WithMessage("Client name cannot be null or empty or contain only whitespace characters!");
         }
+
     }
 
 }

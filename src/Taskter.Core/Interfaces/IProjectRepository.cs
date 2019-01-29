@@ -7,7 +7,6 @@ namespace Taskter.Core.Interfaces
 {
     public interface IProjectRepository : IRepository<Project>
     {
-        void AddProject(Project prj);
         IEnumerable<Project> GetAllProjectsForUser(int userId);
 
     }

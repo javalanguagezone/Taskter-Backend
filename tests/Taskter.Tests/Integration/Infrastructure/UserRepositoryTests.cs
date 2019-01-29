@@ -20,13 +20,10 @@ namespace Taskter.Tests.Integration.Infrastructure
         [SetUp]
         public void SetUp()
         {
-            //kako ukloniti seedove koji se kreiraju prilikom svakog instanciranja taskterDBContexta ? seedovi su u core/data/taskterdbContext ??
             _context = new TaskterDbContext(new DbContextOptionsBuilder<TaskterDbContext>()
             .UseInMemoryDatabase("InMemoryTaskterDB")
             .Options);
             _context.Database.EnsureCreated();
-           
-            //global seeds go here
             _repository = new UserRepository(_context);
         }
 
