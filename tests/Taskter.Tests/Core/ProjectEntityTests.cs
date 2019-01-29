@@ -34,5 +34,12 @@ namespace Taskter.Tests.Core
             Action result = () => new Project("Test name", 1, "TE ST12");
             result.Should().Throw<ArgumentException>().WithMessage("Project code cannot contain whitespaces!");
         }
+
+        [Test]
+        public void Constructor_ClientIdIsLessThanOne_ThrowsArgumentException()
+        {
+            Action result = () => new Project("Test name", 0, "TEST13");
+            result.Should().Throw<ArgumentException>().WithMessage("The ID value can not be less than one!");
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Taskter.Core.SharedKernel;
+using Taskter.Core.Entities.Helpers;
 
 namespace Taskter.Core.Entities
 {
@@ -14,8 +15,7 @@ namespace Taskter.Core.Entities
             get => this._name;
             private set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Project name cannot be null or empty or contain only whitespace characters!");
+                EntityValidaton.StringIsNullOrHasAWhiteSpace(value, "Project name");
                 this._name = value;
             }
         }
@@ -27,13 +27,7 @@ namespace Taskter.Core.Entities
             get => _code;
             private set
             {
-                if (value != null)
-                {
-                    if (value.Length > 15)
-                        throw new ArgumentException("Project code cannot contain more than 15 characters!");
-                    if (value.Contains(" "))
-                        throw new ArgumentException("Project code cannot contain whitespaces!");
-                }
+                EntityValidaton.StringHasMoreThan15ParametersOrHasWhiteSpaces(value);
                 _code = value;
             }
 
@@ -44,7 +38,11 @@ namespace Taskter.Core.Entities
         public int ClientId
         {
             get => _clientId;
-            set { _clientId = value; }
+            private set 
+            {
+                EntityValidaton.ForeignKeyValueValidaton(value); 
+                _clientId = value; 
+            }
         }
         public Client Client { get; set; }
 
@@ -59,5 +57,7 @@ namespace Taskter.Core.Entities
             Code = code;
             ClientId = clientId;
         }
+        
     }
+
 }
