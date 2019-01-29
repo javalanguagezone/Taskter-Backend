@@ -36,22 +36,12 @@ namespace Taskter.Tests.Integration.Infrastructure
         [Test]
         public async Task GetUser_UserIdIs2_ReturnsUserWithId2()
         {
-            //arange
             _context.Users.Add(new User("testUsername", "testFirstname", "testLastName", "Admin", "testUrl") { Id = 1 });
             _context.Users.Add(new User("testUsername2", "test2Firstname", "test2LastName", "Developer", "testUrl") { Id = 2 });
             _context.Users.Add(new User("testUsername3", "test3Firstname", "test3LastName", "Developer", "testUrl") { Id = 3 });
-            //act
             var userInDb = _context.Users.Find(2);
             var result = await _repository.GetUser(2);
-            //assert
             result.Should().BeEquivalentTo(userInDb);
-        }
-
-        [Test]
-        public void testDbChangesEverytime()
-        {
-            var result = _context.Users.Local.Count();
-            result.Should().Be(0);
         }
     }
 }

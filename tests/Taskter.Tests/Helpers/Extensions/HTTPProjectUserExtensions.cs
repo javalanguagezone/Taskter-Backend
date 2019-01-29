@@ -19,9 +19,6 @@ namespace Taskter.Tests.Helpers.Extensions
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<ProjectDTO>>(jsonResponse).ToList();
-
-            //var result = JsonConvert.DeserializeObject<ProjectDTO>(jsonResponse);
-
             return result;
         }
     }

@@ -1,7 +1,6 @@
 using System;
 using FluentAssertions;
 using NUnit.Framework;
-using Taskter.Tests.Helpers.EntityBuilders;
 using Taskter.Core.Entities;
 
 namespace Taskter.Tests.Core

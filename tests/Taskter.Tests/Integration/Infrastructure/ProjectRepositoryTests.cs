@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Taskter.Core.Entities;
@@ -29,28 +32,30 @@ namespace Taskter.Tests.Integration.Infrastructure
         }
 
         [Test]
-        public void GetAllProjectsForUser_UserIdIs4_ReturnsAListOfProjectsForUserWithId4()
+        public void GetAllProjectsForUser_AssignTwoProjectsToUserWhoseIdIs4_ReturnsAListOfTwoAssignedProjectsForUserWithId4()
         {
-            
-            //seed usera, seed projekte, dodijeli useru Projekte
-            _context.Clients.Add(new Client("TestClient1"){Id = 5});
-            _context.Users.Add(new User("test1","test1","test1","test1","test1"){Id = 3});
-            _context.Users.Add(new User("test2","test2","test2","test2","test2"){Id = 4});
-            //
-            
-            _context.Projects.Add(new Project("testProject1", 5,"testcode"){Id = 10});
-            _context.Projects.Add(new Project("testProject2", 5,"testcode"){Id = 11});
-            //
-            _context.UsersProjects.Add(new UserProject(3,10));
-            _context.UsersProjects.Add(new UserProject(4,10));
-            _context.UsersProjects.Add(new UserProject(4,11));
-            //
+
+            _context.Clients.Add(new Client("TestClient1") { Id = 5 });
+            _context.Users.Add(new User("test1", "test1", "test1", "test1", "test1") { Id = 3 });
+            _context.Users.Add(new User("test2", "test2", "test2", "test2", "test2") { Id = 4 });
+
+            IEnumerable<Project> seedProjectList = new List<Project>()
+            {
+                new Project("testProject1", 5,"testcode"){Id = 10},
+                new Project("testProject2", 5,"testcode"){Id = 11}
+            };
+            _context.Projects.Add(seedProjectList.ToArray()[0]);
+            _context.Projects.Add(seedProjectList.ToArray()[1]);
+
+            _context.UsersProjects.Add(new UserProject(3, 10));
+            _context.UsersProjects.Add(new UserProject(4, 10));
+            _context.UsersProjects.Add(new UserProject(4, 11));
+
             _context.SaveChanges();
 
-            
-
-
-
+            var result = _repository.GetAllProjectsForUser(4);
+            result.Count().Should().Be(2);
+            result.Should().BeEquivalentTo(seedProjectList);
         }
     }
 }

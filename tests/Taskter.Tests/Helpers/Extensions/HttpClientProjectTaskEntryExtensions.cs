@@ -16,19 +16,19 @@ namespace Taskter.Tests.Helpers.Extensions
         {
             var insertModel = new ProjectTaskEntryInsertDTO()
             {
-                 UserId = model.UserId,
-                 ProjectTaskId = model.ProjectTaskId,
-                 DurationInMin = model.DurationInMin,
-                 Day = model.Day,
-                 Month = model.Month,
-                 Year = model.Year,
-                 Note = model.Note
+                UserId = model.UserId,
+                ProjectTaskId = model.ProjectTaskId,
+                DurationInMin = model.DurationInMin,
+                Day = model.Day,
+                Month = model.Month,
+                Year = model.Year,
+                Note = model.Note
             };
-       
+
 
             var payload = JsonConvert.SerializeObject(insertModel);
             var response = await client.PostAsync("api/entries", new StringContent(payload, Encoding.UTF8, "application/json"));
-            
+
 
             response.EnsureSuccessStatusCode();
         }
@@ -37,9 +37,9 @@ namespace Taskter.Tests.Helpers.Extensions
         {
             var today = new DateTime();
 
-            var response = await client.GetAsync("api/users/current/entries/{" + today.Year.ToString() + "}/{" + 
+            var response = await client.GetAsync("api/users/current/entries/{" + today.Year.ToString() + "}/{" +
                 today.Month.ToString() + "}/{" + today.Day.ToString() + "}");
-          
+
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<ProjectTaskEntry>>(jsonResponse).ToList();
