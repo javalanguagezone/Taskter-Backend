@@ -20,7 +20,7 @@ namespace Taskter.Infrastructure.Repositories
 
         public IEnumerable<ProjectTaskEntry> GetProjectTaskEntriesByDate(int userId, DateTime date)
         {
-            return _context.ProjectTaskEntres.Where((pr => pr.Id == userId))
+            return _context.ProjectTaskEntries.Where((pr => pr.Id == userId))
             .Where(p => p.Date == date);
 
         }
@@ -35,7 +35,7 @@ namespace Taskter.Infrastructure.Repositories
 
         public IEnumerable<ProjectTaskEntry> GetProjectTaskEntriesByDate(int userId, int year, int month, int day)
         {
-            var USER_TASK_ENTRIES = _context.ProjectTaskEntres.Where(pr => pr.UserId == userId)
+            var USER_TASK_ENTRIES = _context.ProjectTaskEntries.Where(pr => pr.UserId == userId)
             .Where(p => p.Date.Year == year && p.Date.Month == month && p.Date.Day == day)
             .Include(pt => pt.ProjectTask).ThenInclude(pr => pr.Project)
             .ThenInclude(c => c.Client).ToList();

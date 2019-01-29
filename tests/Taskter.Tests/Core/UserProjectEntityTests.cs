@@ -11,34 +11,20 @@ namespace Taskter.Tests.Core
     [TestFixture]
     public class UserProjectEntityTests
     {
-        [Test]
-        public void Constructor_NegativeUserId_ThrowArgumentException()
+        [TestCase(-10)]
+        [TestCase(0)]
+        public void Constructor_NegativeOrZeroUserId_ThrowArgumentException(int userId)
         {
-            Action act = () => new UserProject(-10, 10);
+            Action act = () => new UserProject(userId, 10);
 
             act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
         }
 
-        [Test]
-        public void Constructor_ZeroUserId_ThrowArgumentException()
+        [TestCase(-10)]
+        [TestCase(0)]   
+        public void Constructor_NegativeOrZeroProjectId_ThrowArgumentException(int projectId)
         {
-            Action act = () => new UserProject(0, 10);
-
-            act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
-        }
-
-        [Test]
-        public void Constructor_NegativeProjectId_ThrowArgumentException()
-        {
-            Action act = () => new UserProject(10, -10);
-
-            act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
-        }
-
-        [Test]
-        public void Constructor_ZeroProjectId_ThrowArgumentException()
-        {
-            Action act = () => new UserProject(10, 0);
+            Action act = () => new UserProject(10, projectId);
 
             act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
         }

@@ -19,7 +19,7 @@ namespace Taskter.Infrastructure.Data
         public DbSet<Dummy> Dummies { get; set; }
         public DbSet<UserProject> UsersProjects { get; set; }
 
-        public DbSet<ProjectTaskEntry> ProjectTaskEntres { get; set; }
+        public DbSet<ProjectTaskEntry> ProjectTaskEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -6,9 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Taskter.Api;
-using Taskter.Api.Contracts;
-using Taskter.Tests.Helpers.Extensions;
-using Taskter.Tests.Helpers.Factories;
+using Taskter.Tests.Helpers;
 using Taskter.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Taskter.Infrastructure.Repositories;
@@ -19,7 +17,7 @@ using System.Linq;
 namespace Taskter.Tests.Integration.Api
 {
     [TestFixture]
-    public class ProjectEntryRepositoryShould
+    public class ProjectEntryRepositoryTests
     {
         private ProjectTaskEntryRepository _repository;
 
@@ -35,7 +33,7 @@ namespace Taskter.Tests.Integration.Api
         }
 
         [Test]
-        public void AddEntry()
+        public void GetProjectTaskEntriesByDate_AddedTimeEntryForGivenDate_ReturnNonEmptyResult()
         {
             var newEntry = new ProjectTaskEntry(50, 2, 1, 50, new DateTime(2019, 2, 10), "Nasa nota");
             
@@ -46,7 +44,7 @@ namespace Taskter.Tests.Integration.Api
         }
         
         [Test]
-        public void AddOnlyOneEntryOnSpecifiedDay()
+        public void GetProjectTaskEntriesByDate_AddedTimeEntryForGivenDate_ShouldAddOnlyOneEntry()
         {
             int numOfEnries = _repository.GetProjectTaskEntriesByDate(2, 2019, 2, 10).ToList().Count;
             

@@ -14,38 +14,25 @@ namespace Taskter.Tests.Core
         ProjectTaskEntry _entry = new ProjectTaskEntry(1, 1, 20, DateTime.Now, "Notee");
 
 
-        [Test]
-        public void DurationInMinSetter_NegativeValue_ThrowArgumentException()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void DurationInMinSetter_NegativeOrZeroValue_ThrowArgumentException(int durationInMin)
         {
-            Action act = () => _entry.DurationInMin = -1;
+            Action act = () => _entry.DurationInMin = durationInMin;
             act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
 
         }
-        [Test]
-        public void Constructor_NegativeDurationInMin_ThrowArgumentException()
+
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void Constructor_NegativeOrZeroDurationInMin_ThrowArgumentException(int durationInMin)
         {
             ProjectTaskEntry _entry1;
 
-            Action act = () => _entry1 = new ProjectTaskEntry(1, 1, -1, DateTime.Now, "Notee");
+            Action act = () => _entry1 = new ProjectTaskEntry(1, 1, durationInMin, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
         }
-        [Test]
-        public void DurationInMinSetter_ZeroValue_ThrowArgumentException()
-        {
-            Action act = () => _entry.DurationInMin = 0;
-            act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
 
-        }
-
-        [Test]
-        public void Constructor_ZeroDurationInMin_ThrowArgumentException()
-        {
-            ProjectTaskEntry _entry1; 
-
-            Action act = () => _entry1 = new ProjectTaskEntry(1, 1, 0, DateTime.Now, "Notee"); 
-            act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
-
-        }
         [Test]
         public void Constructor_OverOneDayDurationInMin_ThrowArgumentException()
         {
@@ -60,34 +47,31 @@ namespace Taskter.Tests.Core
             Action act = () => _entry.DurationInMin = 2000;
             act.Should().Throw<ArgumentException>();
         }
-        [Test]
-        public void Constructor_ZeroUserId_ThrowArgumentException()
+
+        [TestCase(-10)]
+        [TestCase(0)]
+        public void Constructor_NegativeOrZeroUserId_ThrowArgumentException(int userId)
         {
             ProjectTaskEntry _entry1;
 
-            Action act = () => _entry1 = new ProjectTaskEntry(0,1, 20, DateTime.Now, "Notee");
+            Action act = () => _entry1 = new ProjectTaskEntry(userId, 1, 20, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>();
         }
-        [Test]
-        public void Constructor_NegativeUserId_ThrowArgumentException()
+
+        [TestCase(-10)]
+        [TestCase(0)]
+        public void Constructor_ZeroOrNegativeProjectTaskId_ThrowArgumentException(int projectTaksId)
         {
             ProjectTaskEntry _entry1;
 
-            Action act = () => _entry1 = new ProjectTaskEntry(-1, 1, 20, DateTime.Now, "Notee");
-            act.Should().Throw<ArgumentException>();
-        }
-        [Test]
-        public void Constructor_ZeroProjectTaskId_ThrowArgumentException()
-        {
-            ProjectTaskEntry _entry1;
-
-            Action act = () => _entry1 = new ProjectTaskEntry(1, 0, 20, DateTime.Now, "Notee");
+            Action act = () => _entry1 = new ProjectTaskEntry(1, projectTaksId, 20, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
         }
-        [Test]
-        public void ProjectTaskSetter_NegativeValue_ThrowArgumentException()
+        [TestCase(-10)]
+        [TestCase(0)]
+        public void ProjectTaskSetter_NegativeOrZeroValue_ThrowArgumentException(int projectTaskId)
         {
-            Action act = () => _entry.ProjectTaskId = -1;
+            Action act = () => _entry.ProjectTaskId = projectTaskId;
             act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
 
         }
