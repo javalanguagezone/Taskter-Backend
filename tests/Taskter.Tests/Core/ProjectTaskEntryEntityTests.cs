@@ -9,20 +9,20 @@ using NSubstitute.ExceptionExtensions;
 namespace Taskter.Tests.Core
 {
     [TestFixture]
-    public class ProjectTaskEntryEntityShould
+    public class ProjectTaskEntryEntityTests
     {
         ProjectTaskEntry _entry = new ProjectTaskEntry(1, 1, 20, DateTime.Now, "Notee");
 
 
         [Test]
-        public void NotAcceptsNegativeDurationInMinOnSetting()
+        public void DurationInMinSetter_NegativeValue_ThrowArgumentException()
         {
-            Action act = () => _entry.SetDuratinInMin(-1);
+            Action act = () => _entry.DurationInMin = -1;
             act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
 
         }
         [Test]
-        public void NotAcceptsNegativeDurationInMinOnCreating()
+        public void Constructor_NegativeDurationInMin_ThrowArgumentException()
         {
             ProjectTaskEntry _entry1;
 
@@ -30,15 +30,15 @@ namespace Taskter.Tests.Core
             act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
         }
         [Test]
-        public void NotAcceptsZeroDurationInMinOnSetting()
+        public void DurationInMinSetter_ZeroValue_ThrowArgumentException()
         {
-            Action act = () => _entry.SetDuratinInMin(0);
+            Action act = () => _entry.DurationInMin = 0;
             act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
 
         }
 
         [Test]
-        public void NotAcceptsZeroDurationInMinOnCreating()
+        public void Constructor_ZeroDurationInMin_ThrowArgumentException()
         {
             ProjectTaskEntry _entry1; 
 
@@ -47,7 +47,7 @@ namespace Taskter.Tests.Core
 
         }
         [Test]
-        public void NotAcceptsOverOneDayDurationInMinOnCreating()
+        public void Constructor_OverOneDayDurationInMin_ThrowArgumentException()
         {
             ProjectTaskEntry _entry1;
 
@@ -55,13 +55,13 @@ namespace Taskter.Tests.Core
             act.Should().Throw<ArgumentException>();
         }
         [Test]
-        public void NotAcceptsOverOneDayDurationInMinOnSetting()
+        public void DurationInMinSetter_OverOneDayMinutes_ThrowArgumentException()
         {
-            Action act = () => _entry.SetDuratinInMin(2000);
+            Action act = () => _entry.DurationInMin = 2000;
             act.Should().Throw<ArgumentException>();
         }
         [Test]
-        public void NotAcceptsNullParametersForUserIdOnCreating()
+        public void Constructor_ZeroUserId_ThrowArgumentException()
         {
             ProjectTaskEntry _entry1;
 
@@ -69,7 +69,7 @@ namespace Taskter.Tests.Core
             act.Should().Throw<ArgumentException>();
         }
         [Test]
-        public void NotAcceptsNegativeParametersForUserIdOnCreating()
+        public void Constructor_NegativeUserId_ThrowArgumentException()
         {
             ProjectTaskEntry _entry1;
 
@@ -77,7 +77,7 @@ namespace Taskter.Tests.Core
             act.Should().Throw<ArgumentException>();
         }
         [Test]
-        public void NotAcceptsZeroIdForProjectTaskIdOnCreating()
+        public void Constructor_ZeroProjectTaskId_ThrowArgumentException()
         {
             ProjectTaskEntry _entry1;
 
@@ -85,9 +85,9 @@ namespace Taskter.Tests.Core
             act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
         }
         [Test]
-        public void NotAcceptsNegativeParametersForPprojectTaskIdOnSetting()
+        public void ProjectTaskSetter_NegativeValue_ThrowArgumentException()
         {
-            Action act = () => _entry.SetProjectTaskId(-1);
+            Action act = () => _entry.ProjectTaskId = -1;
             act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
 
         }

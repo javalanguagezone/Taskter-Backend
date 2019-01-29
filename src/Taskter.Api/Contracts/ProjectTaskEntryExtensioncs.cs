@@ -33,7 +33,6 @@ namespace Taskter.Api.Contracts
 
         public static ProjectTaskEntry ToEntity( this ProjectTaskEntryInsertDTO pte){
             return new ProjectTaskEntry(pte.UserId, pte.ProjectTaskId, pte.DurationInMin, new DateTime(pte.Year, pte.Month, pte.Day), pte.Note);
-            
         }
     }
 }
