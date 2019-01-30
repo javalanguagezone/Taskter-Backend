@@ -22,7 +22,8 @@ namespace Taskter.Tests.Integration.Api
         }
 
         [Test]
-        public async Task ReturnOnlyOneCurrentUser(){
+        public async Task ReturnOnlyOneCurrentUser()
+        {
 
             var result = await _client.GetCurrentUser();
 
@@ -30,13 +31,5 @@ namespace Taskter.Tests.Integration.Api
             result.FirstName.Should().Be("Nermin");
 
         }
-
-        // [Test]
-        // public  async Task ReturnProjectsOnlyForCurrentUser()
-        // {
-        //     var result = await _client.GetProjectsForCurrentUser();
-            
-
-        // }
     }
 }

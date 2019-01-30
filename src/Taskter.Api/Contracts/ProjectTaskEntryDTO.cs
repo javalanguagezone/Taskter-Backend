@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Taskter.Api.Contracts
 {
-    public class ProjectTaskEntryGetDTO
+    public class ProjectTaskEntryDTO
     {
         public int Id { get; set; }
         public string ProjectName { get; set; }

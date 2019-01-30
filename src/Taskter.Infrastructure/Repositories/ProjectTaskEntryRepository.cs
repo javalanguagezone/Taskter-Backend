@@ -1,35 +1,39 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
 using Taskter.Infrastructure.Data;
 
 namespace Taskter.Infrastructure.Repositories
 {
-    class ProjectTaskEntryRepository: IProjectTaskEntryRepository
+    public class ProjectTaskEntryRepository : IProjectTaskEntryRepository
     {
         private readonly TaskterDbContext _context;
 
         public ProjectTaskEntryRepository(TaskterDbContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
-
-        public IEnumerable<ProjectTaskEntry> GetProjectTaskEntriesByDate(int userId, DateTime date)
+        public async Task<ProjectTaskEntry> AddTimeEntry(ProjectTaskEntry newProjectTaskEntry)
         {
-            return _context.ProjectTaskEntres.Where((pr => pr.Id == userId)).Where(p=>p.Date==date);
-
-        }
-
-        public ProjectTaskEntry AddTimeEntry(ProjectTaskEntry newProjectTaskEntry){
-            _context.Add(newProjectTaskEntry);
-            _context.SaveChanges();
+            await _context.AddAsync(newProjectTaskEntry);
+            await _context.SaveChangesAsync();
 
             return newProjectTaskEntry;
         }
+
+        public async Task<IEnumerable<ProjectTaskEntry>> GetProjectTaskEntriesByDate(int userId, int year, int month, int day)
+        {
+            return await _context.ProjectTaskEntries.Where(pr => pr.UserId == userId)
+            .Where(p => p.Date.Year == year && p.Date.Month == month && p.Date.Day == day)
+            .Include(pt => pt.ProjectTask).ThenInclude(pr => pr.Project)
+            .ThenInclude(c => c.Client).ToListAsync();;
+        }
+
     }
 }

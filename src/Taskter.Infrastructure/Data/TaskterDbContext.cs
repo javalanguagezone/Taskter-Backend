@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Taskter.Core.Entities;
 
 namespace Taskter.Infrastructure.Data
@@ -10,88 +11,30 @@ namespace Taskter.Infrastructure.Data
 
         }
 
-        public DbSet<Project> Projects { get; set;}
-        public DbSet<ProjectTask> ProjectTasks {get; set;}
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectTask> ProjectTasks { get; set; }
 
-        public DbSet<User> Users {get;set;}
-        public DbSet<Client> Clients {get; set;}
+        public DbSet<User> Users { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Dummy> Dummies { get; set; }
+        public DbSet<UserProject> UsersProjects { get; set; }
 
-        public DbSet<UserProject> UsersProjects {get; set;}
-
-        public DbSet<ProjectTaskEntry> ProjectTaskEntres { get; set; }
+        public DbSet<ProjectTaskEntry> ProjectTaskEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Client
-            //Name
-            modelBuilder.Entity<Client>().Property(c => c.Name).IsRequired();
-            
 
-            //Project
-                //Name
-            modelBuilder.Entity<Project>().Property(p => p.Name).IsRequired();
-                //Code
-            modelBuilder.Entity<Project>().Property(p => p.Code).HasMaxLength(15);
-            //Client relationship
-            modelBuilder.Entity<Project>();
-            
-                 
-            //ProjectTask
-                //Name
-            modelBuilder.Entity<ProjectTask>().Property(pt => pt.Name).IsRequired();
-                //Billable
-            modelBuilder.Entity<ProjectTask>().Property(pt => pt.Billable).IsRequired();
-                   
-        
-
-            //User
-                //Username
-            modelBuilder.Entity<User>().Property(u => u.UserName).IsRequired();
-                //Role
-            modelBuilder.Entity<User>().Property(u => u.Role).IsRequired();
-                //AvatarURL
-            modelBuilder.Entity<User>().Property(u => u.AvatarURL).IsRequired();
-
-
-            //ProjecTaskEntry
-            modelBuilder.Entity<ProjectTaskEntry>().Property(p => p.DurationInMin).IsRequired();
-            modelBuilder.Entity<ProjectTaskEntry>().Property(p => p.Date).IsRequired();
-            modelBuilder.Entity<ProjectTaskEntry>().HasKey(p => p.Id);
-
-            modelBuilder.Entity<ProjectTaskEntry>()
-                       .HasKey(up => up.Id);
-
-            modelBuilder.Entity<ProjectTaskEntry>()
-                        .HasOne(up => up.ProjectTask)
-                        .WithMany(u => u.ProjectsTaskEntries)
-                        .HasForeignKey(up => up.ProjectTaskId);
-
-            modelBuilder.Entity<ProjectTaskEntry>()
-                        .HasOne(up => up.User)
-                        .WithMany(p => p.UsersProjectsTaskEntries)
-                        .HasForeignKey(up => up.UserId);
-
-
-
-            //UserProject
-            modelBuilder.Entity<UserProject>()
-                        .HasKey(up => new { up.UserId, up.ProjectId});
-            
-            modelBuilder.Entity<UserProject>()
-                        .HasOne(up => up.User)
-                        .WithMany(u => u.UsersProjects)
-                        .HasForeignKey(up => up.UserId);
-            
-            modelBuilder.Entity<UserProject>()
-                        .HasOne(up => up.Project)
-                        .WithMany(p => p.UsersProjects)
-                        .HasForeignKey(up => up.ProjectId);
-
+            UserMapper.AddUserMapping(modelBuilder);
+            ClientMapper.AddClientMapping(modelBuilder);
+            ProjectMapper.AddProjectMapping(modelBuilder);
+            ProjectTaskEntryMapper.AddProjectTaskEntryMapping(modelBuilder);
+            ProjectTaskMapper.AddProjectTask(modelBuilder);
+            UserProjectMapper.AddUserProjectMapping(modelBuilder);
 
             ModelBuilderExtensions.Seed(modelBuilder);
 
         }
 
-        
+
     }
 }

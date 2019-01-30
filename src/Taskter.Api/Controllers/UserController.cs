@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Taskter.Api.Contracts;
 using Taskter.Core.Entities;
@@ -8,9 +9,9 @@ using Taskter.Core.Interfaces;
 
 namespace Taskter.Api.Controllers
 {
-    [Route("/api/users")]
+    [Route("api/users")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : ApplicationControllerBase
     {
         private readonly IUserRepository _repository;
 
@@ -20,26 +21,10 @@ namespace Taskter.Api.Controllers
         }
         [Route("current")]
         [HttpGet]
-        public ActionResult<UserGetDTO> GetCurrentUser() 
+        public async Task<ActionResult<UserDTO>> GetUser() 
         {
-            User currentUser = _repository.GetCurrentUser();
+            User currentUser = await _repository.GetUser(this.UserID);
             return Ok(currentUser.ToDTO());
-        }
-
-        [Route("current/projects")]
-        [HttpGet]
-        public ActionResult<IEnumerable<ProjectGetDTO>> GetProjectsForCurrentUser()
-        {
-            var projectsRepo = _repository.GetProjectsForCurrentUser();
-            return Ok(projectsRepo.ToDTOList());
-        }
-
-        [Route("current/entries/{year}/{month}/{day}")]
-        [HttpGet]
-        public ActionResult<IEnumerable<ProjectTaskEntryGetDTO>> GetProjectTaskEntriesByDate(int year, int month, int day)
-        {
-            var projectTasksRepo = _repository.GetProjectTaskEntriesByDate(year,month, day);
-            return Ok(projectTasksRepo.ToDTOList());
         }
     }
 }

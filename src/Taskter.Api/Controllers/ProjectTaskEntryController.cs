@@ -8,22 +8,30 @@ using Taskter.Core.Interfaces;
 
 namespace Taskter.Api.Controllers
 {
+   
     [ApiController]
-    public class ProjectTaskEntryController: ControllerBase
+    public class ProjectTaskEntryController: ApplicationControllerBase
     {
         private readonly IProjectTaskEntryRepository _repository;
         public ProjectTaskEntryController(IProjectTaskEntryRepository repository)
         {
             _repository = repository;
         }
-
         [Route("api/entries")]
         [HttpPost]
-        public ActionResult PostProjectTaskEntry(ProjectTaskEntryInsertDTO entry){
+        public async Task<ActionResult> PostProjectTaskEntry(ProjectTaskEntryInsertDTO entry){
 
-            _repository.AddTimeEntry(entry.ToEntity());
+            await _repository.AddTimeEntry(entry.ToEntity());
 
             return NoContent();
+        }
+
+        [Route("api/users/current/entries/{year}/{month}/{day}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProjectTaskEntryDTO>>> GetProjectTaskEntriesByDate(int year, int month, int day)
+        {
+            var projectTasksRepo = await _repository.GetProjectTaskEntriesByDate(this.UserID,year,month, day);
+            return Ok(projectTasksRepo.ToDTOList());
         }
     }
 }
