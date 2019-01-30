@@ -7,6 +7,7 @@ namespace Taskter.Api.Contracts
 {
     public class ProjectTaskEntryDTO
     {
+        public int Id { get; set; }
         public string ProjectName { get; set; }
         public string ProjectCode { get; set; }
         public string ProjectTask { get; set; }
