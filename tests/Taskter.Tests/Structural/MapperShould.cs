@@ -18,13 +18,13 @@ namespace Taskter.Tests.Structural
         public void SetUp()
         {
             new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureServices(services =>
                 {
-                    builder.ConfigureServices(services =>
-                    {
-                        services.AddAutoMapper();
-                        _mapper = services.BuildServiceProvider().GetService<IMapper>();
-                    });
-                }).CreateClient();
+                    services.AddAutoMapper();
+                    _mapper = services.BuildServiceProvider().GetService<IMapper>();
+                });
+            }).CreateClient();
         }
 
         [Test]

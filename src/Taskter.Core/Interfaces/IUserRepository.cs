@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
 
@@ -5,6 +8,6 @@ namespace Taskter.Core.Interfaces
 {
     public interface IUserRepository: IRepository<User>
     {
-        User GetCurrentUser();
+        Task<User> GetUser(int userId);
     }
 }

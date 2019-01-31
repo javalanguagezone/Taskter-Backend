@@ -3,7 +3,7 @@ using Taskter.Core.Entities;
 
 namespace Taskter.Core.Interfaces
 {
-    public interface IDummyRepository: IRepository<Dummy>
+    public interface IDummyRepository : IRepository<Dummy>
     {
         IEnumerable<Dummy> GetAll();
         Dummy GetById(int id);

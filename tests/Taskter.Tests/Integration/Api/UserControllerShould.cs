@@ -22,12 +22,13 @@ namespace Taskter.Tests.Integration.Api
         }
 
         [Test]
-        public async Task ReturnOnlyOneCurrentUser(){
+        public async Task ReturnOnlyOneCurrentUser()
+        {
 
             var result = await _client.GetCurrentUser();
 
             result.Should().NotBeNull();
-            result.FirstName.Should().Be("Dejan");
+            result.FirstName.Should().Be("Nermin");
 
         }
     }
