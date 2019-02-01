@@ -22,7 +22,7 @@ namespace Taskter.Tests.Integration.Api
         }
 
         [Test]
-        public async Task ReturnOnlyOneCurrentUser()
+        public async Task GetCurrentUser_ReturnsCurrentlyLoggedInUser()
         {
 
             var result = await _client.GetCurrentUser();

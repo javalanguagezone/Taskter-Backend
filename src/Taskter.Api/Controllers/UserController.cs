@@ -21,7 +21,7 @@ namespace Taskter.Api.Controllers
         }
         [Route("current")]
         [HttpGet]
-        public async Task<ActionResult<UserDTO>> GetUser() 
+        public async Task<ActionResult<UserDTO>> GetCurrentUser() 
         {
             User currentUser = await _repository.GetUser(this.UserID);
             return Ok(currentUser.ToDTO());

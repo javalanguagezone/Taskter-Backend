@@ -119,7 +119,7 @@ namespace Taskter.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProjectTaskEntres",
+                name: "ProjectTaskEntries",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -132,15 +132,15 @@ namespace Taskter.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectTaskEntres", x => x.Id);
+                    table.PrimaryKey("PK_ProjectTaskEntries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProjectTaskEntres_ProjectTasks_ProjectTaskId",
+                        name: "FK_ProjectTaskEntries_ProjectTasks_ProjectTaskId",
                         column: x => x.ProjectTaskId,
                         principalTable: "ProjectTasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProjectTaskEntres_Users_UserId",
+                        name: "FK_ProjectTaskEntries_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -197,7 +197,7 @@ namespace Taskter.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ProjectTaskEntres",
+                table: "ProjectTaskEntries",
                 columns: new[] { "Id", "Date", "DurationInMin", "Note", "ProjectTaskId", "UserId" },
                 values: new object[,]
                 {
@@ -213,13 +213,13 @@ namespace Taskter.Infrastructure.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectTaskEntres_ProjectTaskId",
-                table: "ProjectTaskEntres",
+                name: "IX_ProjectTaskEntries_ProjectTaskId",
+                table: "ProjectTaskEntries",
                 column: "ProjectTaskId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectTaskEntres_UserId",
-                table: "ProjectTaskEntres",
+                name: "IX_ProjectTaskEntries_UserId",
+                table: "ProjectTaskEntries",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -239,7 +239,7 @@ namespace Taskter.Infrastructure.Migrations
                 name: "Dummies");
 
             migrationBuilder.DropTable(
-                name: "ProjectTaskEntres");
+                name: "ProjectTaskEntries");
 
             migrationBuilder.DropTable(
                 name: "UsersProjects");
