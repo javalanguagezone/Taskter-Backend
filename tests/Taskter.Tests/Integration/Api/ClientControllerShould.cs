@@ -11,7 +11,7 @@ using Taskter.Tests.Helpers.Factories;
 namespace Taskter.Tests.Integration.Api
 {
     [TestFixture]
-    public class UserControllerShould
+    public class ClientControllerShould
     {
         private HttpClient _client;
 
@@ -21,20 +21,9 @@ namespace Taskter.Tests.Integration.Api
             _client = new IntegrationWebApplicationFactory<Startup>().CreateClient();
         }
 
-        [Test]
-        public async Task ReturnOnlyOneCurrentUser()
+        public async Task ReturnNonEmptyListWhenReturningAllClients()
         {
-
-            var result = await _client.GetCurrentUser();
-
-            result.Should().NotBeNull();
-            result.FirstName.Should().Be("Nermin");
-
-        }
-
-        public async Task ReturnNonEmptyListWhenReturningAllUsers()
-        {
-            var result = await _client.GetAllUsers();
+            var result = await _client.GetAllClients();
 
             result.Should().NotBeNull();
         }

@@ -21,5 +21,14 @@ namespace Taskter.Tests.Helpers.Extensions
             return result;
         }
 
+        public static async Task<IEnumerable<User>> GetAllUsers(this HttpClient client)
+        {
+            var response = await client.GetAsync("/api/users");
+            response.EnsureSuccessStatusCode();
+            var jsonResponse =await response.Content.ReadAsStringAsync();
+
+            var result = JsonConvert.DeserializeObject<IEnumerable<User>>(jsonResponse);
+            return result;
+        }
     }
 }
