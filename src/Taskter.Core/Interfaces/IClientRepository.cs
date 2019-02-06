@@ -6,9 +6,8 @@ using Taskter.Core.Interfaces;
 
 namespace Taskter.Core.Interfaces
 {
-    public interface IUserRepository: IRepository<User>
+    public interface IClientRepository: IRepository<Client>
     {
-        Task<User> GetUser(int userId);
-        Task<IEnumerable<User>> GetAllUsers();
+        Task<IEnumerable<Client>> GetAllClients();
     }
 }

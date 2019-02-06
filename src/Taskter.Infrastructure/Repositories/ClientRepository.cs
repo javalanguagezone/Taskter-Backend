@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Taskter.Core.Entities;
@@ -8,23 +7,16 @@ using Taskter.Infrastructure.Data;
 
 namespace Taskter.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    class ClientRepository:IClientRepository
     {
-
         private readonly TaskterDbContext _context;
-        public UserRepository(TaskterDbContext context)
+        public ClientRepository (TaskterDbContext context)
         {
             _context = context;
         }
-        public async Task<User> GetUser(int userId)
+        public async Task<IEnumerable<Client>> GetAllClients()
         {
-            return await _context.Users.FindAsync(userId);
+            return await _context.Clients.ToListAsync();
         }
-
-        public async Task<IEnumerable<User>> GetAllUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
-
     }
 }
