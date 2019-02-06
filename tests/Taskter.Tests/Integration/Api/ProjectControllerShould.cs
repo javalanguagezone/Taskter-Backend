@@ -57,7 +57,16 @@ namespace Taskter.Tests.Integration.Api
                 new Project("test project 1", 1, null) {Id = 10},
                 new Project("test project 2", 1, null) {Id = 11}
             };
+
+            var seedProjectsTaskList = new List<ProjectTask>()
+            {
+                new ProjectTask("testTask1",10,false) {Id =20},
+                new ProjectTask("testTask2",10,false) {Id =21},
+                new ProjectTask("testTask1",11,false) {Id =22},
+                new ProjectTask("testTask2",11,false) {Id =23}
+            };
             _dbContext.Projects.AddRange(seedProjectsList);
+            _dbContext.ProjectTasks.AddRange(seedProjectsTaskList);
             //seed userProjects
             _dbContext.UsersProjects.Add(new UserProject(3, 10));
             _dbContext.UsersProjects.Add(new UserProject(3, 11));
