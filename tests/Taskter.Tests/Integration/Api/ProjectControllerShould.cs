@@ -24,7 +24,7 @@ namespace Taskter.Tests.Integration.Api
         private TaskterDbContext _dbContext;
 
         [Test]
-        public async Task GetProjectsForCurrentUser_SeededTwoProjectsInTest_ReturnsAListOfThoseTwoSeededProjects()
+        public async Task GetProjectsForCurrentUser_AssignedTwoProjects_ReturnsAListOfTwoAssignedProjects()
         {
             //refaktor u helper extenziju
             _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
