@@ -14,6 +14,7 @@ using Taskter.Infrastructure.Data;
 using Taskter.Infrastructure.Repositories;
 using Taskter.Infrastructure.UserContext;
 using Taskter.Tests.Helpers.Extensions;
+using Microsoft.AspNetCore.TestHost;
 
 namespace Taskter.Tests.Integration.Api
 {
@@ -23,8 +24,6 @@ namespace Taskter.Tests.Integration.Api
         private HttpClient _client;
         private ICurrentUserContext _currentUserContext;
         private TaskterDbContext _dbContext;
-        private ProjectRepository _projectsRepo;
-        private ServiceProvider _sp;
 
         [SetUp]
         public void SetUp()
@@ -37,19 +36,15 @@ namespace Taskter.Tests.Integration.Api
             //refaktor u helper extenziju
             _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
             {
-                builder.ConfigureServices(services =>
+                builder.ConfigureTestServices(services =>
                 {
-                    _sp = services.BuildServiceProvider();
                     var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
                     services.Remove(serviceDesc);
-                    serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(IProjectRepository));
-                    services.Remove(serviceDesc);
-                    _dbContext = _sp.GetRequiredService<TaskterDbContext>();
-
                     _currentUserContext = new CurrentUserContext() { UserId = 3 };
                     services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
-                    _projectsRepo = new ProjectRepository(_dbContext, _currentUserContext);
-                    services.AddScoped<IProjectRepository>(x=> _projectsRepo);
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+
                 });
             }).CreateClient();
             //
