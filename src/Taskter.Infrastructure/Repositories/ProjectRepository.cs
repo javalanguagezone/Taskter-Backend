@@ -6,20 +6,24 @@ using Microsoft.EntityFrameworkCore;
 using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
 using Taskter.Infrastructure.Data;
+using Taskter.Infrastructure.UserContext;
 
 namespace Taskter.Infrastructure.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
         private readonly TaskterDbContext _context;
+        private ICurrentUserContext _currentUserContext;
 
-        public ProjectRepository(TaskterDbContext context)
+
+        public ProjectRepository(TaskterDbContext context, ICurrentUserContext currentUserContext) 
         {
             _context = context;
+            _currentUserContext = currentUserContext;
         }
-        public IEnumerable<Project> GetAllProjectsForUser(int userId)
+        public IEnumerable<Project> GetAllProjectsForCurrentUser()
         {
-            var USER_PROJECTS = _context.UsersProjects.Where(up => up.UserId == userId)
+            var USER_PROJECTS = _context.UsersProjects.Where(up => up.UserId == _currentUserContext.UserId)
             .Select(up => up.Project)
             .Include(s => s.Client).Include(s => s.Tasks).ToList();
 

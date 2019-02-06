@@ -21,7 +21,7 @@ namespace Taskter.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ProjectDTO>> GetProjectsForCurrentUser()
         {
-            var projectsRepo = _repository.GetAllProjectsForUser(this.UserID);
+            var projectsRepo = _repository.GetAllProjectsForCurrentUser();
             return Ok(projectsRepo.ToDTOList());
         }
     }
