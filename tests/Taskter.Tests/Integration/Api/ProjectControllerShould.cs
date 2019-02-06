@@ -15,6 +15,7 @@ using Taskter.Infrastructure.Repositories;
 using Taskter.Infrastructure.UserContext;
 using Taskter.Tests.Helpers.Extensions;
 using Microsoft.AspNetCore.TestHost;
+using System;
 
 namespace Taskter.Tests.Integration.Api
 {
@@ -74,7 +75,15 @@ namespace Taskter.Tests.Integration.Api
             //test
             _currentUserContext.UserId.Should().Be(3);
             var result = await _client.GetProjectsForCurrentUser();
-            var seedsDTO = seedProjectsList.ToDTOList();
+            IEnumerable<ProjectDTO> seedsDTO = new List<ProjectDTO>();
+            try
+            {
+                seedsDTO = seedProjectsList.ToDTOList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             result.Should().BeEquivalentTo(seedsDTO);
             var hw = "hw";
         }
