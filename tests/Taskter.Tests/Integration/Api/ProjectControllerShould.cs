@@ -71,5 +71,29 @@ namespace Taskter.Tests.Integration.Api
             var seedsDto = seedProjectsList.ToDTOList();
             result.Should().BeEquivalentTo(seedsDto);
         }
+
+        [Test]
+        public async Task GetProjectsForCurrentUser_Assigned0Projects_ReturnsEmptyListAssignedProjects()
+        {
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
+                    services.Remove(serviceDesc);
+                    _currentUserContext = new CurrentUserContext() { UserId = 4 };
+                    services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+                });
+            }).CreateClient();
+
+            _dbContext.Users.Add(new User("test2", "test 2", "test lastName", "admin", "http://google.com")
+            { Id = _currentUserContext.UserId });
+            _dbContext.SaveChanges();
+            var result = await _client.GetProjectsForCurrentUser();
+
+            result.Count.Should().Be(0);
+        }
     }
 }

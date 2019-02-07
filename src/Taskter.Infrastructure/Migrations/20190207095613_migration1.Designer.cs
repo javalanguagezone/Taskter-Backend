@@ -10,8 +10,8 @@ using Taskter.Infrastructure.Data;
 namespace Taskter.Infrastructure.Migrations
 {
     [DbContext(typeof(TaskterDbContext))]
-    [Migration("20190128213040_testNewFields")]
-    partial class testNewFields
+    [Migration("20190207095613_migration1")]
+    partial class migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -194,13 +194,13 @@ namespace Taskter.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProjectTaskEntres");
+                    b.ToTable("ProjectTaskEntries");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2019, 1, 28, 22, 30, 40, 265, DateTimeKind.Local).AddTicks(8704),
+                            Date = new DateTime(2019, 2, 7, 10, 56, 12, 308, DateTimeKind.Local).AddTicks(5387),
                             DurationInMin = 30,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 1,
@@ -209,7 +209,7 @@ namespace Taskter.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5565),
+                            Date = new DateTime(2019, 2, 7, 10, 56, 12, 314, DateTimeKind.Local).AddTicks(8160),
                             DurationInMin = 90,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 2,
@@ -218,7 +218,7 @@ namespace Taskter.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5613),
+                            Date = new DateTime(2019, 2, 7, 10, 56, 12, 314, DateTimeKind.Local).AddTicks(8306),
                             DurationInMin = 60,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 3,
@@ -227,7 +227,7 @@ namespace Taskter.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5620),
+                            Date = new DateTime(2019, 2, 7, 10, 56, 12, 314, DateTimeKind.Local).AddTicks(8325),
                             DurationInMin = 90,
                             Note = " Lorem ipsum dolor sit amet",
                             ProjectTaskId = 4,

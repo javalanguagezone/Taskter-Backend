@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Taskter.Infrastructure.Migrations
 {
-    public partial class testNewFields : Migration
+    public partial class migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -201,10 +201,10 @@ namespace Taskter.Infrastructure.Migrations
                 columns: new[] { "Id", "Date", "DurationInMin", "Note", "ProjectTaskId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 1, 28, 22, 30, 40, 265, DateTimeKind.Local).AddTicks(8704), 30, " Lorem ipsum dolor sit amet", 1, 1 },
-                    { 2, new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5565), 90, " Lorem ipsum dolor sit amet", 2, 1 },
-                    { 3, new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5613), 60, " Lorem ipsum dolor sit amet", 3, 1 },
-                    { 4, new DateTime(2019, 1, 28, 22, 30, 40, 270, DateTimeKind.Local).AddTicks(5620), 90, " Lorem ipsum dolor sit amet", 4, 1 }
+                    { 1, new DateTime(2019, 2, 7, 10, 56, 12, 308, DateTimeKind.Local).AddTicks(5387), 30, " Lorem ipsum dolor sit amet", 1, 1 },
+                    { 2, new DateTime(2019, 2, 7, 10, 56, 12, 314, DateTimeKind.Local).AddTicks(8160), 90, " Lorem ipsum dolor sit amet", 2, 1 },
+                    { 3, new DateTime(2019, 2, 7, 10, 56, 12, 314, DateTimeKind.Local).AddTicks(8306), 60, " Lorem ipsum dolor sit amet", 3, 1 },
+                    { 4, new DateTime(2019, 2, 7, 10, 56, 12, 314, DateTimeKind.Local).AddTicks(8325), 90, " Lorem ipsum dolor sit amet", 4, 1 }
                 });
 
             migrationBuilder.CreateIndex(
