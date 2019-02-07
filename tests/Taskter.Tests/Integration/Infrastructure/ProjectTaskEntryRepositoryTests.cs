@@ -1,12 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Taskter.Api;
-using Taskter.Tests.Helpers;
 using Taskter.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Taskter.Infrastructure.Repositories;

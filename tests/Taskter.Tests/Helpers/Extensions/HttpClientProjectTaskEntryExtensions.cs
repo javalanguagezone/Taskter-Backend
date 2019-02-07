@@ -23,26 +23,11 @@ namespace Taskter.Tests.Helpers.Extensions
                 Month = model.Date.Month,
                 Year = model.Date.Year,
                 Note = model.Note
-
             };
            
             var response = await client.PostAsJsonAsync("api/entries", insertModel);
             response.EnsureSuccessStatusCode();
         }
-
-        public static async Task<List<ProjectTaskEntry>> GetTodaysEntries(this HttpClient client)
-        {
-            var today = new DateTime();
-
-            var response = await client.GetAsync("api/users/current/entries/{" + today.Year.ToString() + "}/{" +
-                today.Month.ToString() + "}/{" + today.Day.ToString() + "}");
-
-            response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<ProjectTaskEntry>>(jsonResponse).ToList();
-            return result;
-       } 
-
         public static async Task<List<ProjectTaskEntryDTO>> GetProjectTaskEntriesByDate(this HttpClient client, int year, int month, int day)
         {
             var response = await client.GetAsync($"/api/users/current/entries/{year}/{month}/{day}");

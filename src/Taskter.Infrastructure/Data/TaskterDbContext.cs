@@ -16,14 +16,12 @@ namespace Taskter.Infrastructure.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Dummy> Dummies { get; set; }
         public DbSet<UserProject> UsersProjects { get; set; }
 
         public DbSet<ProjectTaskEntry> ProjectTaskEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             UserMapper.AddUserMapping(modelBuilder);
             ClientMapper.AddClientMapping(modelBuilder);
             ProjectMapper.AddProjectMapping(modelBuilder);
@@ -32,9 +30,6 @@ namespace Taskter.Infrastructure.Data
             UserProjectMapper.AddUserProjectMapping(modelBuilder);
 
             ModelBuilderExtensions.Seed(modelBuilder);
-
         }
-
-
     }
 }

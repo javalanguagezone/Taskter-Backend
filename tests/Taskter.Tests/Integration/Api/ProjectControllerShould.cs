@@ -26,7 +26,6 @@ namespace Taskter.Tests.Integration.Api
         [Test]
         public async Task GetProjectsForCurrentUser_AssignedTwoProjects_ReturnsAListOfTwoAssignedProjects()
         {
-            //refaktor u helper extenziju
             _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
             {
                 builder.ConfigureTestServices(services =>
@@ -39,14 +38,11 @@ namespace Taskter.Tests.Integration.Api
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();
                 });
             }).CreateClient();
-            //
-            //seed user
+    
             _dbContext.Users.Add(new User("test1", "test 1", "test lastName", "admin", "http://google.com")
             { Id = _currentUserContext.UserId });
-            //seed client
             var clientSeed = new Client("testClient") { Id = 20 };
             _dbContext.Clients.Add(clientSeed);
-            //seed projects
             var seedProjectsList = new List<Project>()
             {
                 new Project("test project 1", 20, null) {Id = 10, Client = clientSeed},
@@ -62,11 +58,10 @@ namespace Taskter.Tests.Integration.Api
             };
             _dbContext.Projects.AddRange(seedProjectsList);
             _dbContext.ProjectTasks.AddRange(seedProjectsTaskList);
-            //seed userProjects
             _dbContext.UsersProjects.Add(new UserProject(3, 10));
             _dbContext.UsersProjects.Add(new UserProject(3, 11));
             _dbContext.SaveChanges();
-            //test
+
             var result = await _client.GetProjectsForCurrentUser();
             var seedsDto = seedProjectsList.ToDTOList();
             result.Should().BeEquivalentTo(seedsDto);
@@ -91,8 +86,8 @@ namespace Taskter.Tests.Integration.Api
             _dbContext.Users.Add(new User("test2", "test 2", "test lastName", "admin", "http://google.com")
             { Id = _currentUserContext.UserId });
             _dbContext.SaveChanges();
-            var result = await _client.GetProjectsForCurrentUser();
 
+            var result = await _client.GetProjectsForCurrentUser();
             result.Count.Should().Be(0);
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Taskter.Core.SharedKernel;
+﻿using Taskter.Core.SharedKernel;
 
 namespace Taskter.Core.Interfaces
 {
