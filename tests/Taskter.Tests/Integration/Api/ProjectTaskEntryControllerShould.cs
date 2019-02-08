@@ -64,7 +64,7 @@ namespace Taskter.Tests.Integration.Api
             _dbContext.ProjectTaskEntries.AddRange(seedProjectsTaskEntryList);
             _dbContext.SaveChanges();
 
-            var result = await _client.GetProjectTaskEntriesByDate(2019, 2, 7);
+            var result = await _client.GetProjectTaskEntriesByDate(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             var seedsDto = seedProjectsTaskEntryList.ToDTOList();
             result.Should().BeEquivalentTo(seedsDto);
         }
