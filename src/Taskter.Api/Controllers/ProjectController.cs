@@ -24,5 +24,13 @@ namespace Taskter.Api.Controllers
             var projectsRepo = _repository.GetAllProjectsForUser(this.UserID);
             return Ok(projectsRepo.ToDTOList());
         }
+
+        [Route("/api/project")]
+        [HttpPost]
+        public ActionResult postNewProject(ProjectInsertDTO project)
+        {
+            project.getClient();
+            return Ok();
+        }
     }
 }
