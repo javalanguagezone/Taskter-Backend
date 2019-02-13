@@ -13,12 +13,11 @@ namespace Taskter.Api.Controllers
     {
     
         private readonly IProjectRepository _repository;
-        private readonly IClientRepository _clientRepository;
         private readonly IUserProjectRepository _userProjectRepository;
+
         public ProjectController(IProjectRepository repository, IClientRepository clientRepository, IUserProjectRepository userProjectRepository)
         {
             _repository = repository;
-            _clientRepository = clientRepository;
             _userProjectRepository = userProjectRepository;
         }
         [Route("/api/users/current/projects")]
@@ -33,8 +32,7 @@ namespace Taskter.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> PostNewProject(ProjectInsertDTO project)
         {
-            var clientId = await _clientRepository.StoreNewClient(project.client.name);
-            var projectId = await _repository.StoreNewProject(new Core.Entities.Project(project.projectName, clientId, project.projectCode));
+            var projectId = await _repository.StoreNewProject(ProjectExtensions.ToEntity(project));
             _userProjectRepository.InsertUserProjects(projectId, project.userIds);
             return Ok();
         }

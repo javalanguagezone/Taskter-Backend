@@ -13,8 +13,11 @@ namespace Taskter.Infrastructure.Shared
             services.AddScoped<IProjectTaskEntryRepository, ProjectTaskEntryRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IUserProjectRepository, UserProjectRepository>();
 
             services.AddTransient<ICurrentUserContext, CurrentUserContext>();
+
+
         }
     }
 }
