@@ -18,5 +18,13 @@ namespace Taskter.Infrastructure.Repositories
         {
             return await _context.Clients.ToListAsync();
         }
+
+        public async Task<int> StoreNewClient(string name)
+        {
+            var cl = await _context.Clients.AddAsync(new Client(name));
+            _context.SaveChanges();
+
+            return cl.Entity.Id;
+        }
     }
 }

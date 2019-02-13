@@ -10,5 +10,6 @@ namespace Taskter.Core.Interfaces
     {
         Task<User> GetUser(int userId);
         Task<IEnumerable<User>> GetAllUsers();
+
     }
 }

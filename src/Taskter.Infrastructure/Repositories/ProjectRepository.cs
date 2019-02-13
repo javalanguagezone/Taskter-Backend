@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
@@ -26,5 +27,12 @@ namespace Taskter.Infrastructure.Repositories
             return USER_PROJECTS;
         }
 
+        public async Task<int> StoreNewProject(Project project)
+        {
+            var proj = await _context.Projects.AddAsync(project);
+            _context.SaveChanges();
+
+            return proj.Entity.Id;
+        }
     }
 }

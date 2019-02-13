@@ -13,9 +13,13 @@ namespace Taskter.Api.Controllers
     {
     
         private readonly IProjectRepository _repository;
-        public ProjectController(IProjectRepository repository)
+        private readonly IClientRepository _clientRepository;
+        private readonly IUserProjectRepository _userProjectRepository;
+        public ProjectController(IProjectRepository repository, IClientRepository clientRepository, IUserProjectRepository userProjectRepository)
         {
             _repository = repository;
+            _clientRepository = clientRepository;
+            _userProjectRepository = userProjectRepository;
         }
         [Route("/api/users/current/projects")]
         [HttpGet]
@@ -24,12 +28,14 @@ namespace Taskter.Api.Controllers
             var projectsRepo = _repository.GetAllProjectsForUser(this.UserID);
             return Ok(projectsRepo.ToDTOList());
         }
-
+        
         [Route("/api/project")]
         [HttpPost]
-        public ActionResult postNewProject(ProjectInsertDTO project)
+        public async Task<ActionResult> PostNewProject(ProjectInsertDTO project)
         {
-            project.getClient();
+            var clientId = await _clientRepository.StoreNewClient(project.client.name);
+            var projectId = await _repository.StoreNewProject(new Core.Entities.Project(project.projectName, clientId, project.projectCode));
+            _userProjectRepository.InsertUserProjects(projectId, project.userIds);
             return Ok();
         }
     }
