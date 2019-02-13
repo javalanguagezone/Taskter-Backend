@@ -8,5 +8,7 @@ namespace Taskter.Core.Interfaces
     {
         Task<ProjectTaskEntry> AddTimeEntry(ProjectTaskEntry newProjectTaskEntry);
         Task<IEnumerable<ProjectTaskEntry>> GetProjectTaskEntriesForCurrentUserByDate( int year, int month, int day);
+        Task<ProjectTaskEntry> GetProjectTaskEntryByIdAsync(int id);
+        void UpdateTaskEntry(ProjectTaskEntry projectTaskEntry);
     }
 }

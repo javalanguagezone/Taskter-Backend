@@ -33,5 +33,42 @@ namespace Taskter.Api.Controllers
             var projectTasksRepo = await _repository.GetProjectTaskEntriesForCurrentUserByDate(year, month, day);
             return Ok(projectTasksRepo.ToDTOList());
         }
+
+        [Route("api/users/current/entries/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProjectTaskEntryUpdateDTO>>> GetProjectTaskEntryByIdAsync(int id)
+        {
+            var projectTasksRepo = await _repository.GetProjectTaskEntryByIdAsync(id);
+            return Ok(projectTasksRepo.ToUpdateDTO());
+        }
+
+
+
+        [Route("api/users/current/entries")]
+        [HttpPut]
+        public async Task<ActionResult> UpdateTaskEntry(ProjectTaskEntryUpdateDTO editEntry)
+        {
+
+            var entry = await _repository.GetProjectTaskEntryByIdAsync(editEntry.Id);
+
+            if (entry == null)
+            {
+                return NotFound();
+            }
+
+
+
+
+            entry.DurationInMin = editEntry.durationInMin;
+            entry.Note = editEntry.Note;
+            entry.ProjectTaskId = editEntry.ProjectTaskId;
+
+
+            _repository.UpdateTaskEntry(entry);
+
+            return NoContent();
+
+
+        }
     }
 }

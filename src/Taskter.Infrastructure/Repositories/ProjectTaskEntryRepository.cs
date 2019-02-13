@@ -36,5 +36,17 @@ namespace Taskter.Infrastructure.Repositories
               .ThenInclude(c => c.Client).ToListAsync();
             return entries;
         }
+        public async Task<ProjectTaskEntry> GetProjectTaskEntryByIdAsync(int id)
+        {
+            return await _context.ProjectTaskEntries
+            .Where(x => x.Id == id)
+            .Include(pt => pt.ProjectTask)
+            .FirstOrDefaultAsync();
+        }
+
+        public void UpdateTaskEntry(ProjectTaskEntry projectTaskEntry)
+        {
+            _context.SaveChanges();
+        }
     }
 }
