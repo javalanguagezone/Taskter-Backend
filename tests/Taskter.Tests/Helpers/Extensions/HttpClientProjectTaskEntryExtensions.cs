@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Taskter.Tests.Helpers.Extensions
                 Year = model.Date.Year,
                 Note = model.Note
             };
-           
+
             var response = await client.PostAsJsonAsync("api/entries", insertModel);
             response.EnsureSuccessStatusCode();
         }
@@ -36,6 +37,29 @@ namespace Taskter.Tests.Helpers.Extensions
             var jsonResponse = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<ProjectTaskEntryDTO>>(jsonResponse).ToList();
             return result;
+        }
+
+        public static async Task<ProjectTaskEntryUpdateDTO> GetProjectTaskEntriesByIdAsync(this HttpClient client, int id)
+        {
+            var response = await client.GetAsync($"/api/users/current/entries/{id}");
+
+            response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ProjectTaskEntryUpdateDTO>(jsonResponse);
+            return result;
+        }
+
+
+
+        public static async  Task<HttpResponseMessage> UpdateTaskEntry(this HttpClient client, ProjectTaskEntryUpdateDTO entry)
+        {
+            var payload = JsonConvert.SerializeObject(entry);
+            var httpContent = new StringContent(payload, Encoding.UTF8, "application/json");
+            var response = await client.PutAsync("/api/users/current/entries", httpContent);
+
+            response.EnsureSuccessStatusCode();
+           
+            return response;
         }
     }
 }

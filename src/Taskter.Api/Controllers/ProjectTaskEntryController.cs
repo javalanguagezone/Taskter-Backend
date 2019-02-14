@@ -39,6 +39,10 @@ namespace Taskter.Api.Controllers
         public async Task<ActionResult<IEnumerable<ProjectTaskEntryUpdateDTO>>> GetProjectTaskEntryByIdAsync(int id)
         {
             var projectTasksRepo = await _repository.GetProjectTaskEntryByIdAsync(id);
+            if (projectTasksRepo == null)
+            {
+                return NotFound();
+            }
             return Ok(projectTasksRepo.ToUpdateDTO());
         }
 
