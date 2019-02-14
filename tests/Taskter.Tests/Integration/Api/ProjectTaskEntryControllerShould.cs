@@ -152,7 +152,7 @@ namespace Taskter.Tests.Integration.Api
         }
 
         [Test]
-        public async Task UpdateEntry_AddedTwoTaskEntries_ReturnsUpdatedEntry()
+        public async Task UpdateEntry_AddedOneEntryChangedValuesOfEntry_ReturnsNoContentAndUpdatedEntry()
         {
             _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
             {
