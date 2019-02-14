@@ -33,7 +33,7 @@ namespace Taskter.Api.Controllers
         public async Task<ActionResult> PostNewProject(ProjectInsertDTO project)
         {
             var projectId = await _repository.StoreNewProject(ProjectExtensions.ToEntity(project));
-            _userProjectRepository.InsertUserProjects(projectId, project.userIds);
+            _userProjectRepository.InsertUserProjects(projectId, project.UserIds);
             return Ok();
         }
     }

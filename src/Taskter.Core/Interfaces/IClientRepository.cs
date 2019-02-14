@@ -9,6 +9,6 @@ namespace Taskter.Core.Interfaces
     public interface IClientRepository: IRepository<Client>
     {
         Task<IEnumerable<Client>> GetAllClients();
-        Task<int> StoreNewClient(string name);
+        Task<int> StoreNewClient(Client client);
     }
 }

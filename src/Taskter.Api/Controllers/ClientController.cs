@@ -25,11 +25,12 @@ namespace Taskter.Api.Controllers
         {
             return await _repository.GetAllClients();
         }
+
         [Route("/api/client")]
         [HttpPost]
         public async Task<ActionResult> StoreNewClient(ClientInsertDTO client)
         {
-            await _repository.StoreNewClient(client.name);
+            await _repository.StoreNewClient(client.ToEntity());
 
             return Ok();
         }
