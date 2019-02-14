@@ -194,7 +194,7 @@ namespace Taskter.Tests.Integration.Api
             var result = await _client.UpdateTaskEntry(taskEntry.ToUpdateDTO());
             var updatedTaskEntry = await _client.GetProjectTaskEntriesByIdAsync(10);
 
-            updatedTaskEntry.durationInMin.Should().Equals(100);
+            updatedTaskEntry.durationInMin.Should().Be(100);
             result.StatusCode.Should().BeEquivalentTo(System.Net.HttpStatusCode.NoContent);
 
 
