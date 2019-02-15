@@ -27,7 +27,7 @@ namespace Taskter.Infrastructure.Repositories
             return USER_PROJECTS;
         }
 
-        public async Task<int> StoreNewProject(Project project)
+        public async Task<int> AddProject(Project project)
         {
             var proj = await _context.Projects.AddAsync(project);
             _context.SaveChanges();

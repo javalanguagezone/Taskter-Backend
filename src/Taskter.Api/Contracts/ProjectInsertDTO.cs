@@ -13,7 +13,7 @@ namespace Taskter.Api.Contracts
         [Required]
         public ICollection<int> UserIds { get; set; }
         [Required]
-        public ClientInsertDTO Client { get; set; }
+        public int ClientId { get; set; }
         [Required]
         public ICollection<ProjectTaskInsertDTO> Tasks { get; set; }
     }

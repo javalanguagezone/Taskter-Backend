@@ -29,7 +29,7 @@ namespace Taskter.Api.Contracts
 
         public static Project ToEntity(this ProjectInsertDTO pidto)
         {
-            return new Project(pidto.ProjectName, pidto.Client.Id, pidto.ProjectCode);
+            return new Project(pidto.ProjectName, pidto.ClientId, pidto.ProjectCode);
         }
     }
 }
