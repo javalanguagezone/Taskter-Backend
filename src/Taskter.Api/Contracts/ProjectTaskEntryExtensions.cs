@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Taskter.Core.Entities;
 
 namespace Taskter.Api.Contracts
 {
-    public static class ProjectTaskEntryExtensioncs
+    public static class ProjectTaskEntryExtensions
     {
         public static ProjectTaskEntryDTO ToDTO(this ProjectTaskEntry pte)
         {
@@ -18,7 +16,7 @@ namespace Taskter.Api.Contracts
                 ProjectTask = pte.ProjectTask.Name,
                 ClientName = pte.ProjectTask.Project.Client.Name,
                 durationInMin = pte.DurationInMin,
-                Note=pte.Note
+                Note = pte.Note
             };
         }
 
@@ -31,9 +29,10 @@ namespace Taskter.Api.Contracts
             }
             return projectsTaskEntriesDTO;
         }
-
-        public static ProjectTaskEntry ToEntity( this ProjectTaskEntryInsertDTO pte){
-            return new ProjectTaskEntry(pte.UserId, pte.ProjectTaskId, pte.DurationInMin, new DateTime(pte.Year, pte.Month, pte.Day), pte.Note);
+        public static ProjectTaskEntry ToEntity(this ProjectTaskEntryInsertDTO pte)
+        {
+            var newEntry = new ProjectTaskEntry(pte.UserId, pte.ProjectTaskId, pte.DurationInMin, new DateTime(pte.Year, pte.Month, pte.Day), pte.Note);
+            return newEntry;
         }
     }
 }

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Taskter.Core.Entities;
 using Taskter.Infrastructure.Data;
 using Taskter.Infrastructure.Repositories;
+using Taskter.Infrastructure.UserContext;
 
 namespace Taskter.Tests.Integration.Infrastructure
 {
@@ -22,7 +23,8 @@ namespace Taskter.Tests.Integration.Infrastructure
             .UseInMemoryDatabase("InMemoryTaskterDB")
             .Options);
             _context.Database.EnsureCreated();
-            _repository = new ProjectRepository(_context);
+            var _userContext = new CurrentUserContext() { UserId = 4 };
+            _repository = new ProjectRepository(_context, _userContext);
         }
 
         [TearDown]
@@ -53,7 +55,7 @@ namespace Taskter.Tests.Integration.Infrastructure
 
             _context.SaveChanges();
 
-            var result = _repository.GetAllProjectsForUser(4);
+            var result = _repository.GetAllProjectsForCurrentUser();
             result.Count().Should().Be(2);
             result.Should().BeEquivalentTo(seedProjectList);
         }

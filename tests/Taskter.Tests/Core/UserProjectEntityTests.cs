@@ -1,10 +1,7 @@
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Taskter.Core.Entities;
 using FluentAssertions;
-using NSubstitute.ExceptionExtensions;
 
 namespace Taskter.Tests.Core
 {
