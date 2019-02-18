@@ -2,9 +2,11 @@ using FluentAssertions;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using System.Collections;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Taskter.Api;
+using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
 using Taskter.Infrastructure.Data;
 using Taskter.Tests.Helpers.Factories;
@@ -26,7 +28,24 @@ namespace Taskter.Tests.Integration.Api
         [Test]
         public async Task AddClients_AddOneClient_UpdatedDB()
         {
-             
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+                    _clientRepository = sp.GetRequiredService<IClientRepository>();
+                });
+            }
+            ).CreateClient();
+
+            var CurrentClientList = _clientRepository.GetAllClients() as ICollection;
+            var CurrentClientListLength = CurrentClientList.Count;
+            _dbContext.Clients.Add(new Client("TestClient"));
+            _dbContext.SaveChanges();
+            var UpdatedClientList = await _clientRepository.GetAllClients() as ICollection;
+
+            UpdatedClientList.Should().HaveCountGreaterThan(CurrentClientListLength);
         }
         [Test]
         public async Task ReturnNonEmptyListWhenReturningAllClients()
@@ -37,7 +56,6 @@ namespace Taskter.Tests.Integration.Api
                 {
                    
                     var sp = services.BuildServiceProvider();
-                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
                     _clientRepository = sp.GetRequiredService<IClientRepository>();
                 });
             }).CreateClient();
