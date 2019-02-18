@@ -1,12 +1,12 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Taskter.Api;
-using Taskter.Tests.Helpers.Extensions;
+using Taskter.Core.Interfaces;
+using Taskter.Infrastructure.Data;
 using Taskter.Tests.Helpers.Factories;
 
 namespace Taskter.Tests.Integration.Api
@@ -15,6 +15,8 @@ namespace Taskter.Tests.Integration.Api
     public class ClientControllerShould
     {
         private HttpClient _client;
+        private IClientRepository _clientRepository;
+        private TaskterDbContext _dbContext;
 
         [SetUp]
         public void SetUp()
@@ -33,14 +35,14 @@ namespace Taskter.Tests.Integration.Api
             {
                 builder.ConfigureTestServices(services =>
                 {
-                    var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
-                    services.Remove(serviceDesc);
-                    _currentUserContext = new CurrentUserContext() { UserId = 3 };
-                    services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
+                   
                     var sp = services.BuildServiceProvider();
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();
+                    _clientRepository = sp.GetRequiredService<IClientRepository>();
                 });
             }).CreateClient();
+
+            var result = await _clientRepository.GetAllClients();
 
             result.Should().NotBeNull();
         }
