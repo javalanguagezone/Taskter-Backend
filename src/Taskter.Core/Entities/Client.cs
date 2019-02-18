@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Taskter.Core.SharedKernel;
-using Taskter.Core.Entities.Helpers;
+
 namespace Taskter.Core.Entities {
     public class Client : BaseEntity {
         private string _name;
@@ -9,7 +10,7 @@ namespace Taskter.Core.Entities {
             get => _name;
             private set
             {
-                EntityValidaton.StringIsNullOrHasAWhiteSpace(value, "Client name");
+                StringIsNullOrHasAWhiteSpace(value, "Client name");
                 _name = value;
             }
         }
@@ -22,6 +23,11 @@ namespace Taskter.Core.Entities {
         {
             Name = name;
         }
+        private void StringIsNullOrHasAWhiteSpace(string p, string propName)
+        {
+            if (string.IsNullOrWhiteSpace(p))
+                throw new ArgumentException(propName + " cannot be null or empty or contain only whitespace characters!");
 
+        }
     }
 }

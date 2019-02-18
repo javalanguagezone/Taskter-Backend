@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 using Taskter.Core.SharedKernel;
-using Taskter.Core.Entities.Helpers;
 
 namespace Taskter.Core.Entities
 {
@@ -15,7 +12,7 @@ namespace Taskter.Core.Entities
             get => this._name;
             private set
             {
-                EntityValidaton.StringIsNullOrHasAWhiteSpace(value, "Project name");
+                StringIsNullOrHasAWhiteSpace(value, "Project name");
                 this._name = value;
             }
         }
@@ -27,7 +24,7 @@ namespace Taskter.Core.Entities
             get => _code;
             private set
             {
-                EntityValidaton.StringHasMoreThan15ParametersOrHasWhiteSpaces(value);
+                StringHasMoreThan15CharactersOrHasWhiteSpaces(value);
                 _code = value;
             }
 
@@ -38,10 +35,10 @@ namespace Taskter.Core.Entities
         public int ClientId
         {
             get => _clientId;
-            private set 
+            private set
             {
-                EntityValidaton.ForeignKeyValueValidaton(value); 
-                _clientId = value; 
+                ForeignKeyValueValidaton(value);
+                _clientId = value;
             }
         }
         public Client Client { get; set; }
@@ -56,7 +53,26 @@ namespace Taskter.Core.Entities
             Code = code;
             ClientId = clientId;
         }
-        
-    }
+        private void StringIsNullOrHasAWhiteSpace(string p, string propName)
+        {
+            if (string.IsNullOrWhiteSpace(p))
+                throw new ArgumentException(propName + " cannot be null or empty or contain only whitespace characters!");
 
+        }
+        public static void StringHasMoreThan15CharactersOrHasWhiteSpaces(string p)
+        {
+            if (p != null)
+            {
+                if (p.Length > 15)
+                    throw new ArgumentException("Project code cannot contain more than 15 characters!");
+                if (p.Contains(" "))
+                    throw new ArgumentException("Project code cannot contain whitespaces!");
+            }
+        }
+        public static void ForeignKeyValueValidaton(int key)
+        {
+            if (key < 1)
+                throw new ArgumentException("The ID value can not be less than one!");
+        }
+    }
 }

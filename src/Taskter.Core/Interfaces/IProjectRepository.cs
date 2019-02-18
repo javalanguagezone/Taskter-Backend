@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Taskter.Core.Entities;
 
 namespace Taskter.Core.Interfaces
 {
     public interface IProjectRepository : IRepository<Project>
     {
-        IEnumerable<Project> GetAllProjectsForUser(int userId);
         Task<int> AddProject(Project project);
-
+        IEnumerable<Project> GetAllProjectsForCurrentUser();
     }
 }

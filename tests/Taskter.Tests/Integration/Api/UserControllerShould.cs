@@ -1,7 +1,5 @@
 using FluentAssertions;
 using NUnit.Framework;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Taskter.Api;
@@ -22,7 +20,7 @@ namespace Taskter.Tests.Integration.Api
         }
 
         [Test]
-        public async Task ReturnOnlyOneCurrentUser()
+        public async Task GetCurrentUser_ReturnsCurrentlyLoggedInUser()
         {
 
             var result = await _client.GetCurrentUser();
