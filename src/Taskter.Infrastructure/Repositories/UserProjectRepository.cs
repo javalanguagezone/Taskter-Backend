@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Taskter.Core.Entities;
@@ -16,6 +18,9 @@ namespace Taskter.Infrastructure.Repositories
         {
             _context = context;
         }
+
+        
+
         public async void InsertUserProjects(int projectID, ICollection<int> userIDs)
         {
             foreach (var id in userIDs)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Taskter.Api.Contracts;
+using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
 
 namespace Taskter.Api.Controllers
@@ -29,7 +30,26 @@ namespace Taskter.Api.Controllers
             var projectsRepo = _repository.GetAllProjectsForCurrentUser();
             return Ok(projectsRepo.ToDTOList());
         }
-        
+
+        [Route("/api/projects")]
+        [HttpGet]
+        public ActionResult<IEnumerable<ProjectDTO>> GetAllProjects()
+        {
+            var projectsRepo = _repository.GetAllProjects();
+            return Ok(projectsRepo.ToDTOList());
+        }
+
+        [Route("/api/projects/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetProjectDetailsById(int id)
+        {
+            var projectsRepo = await _repository.GetProjectDetailsById(id);
+
+            return Ok(projectsRepo.ToDTO());
+        }
+
+
+
         [Route("/api/project")]
         [HttpPost]
         public async Task<ActionResult> PostNewProject(ProjectInsertDTO project)
