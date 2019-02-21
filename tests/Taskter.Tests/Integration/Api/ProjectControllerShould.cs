@@ -90,5 +90,37 @@ namespace Taskter.Tests.Integration.Api
             var result = await _client.GetProjectsForCurrentUser();
             result.Count.Should().Be(0);
         }
+
+        [Test]
+        public async Task EditProject_ChangeNameCodeClient_EditedProject()
+        {
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+
+                });
+            }).CreateClient();
+
+            var clientEntry1 = _dbContext.Clients.Add(new Client("ClientTest1"));
+            var clientEntry2 = _dbContext.Clients.Add(new Client("ClientTest2"));
+
+            var projectEntry = _dbContext.Projects.Add(new Project("TestProject", clientEntry1.Entity.Id, "2211"));
+            var project = await _client.GetProjectById(projectEntry.Entity.Id);
+
+            project.Name = "ProjectTest";
+            project.ClientId = clientEntry2.Entity.Id;
+            project.Code = "1122";
+
+            await HTTPProjectExtension.EditProject(_client, project);
+
+            var result = await _client.GetProjectById(project.ID);
+
+            result.Name.Should().Be("ProjectTest");
+            result.ClientId.Should().Be(clientEntry2.Entity.Id);
+            result.Code.Should().Be("1122");
+        }
     }
 }

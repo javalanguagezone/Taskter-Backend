@@ -38,5 +38,22 @@ namespace Taskter.Infrastructure.Repositories
 
             return proj.Entity.Id;
         }
+
+        public async Task EditProject(Project editedProject)
+        {
+            var project = await _context.Projects.FindAsync(editedProject.Id);
+
+            if (project != null)
+                project.Edit(editedProject.Name, editedProject.Code, editedProject.ClientId);
+
+            _context.Projects.Update(project);
+            _context.SaveChanges();
+
+        }
+
+        public async Task<Project> GetProjectById(int id)
+        {
+            return await _context.Projects.FindAsync(id);
+        }
     }
 }
