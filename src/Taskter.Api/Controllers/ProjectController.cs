@@ -43,7 +43,7 @@ namespace Taskter.Api.Controllers
 
         [Route("/api/projects/{id}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetProjectDetailsById(int id)
+        public async Task<ActionResult<ProjectDTO>> GetProjectDetailsById(int id)
         {
             var projectsRepo = await _repository.GetProjectDetailsById(id);
             return Ok(projectsRepo.ToDTO());

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using FluentAssertions;
@@ -13,6 +14,7 @@ using Taskter.Infrastructure.Data;
 using Taskter.Infrastructure.UserContext;
 using Taskter.Tests.Helpers.Extensions;
 using Microsoft.AspNetCore.TestHost;
+using NUnit.Framework.Internal;
 using Taskter.Core.Interfaces;
 
 namespace Taskter.Tests.Integration.Api
@@ -91,6 +93,121 @@ namespace Taskter.Tests.Integration.Api
 
             var result = await _client.GetProjectsForCurrentUser();
             result.Count.Should().Be(0);
+        }
+
+        [Test]
+        public async Task GetProjectDetailsById_SeededThreeProjects_ReturnsDetailsAboutSecondSeededProject()
+        {
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+                });
+            }).CreateClient();
+
+            _dbContext.Clients.Add(new Client("TestClient1") { Id = 5 });
+            _dbContext.Clients.Add(new Client("TestClient2") { Id = 6 });
+            IEnumerable<Project> seedProjectList = new List<Project>()
+            {
+                new Project("testProject1", 5,"testcode001"){Id = 10},
+                new Project("testProject2", 6,"testcode002"){Id = 11},
+                new Project("testProject3", 6,"testcode003"){Id = 12}
+            };
+            IEnumerable<ProjectTask> seedProjectTaskList = new List<ProjectTask>()
+            {
+                new ProjectTask("testProjectTask1", 10, true){Id = 20},
+                new ProjectTask("testProjectTask2", 11, false){Id = 21},
+                new ProjectTask("testProjectTask3", 11, true){Id = 22},
+                new ProjectTask("testProjectTask4", 12, false){Id = 23}
+            };
+            _dbContext.Projects.AddRange(seedProjectList);
+            _dbContext.ProjectTasks.AddRange(seedProjectTaskList);
+            _dbContext.SaveChanges();
+
+            var result = await _client.GetProjectDetailsById(seedProjectList.ToArray()[1].Id);
+            result.Should().BeEquivalentTo(seedProjectList.ToArray()[1].ToDTO());
+        }
+
+        [Test]
+        public async Task GetUsersByProjectId_SeededTwoUsersOnAProject_ReturnsAListOfTwoSeededUsers()
+        {
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+                });
+            }).CreateClient();
+
+            var userSeedList = new List<User>()
+            {
+                new User("testUsername", "testFirstname", "testLastName", "Admin", "testUrl") {Id = 50},
+                new User("testUsername2", "test2Firstname", "test2LastName", "Developer", "testUrl") {Id = 60}
+            };
+            var projectSeedList = new List<Project>()
+            {
+                new Project("testProject1", 5, null) {Id = 100},
+                new Project("testProject2", 5, null) {Id = 110}
+            };
+            var usersProjectsList = new List<UserProject>()
+            {
+                new UserProject(50, 110),
+                new UserProject(60, 110),
+                new UserProject(50, 100)
+            };
+            _dbContext.Clients.Add(new Client("TestClient1") {Id = 50});
+            _dbContext.Users.AddRange(userSeedList);
+            _dbContext.Projects.AddRange(projectSeedList);
+            _dbContext.UsersProjects.AddRange(usersProjectsList);
+            _dbContext.SaveChanges();
+
+            var result = await _client.GetUsersByProjectId(projectSeedList.ToArray()[1].Id);
+            result.Count().Should().Be(2);
+            result.Should().BeEquivalentTo(userSeedList.ToDTOList());
+        }
+
+        [Test]
+        public async Task GetAllProjects_SeededZeroProjects_ReturnsNoProjects()
+        {
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+                });
+            }).CreateClient();
+            var result = await _client.GetAllProjects();
+            result.Count().Should().Be(0);
+        }
+
+        [Test]
+        public async Task GetAllProjects_SeededThreeProjects_ReturnsAListOfThreeSeededProjects()
+        {
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+                });
+            }).CreateClient();
+            _dbContext.Clients.Add(new Client("TestClient1") { Id = 5 });
+            IEnumerable<Project> seedProjectList = new List<Project>()
+            {
+                new Project("testProject1", 5,"testcode001"){Id = 10},
+                new Project("testProject2", 5,"testcode002"){Id = 11},
+                new Project("testProject3", 5,"testcode003"){Id = 12}
+            };
+            _dbContext.Projects.AddRange(seedProjectList);
+            _dbContext.SaveChanges();
+
+            var result = await _client.GetAllProjects();
+            result.Count().Should().Be(3);
+            result.Should().BeEquivalentTo(seedProjectList.ToDTOList());
         }
 
         [Test]
