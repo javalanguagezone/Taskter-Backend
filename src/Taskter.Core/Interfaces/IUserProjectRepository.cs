@@ -9,6 +9,7 @@ namespace Taskter.Core.Interfaces
     public interface IUserProjectRepository
     {
         void InsertUserProjects(int projectID, ICollection<int> userIDs);
-        
+        Task<IEnumerable<UserProject>> GetUsersByProjectId( int projectId);
+
     }
 }
