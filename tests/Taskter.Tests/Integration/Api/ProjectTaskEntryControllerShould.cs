@@ -147,8 +147,6 @@ namespace Taskter.Tests.Integration.Api
             var result = await _client.GetProjectTaskEntriesByIdAsync(10);
             var pteUpdateDTO = seedProjectsTaskEntryList[0].ToUpdateDTO();
             result.Should().BeEquivalentTo(pteUpdateDTO);
-            
-
         }
 
         [Test]
@@ -185,8 +183,7 @@ namespace Taskter.Tests.Integration.Api
             };
 
             var taskEntry = new ProjectTaskEntry(3, 20, 30, DateTime.Now, "Notee") { Id = 10, ProjectTask = seedProjectsTaskList[0] };
-            
-           
+                       
             _dbContext.ProjectTaskEntries.Add(taskEntry);
             _dbContext.SaveChanges();
 
@@ -196,8 +193,6 @@ namespace Taskter.Tests.Integration.Api
 
             updatedTaskEntry.durationInMin.Should().Be(100);
             result.StatusCode.Should().BeEquivalentTo(System.Net.HttpStatusCode.NoContent);
-
-
         }
 
     }
