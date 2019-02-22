@@ -16,26 +16,28 @@ namespace Taskter.Api.Controllers
         private readonly IProjectRepository _repository;
         private readonly IUserProjectRepository _userProjectRepository;
         private readonly IProjectTaskRepository _projectTaskRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ProjectController(IProjectRepository repository, IClientRepository clientRepository, IUserProjectRepository userProjectRepository, IProjectTaskRepository projectTaskRepository)
+        public ProjectController(IProjectRepository repository, IUserRepository userRepo, IProjectTaskRepository projectTaskRepository, IUserProjectRepository userProjectRepository)
         {
             _repository = repository;
-            _userProjectRepository = userProjectRepository;
             _projectTaskRepository = projectTaskRepository;
+            _userRepository = userRepo;
+            _userProjectRepository = userProjectRepository;
         }
         [Route("/api/users/current/projects")]
         [HttpGet]
-        public ActionResult<IEnumerable<ProjectDTO>> GetProjectsForCurrentUser()
+        public  async Task<ActionResult<IEnumerable<ProjectDTO>>> GetProjectsForCurrentUser()
         {
-            var projectsRepo = _repository.GetAllProjectsForCurrentUser();
+            var projectsRepo = await _repository.GetAllProjectsForCurrentUser();
             return Ok(projectsRepo.ToDTOList());
         }
 
         [Route("/api/projects")]
         [HttpGet]
-        public ActionResult<IEnumerable<ProjectDTO>> GetAllProjects()
+        public async Task <ActionResult<IEnumerable<ProjectDTO>>> GetAllProjects()
         {
-            var projectsRepo = _repository.GetAllProjects();
+            var projectsRepo = await _repository.GetAllProjects();
             return Ok(projectsRepo.ToDTOList());
         }
 
@@ -44,7 +46,6 @@ namespace Taskter.Api.Controllers
         public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetProjectDetailsById(int id)
         {
             var projectsRepo = await _repository.GetProjectDetailsById(id);
-
             return Ok(projectsRepo.ToDTO());
         }
 
@@ -52,20 +53,10 @@ namespace Taskter.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsersByProjectId(int id)
         {
-            var userProjectRepo = await _userProjectRepository.GetUsersByProjectId(id);
-
-            List<User> users = new List<User>();
-
-            foreach (var item in userProjectRepo)
-            {
-                users.Add(item.User);
-            }
-
+            var users = await _userRepository.GetUsersOnProject(id);
             return Ok(users.ToDTOList());
         }
-
-
-
+        
         [Route("/api/project")]
         [HttpPost]
         public async Task<ActionResult> PostNewProject(ProjectInsertDTO project)

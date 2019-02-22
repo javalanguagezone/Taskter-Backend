@@ -22,20 +22,20 @@ namespace Taskter.Infrastructure.Repositories
             _context = context;
             _currentUserContext = currentUserContext;
         }
-        public IEnumerable<Project> GetAllProjectsForCurrentUser()
+        public async Task<IEnumerable<Project>> GetAllProjectsForCurrentUser()
         {
-            var USER_PROJECTS = _context.UsersProjects.Where(up => up.UserId == _currentUserContext.UserId)
+            var USER_PROJECTS = await _context.UsersProjects.Where(up => up.UserId == _currentUserContext.UserId)
             .Select(up => up.Project)
-            .Include(s => s.Client).Include(s => s.Tasks).ToList();
+            .Include(s => s.Client).Include(s => s.Tasks).ToListAsync();
 
             return USER_PROJECTS;
         }
 
-        public IEnumerable<Project> GetAllProjects()
+        public async Task<IEnumerable<Project>> GetAllProjects()
         {
-            var PROJECTS = _context.Projects
+            var PROJECTS = await _context.Projects
                           .Include(s => s.Client)
-                          .Include(s => s.Tasks).ToList();
+                          .Include(s => s.Tasks).ToListAsync();
 
             return PROJECTS;
         }

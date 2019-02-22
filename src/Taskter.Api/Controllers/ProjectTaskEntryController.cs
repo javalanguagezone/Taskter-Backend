@@ -3,13 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Taskter.Api.Contracts;
 using Taskter.Core.Interfaces;
-
-
-
-
 namespace Taskter.Api.Controllers
 {
-
     [ApiController]
     public class ProjectTaskEntryController : ApplicationControllerBase
     {
