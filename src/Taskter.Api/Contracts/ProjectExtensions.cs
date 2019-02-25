@@ -12,6 +12,7 @@ namespace Taskter.Api.Contracts
                     ID = project.Id,
                     Name = project.Name,
                     ClientName = project.Client.Name,
+                    ClientId = project.ClientId,
                     Code = project.Code,
                     Tasks = project.Tasks.ToDTOList()
                 };

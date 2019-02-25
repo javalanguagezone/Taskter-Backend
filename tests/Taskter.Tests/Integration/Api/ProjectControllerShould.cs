@@ -108,19 +108,52 @@ namespace Taskter.Tests.Integration.Api
             var clientEntry2 = _dbContext.Clients.Add(new Client("ClientTest2"));
 
             var projectEntry = _dbContext.Projects.Add(new Project("TestProject", clientEntry1.Entity.Id, "2211"));
+            var task = _dbContext.ProjectTasks.Add(new ProjectTask("TestTask", projectEntry.Entity.Id, true));
+            
+            _dbContext.SaveChanges();
             var project = await _client.GetProjectById(projectEntry.Entity.Id);
-
+            
             project.Name = "ProjectTest";
             project.ClientId = clientEntry2.Entity.Id;
             project.Code = "1122";
 
             await HTTPProjectExtension.EditProject(_client, project);
+            _dbContext.SaveChanges();
 
             var result = await _client.GetProjectById(project.ID);
 
             result.Name.Should().Be("ProjectTest");
             result.ClientId.Should().Be(clientEntry2.Entity.Id);
             result.Code.Should().Be("1122");
+        }
+
+        [Test]
+        public async Task EditProject_ChangeProjectUsers_EditedProject()
+        {
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+
+                });
+            }).CreateClient();
+
+            var ProjectEntry = _dbContext.Projects.Add(new Project("TestProject", 1));
+            var seedUserProjectList = new List<UserProject>()
+            {
+                new UserProject(new User("Test1UserName","Test1","Tester1","Tester","www.google.com").Id, ProjectEntry.Entity.Id),
+                new UserProject(new User("Test2UserName","Test2","Tester2","Tester","www.google.com").Id, ProjectEntry.Entity.Id),
+                new UserProject(new User("Test3UserName","Test3","Tester3","Tester","www.google.com").Id, ProjectEntry.Entity.Id),
+                
+            };
+            _dbContext.UsersProjects.AddRange(seedUserProjectList);
+            _dbContext.SaveChanges();
+
+            
+
+       
         }
     }
 }

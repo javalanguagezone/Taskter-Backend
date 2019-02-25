@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Taskter.Core.Entities;
 
 namespace Taskter.Core.Interfaces
 {

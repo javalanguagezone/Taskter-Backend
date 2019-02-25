@@ -39,9 +39,9 @@ namespace Taskter.Infrastructure.Repositories
             return proj.Entity.Id;
         }
 
-        public async Task EditProject(Project editedProject)
+        public async Task EditProject(Project editedProject, int projId)
         {
-            var project = await _context.Projects.FindAsync(editedProject.Id);
+            var project = await _context.Projects.FindAsync(projId);
 
             if (project != null)
                 project.Edit(editedProject.Name, editedProject.Code, editedProject.ClientId);
@@ -53,7 +53,9 @@ namespace Taskter.Infrastructure.Repositories
 
         public async Task<Project> GetProjectById(int id)
         {
-            return await _context.Projects.FindAsync(id);
+            return await _context.Projects.Where(p => p.Id == id)
+                .Include(c => c.Client)
+                .Include(t => t.Tasks).SingleAsync();
         }
     }
 }

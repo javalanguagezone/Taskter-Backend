@@ -19,11 +19,23 @@ namespace Taskter.Api.Contracts
                 AvatarURL = user.AvatarURL
             };
         }
-
+        public static UserDTO ToDTO(this UserProject userProject)
+        {
+            return new UserDTO()
+            {
+                UserId = userProject.UserId,
+                Username = userProject.User.UserName,
+                FirstName = userProject.User.FirstName,
+                LastName = userProject.User.LastName,
+                Role = userProject.User.Role,
+                AvatarURL = userProject.User.AvatarURL
+            };
+        }
         public static IEnumerable<UserDTO> ToDTOList(this IEnumerable<User> users)
         {
             IEnumerable<UserDTO> UsersDTO = users.Select(u => u.ToDTO());
             return UsersDTO;
         }
+       
     }
 }

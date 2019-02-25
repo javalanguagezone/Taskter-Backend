@@ -25,5 +25,7 @@ namespace Taskter.Tests.Helpers.Extensions
         {
             await client.PostAsJsonAsync("api/projects/edit", project);
         }
+
+        
     }   
 }

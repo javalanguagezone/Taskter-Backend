@@ -44,7 +44,7 @@ namespace Taskter.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> EditProject(ProjectDTO project)
         {
-            await _projectRepository.EditProject(ProjectExtensions.ToEntity(project));
+            await _projectRepository.EditProject(ProjectExtensions.ToEntity(project), project.ID);
             return Ok();
         }
 
@@ -55,5 +55,7 @@ namespace Taskter.Api.Controllers
             var result = await _projectRepository.GetProjectById(id);
             return Ok(ProjectExtensions.ToDTO(result));
         }
+        
+       
     }
 }

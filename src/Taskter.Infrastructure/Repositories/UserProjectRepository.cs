@@ -16,6 +16,9 @@ namespace Taskter.Infrastructure.Repositories
         {
             _context = context;
         }
+
+       
+
         public async void InsertUserProjects(int projectID, ICollection<int> userIDs)
         {
             foreach (var id in userIDs)
@@ -25,5 +28,6 @@ namespace Taskter.Infrastructure.Repositories
             }
             _context.SaveChanges();            
         }
+        
     }
 }
