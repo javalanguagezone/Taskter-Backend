@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Taskter.Api.Contracts;
 using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
 
@@ -23,6 +24,15 @@ namespace Taskter.Api.Controllers
         public async Task<IEnumerable<Client>> GetAllClients()
         {
             return await _repository.GetAllClients();
+        }
+
+        [Route("/api/client")]
+        [HttpPost]
+        public async Task<ActionResult> StoreNewClient(ClientInsertDTO client)
+        {
+            await _repository.StoreNewClient(client.ToEntity());
+
+            return Ok();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Taskter.Core.Entities;
 
@@ -7,5 +8,6 @@ namespace Taskter.Core.Interfaces
     {
         Task<User> GetUser(int userId);
         Task<IEnumerable<User>> GetAllUsers();
+
     }
 }
