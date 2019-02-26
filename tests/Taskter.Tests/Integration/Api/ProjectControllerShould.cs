@@ -140,20 +140,24 @@ namespace Taskter.Tests.Integration.Api
                 });
             }).CreateClient();
 
-            var ProjectEntry = _dbContext.Projects.Add(new Project("TestProject", 1));
-            var seedUserProjectList = new List<UserProject>()
-            {
-                new UserProject(new User("Test1UserName","Test1","Tester1","Tester","www.google.com").Id, ProjectEntry.Entity.Id),
-                new UserProject(new User("Test2UserName","Test2","Tester2","Tester","www.google.com").Id, ProjectEntry.Entity.Id),
-                new UserProject(new User("Test3UserName","Test3","Tester3","Tester","www.google.com").Id, ProjectEntry.Entity.Id),
-                
-            };
-            _dbContext.UsersProjects.AddRange(seedUserProjectList);
+            var clientEntry1 = _dbContext.Clients.Add(new Client("ClientTest1"));
+
+            var projectEntry = _dbContext.Projects.Add(new Project("TestProject", clientEntry1.Entity.Id, "2211"));
+            _dbContext.ProjectTasks.Add(new ProjectTask("TestTask", projectEntry.Entity.Id, true));
+            _dbContext.UsersProjects.Add(new UserProject(1, projectEntry.Entity.Id));
             _dbContext.SaveChanges();
-
             
+            var project = await _client.GetProjectById(projectEntry.Entity.Id);
 
-       
+            project.Users = new List<int>(){2};
+
+            var result = _client.EditProject(project);
+            _dbContext.SaveChanges();
+            
+            var userList = _dbContext.UsersProjects.Where(u => u.ProjectId == projectEntry.Entity.Id).ToList();
+            
+            userList.Count.Should().Be(1);
+            userList[0].UserId.Should().Be(2);
         }
     }
 }
