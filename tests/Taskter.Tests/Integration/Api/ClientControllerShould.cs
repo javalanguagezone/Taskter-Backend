@@ -25,8 +25,9 @@ namespace Taskter.Tests.Integration.Api
         {
             _client = new IntegrationWebApplicationFactory<Startup>().CreateClient();
         }
+        
         [Test]
-        public async Task AddClients_AddOneClient_UpdatedDB()
+        public async Task AddClients_AddOneClient_AddOneClientToDBAndReturnOneRecorddMore()
         {
             _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
             {
@@ -39,30 +40,34 @@ namespace Taskter.Tests.Integration.Api
             }
             ).CreateClient();
 
-            var CurrentClientList = _clientRepository.GetAllClients() as ICollection;
+            var CurrentClientList = await _clientRepository.GetAllClients() as ICollection;
             var CurrentClientListLength = CurrentClientList.Count;
             _dbContext.Clients.Add(new Client("TestClient"));
             _dbContext.SaveChanges();
             var UpdatedClientList = await _clientRepository.GetAllClients() as ICollection;
 
             UpdatedClientList.Should().HaveCountGreaterThan(CurrentClientListLength);
+    
         }
         [Test]
-        public async Task ReturnNonEmptyListWhenReturningAllClients()
+        public async Task AllClients_WhenDBNotEmpty_ReturnNonEmptyResult()
         {
             _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
             {
                 builder.ConfigureTestServices(services =>
                 {
-                   
                     var sp = services.BuildServiceProvider();
                     _clientRepository = sp.GetRequiredService<IClientRepository>();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
                 });
             }).CreateClient();
 
+            _dbContext.Clients.Add(new Client("Test1"));
+            _dbContext.SaveChanges();
+
             var result = await _clientRepository.GetAllClients();
 
-            result.Should().NotBeNull();
+            result.Should().NotBeNullOrEmpty();
         }
     }
 }

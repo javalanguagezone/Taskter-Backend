@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Taskter.Core.Entities;
@@ -17,7 +19,12 @@ namespace Taskter.Infrastructure.Repositories
             _context = context;
         }
 
-       
+        public async Task<IEnumerable<UserProject>> GetUsersByProjectId(int projectId)
+        {
+            var usersProjects = await _context.UsersProjects.Where(x => x.ProjectId == projectId).Include(u => u.User).ToListAsync();
+
+            return usersProjects;
+        }
 
         public async void InsertUserProjects(int projectID, ICollection<int> userIDs)
         {

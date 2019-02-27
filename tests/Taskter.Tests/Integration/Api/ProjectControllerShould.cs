@@ -13,6 +13,7 @@ using Taskter.Infrastructure.Data;
 using Taskter.Infrastructure.UserContext;
 using Taskter.Tests.Helpers.Extensions;
 using Microsoft.AspNetCore.TestHost;
+using Taskter.Core.Interfaces;
 
 namespace Taskter.Tests.Integration.Api
 {
@@ -22,6 +23,7 @@ namespace Taskter.Tests.Integration.Api
         private HttpClient _client;
         private ICurrentUserContext _currentUserContext;
         private TaskterDbContext _dbContext;
+        private IProjectRepository _projectRepository;
 
         [Test]
         public async Task GetProjectsForCurrentUser_AssignedTwoProjects_ReturnsAListOfTwoAssignedProjects()

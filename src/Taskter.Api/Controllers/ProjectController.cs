@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Taskter.Api.Contracts;
+using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
 
 namespace Taskter.Api.Controllers
@@ -30,6 +31,41 @@ namespace Taskter.Api.Controllers
             return Ok(projectsRepo.ToDTOList());
         }
 
+        [Route("/api/projects")]
+        [HttpGet]
+        public ActionResult<IEnumerable<ProjectDTO>> GetAllProjects()
+        {
+            var projectsRepo = _projectRepository.GetAllProjects();
+            return Ok(projectsRepo.ToDTOList());
+        }
+
+        [Route("/api/projects/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetProjectDetailsById(int id)
+        {
+            var projectsRepo = await _projectRepository.GetProjectDetailsById(id);
+
+            return Ok(projectsRepo.ToDTO());
+        }
+
+        [Route("/api/projects/{id}/users")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsersByProjectId(int id)
+        {
+            var userProjectRepo = await _userProjectRepository.GetUsersByProjectId(id);
+
+            List<User> users = new List<User>();
+
+            foreach (var item in userProjectRepo)
+            {
+                users.Add(item.User);
+            }
+
+            return Ok(users.ToDTOList());
+        }
+
+
+
         [Route("/api/project")]
         [HttpPost]
         public async Task<ActionResult> PostNewProject(ProjectInsertDTO project)
@@ -46,16 +82,6 @@ namespace Taskter.Api.Controllers
         {
             await _projectRepository.EditProject(ProjectExtensions.ToEntity(project), project.ID);
             return Ok();
-        }
-
-        [Route("api/projects/{id}")]
-        [HttpGet]
-        public async Task<ActionResult> GetProjectById(int id)
-        {
-            var result = await _projectRepository.GetProjectById(id);
-            return Ok(ProjectExtensions.ToDTO(result));
-        }
-        
-       
+        }   
     }
 }
