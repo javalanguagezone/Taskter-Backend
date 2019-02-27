@@ -151,7 +151,7 @@ namespace Taskter.Tests.Integration.Api
             
             var project = await _client.GetProjectById(projectEntry.Entity.Id);
 
-            project.Users = new List<int>(){2};
+            //project.Users = new List<int>(){2};
 
             var result = _client.EditProject(project);
             _dbContext.SaveChanges();

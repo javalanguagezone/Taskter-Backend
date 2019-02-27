@@ -31,7 +31,6 @@ namespace Taskter.Infrastructure.Repositories
             foreach (var id in userIDs)
             {
                 await _context.UsersProjects.AddAsync(new UserProject(id, projectID));
-
             }
             _context.SaveChanges();            
         }

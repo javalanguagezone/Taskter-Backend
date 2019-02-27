@@ -64,8 +64,6 @@ namespace Taskter.Api.Controllers
             return Ok(users.ToDTOList());
         }
 
-
-
         [Route("/api/project")]
         [HttpPost]
         public async Task<ActionResult> PostNewProject(ProjectInsertDTO project)
@@ -78,7 +76,7 @@ namespace Taskter.Api.Controllers
 
         [Route("api/projects/edit")]
         [HttpPost]
-        public async Task<ActionResult> EditProject(ProjectDTO project)
+        public async Task<ActionResult> EditProject(ProjectInsertDTO project)
         {
             await _projectRepository.EditProject(ProjectExtensions.ToEntity(project), project.ID);
             return Ok();
