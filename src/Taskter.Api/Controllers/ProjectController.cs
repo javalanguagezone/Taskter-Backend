@@ -25,7 +25,7 @@ namespace Taskter.Api.Controllers
         }
         [Route("/api/users/current/projects")]
         [HttpGet]
-        public ActionResult<IEnumerable<ProjectDTO>> GetProjectsForCurrentUser()
+        public ActionResult<IEnumerable<ProjectUpdateDTO>> GetProjectsForCurrentUser()
         {
             var projectsRepo = _projectRepository.GetAllProjectsForCurrentUser();
             return Ok(projectsRepo.ToDTOList());
@@ -33,7 +33,7 @@ namespace Taskter.Api.Controllers
 
         [Route("/api/projects")]
         [HttpGet]
-        public ActionResult<IEnumerable<ProjectDTO>> GetAllProjects()
+        public ActionResult<IEnumerable<ProjectUpdateDTO>> GetAllProjects()
         {
             var projectsRepo = _projectRepository.GetAllProjects();
             return Ok(projectsRepo.ToDTOList());
@@ -41,7 +41,7 @@ namespace Taskter.Api.Controllers
 
         [Route("/api/projects/{id}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProjectDTO>>> GetProjectDetailsById(int id)
+        public async Task<ActionResult<IEnumerable<ProjectUpdateDTO>>> GetProjectDetailsById(int id)
         {
             var projectsRepo = await _projectRepository.GetProjectDetailsById(id);
 
@@ -75,11 +75,18 @@ namespace Taskter.Api.Controllers
         }
 
         [Route("api/projects/edit")]
-        [HttpPost]
-        public async Task<ActionResult> EditProject(ProjectInsertDTO project)
+        [HttpPut]
+        public async Task<ActionResult> EditProject(ProjectUpdateDTO project)
         {
-            await _projectRepository.EditProject(ProjectExtensions.ToEntity(project), project.ID);
-            return Ok();
+            var entry = await _projectRepository.GetProjectByIdAsync(project.ID); 
+            if (entry == null)
+            {
+                return NotFound();
+            }
+            var updatedProject = project.ToEntity();
+            _projectRepository.Update(entry, updatedProject);
+
+            return NoContent();            
         }   
     }
 }

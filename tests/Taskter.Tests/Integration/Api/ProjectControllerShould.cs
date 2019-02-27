@@ -119,7 +119,7 @@ namespace Taskter.Tests.Integration.Api
             project.ClientId = clientEntry2.Entity.Id;
             project.Code = "1122";
 
-            await HTTPProjectExtension.EditProject(_client, project);
+            await _client.EditProject(project);
             _dbContext.SaveChanges();
 
             var result = await _client.GetProjectById(project.ID);

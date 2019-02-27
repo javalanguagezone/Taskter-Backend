@@ -5,9 +5,9 @@ namespace Taskter.Api.Contracts
 {
     public static class ProjectExtensions 
     {
-        public static ProjectDTO ToDTO (this Project project)
+        public static ProjectUpdateDTO ToDTO (this Project project)
         {
-            return new ProjectDTO() 
+            return new ProjectUpdateDTO() 
                 {
                     ID = project.Id,
                     Name = project.Name,
@@ -18,9 +18,9 @@ namespace Taskter.Api.Contracts
                 };
         }
 
-        public static IEnumerable<ProjectDTO> ToDTOList (this IEnumerable<Project> projects) 
+        public static IEnumerable<ProjectUpdateDTO> ToDTOList (this IEnumerable<Project> projects) 
         {
-            var projectsDTO = new List<ProjectDTO>();
+            var projectsDTO = new List<ProjectUpdateDTO>();
             foreach (var proj in projects)
             {
                 projectsDTO.Add(proj.ToDTO());
@@ -32,9 +32,10 @@ namespace Taskter.Api.Contracts
         {
             return new Project(pidto.ProjectName, pidto.ClientId, pidto.ProjectCode);
         }
-        public static Project ToEntity(this ProjectDTO pdto)
+        
+        public static Project ToEntity(this ProjectUpdateDTO prjuDTO)
         {
-            return new Project(pdto.Name, pdto.ClientId, pdto.Code);
+            return new Project(prjuDTO.Name, prjuDTO.ClientId, prjuDTO.Code) { Id = prjuDTO.ID };
         }
     }
 }

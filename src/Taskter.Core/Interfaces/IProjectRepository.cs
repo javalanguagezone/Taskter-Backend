@@ -8,9 +8,9 @@ namespace Taskter.Core.Interfaces
     {
         Task<int> AddProject(Project project);
         IEnumerable<Project> GetAllProjectsForCurrentUser();
-        Task EditProject(Project project, int projectId);
         IEnumerable<Project> GetAllProjects();
         Task<Project> GetProjectDetailsById(int id);
-
+        Task<Project> GetProjectByIdAsync(int id);
+        void Update(Project project,Project updatedProject);
     }
 }
