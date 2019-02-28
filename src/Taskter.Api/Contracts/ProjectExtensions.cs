@@ -5,22 +5,22 @@ namespace Taskter.Api.Contracts
 {
     public static class ProjectExtensions 
     {
-        public static ProjectUpdateDTO ToDTO (this Project project)
+        public static ProjectDTO ToDTO (this Project project)
         {
-            return new ProjectUpdateDTO() 
+            return new ProjectDTO() 
                 {
                     ID = project.Id,
                     Name = project.Name,
                     ClientName = project.Client.Name,
-                    ClientId = project.ClientId,
+                    ClientId = project.Client.Id,
                     Code = project.Code,
                     Tasks = project.Tasks.ToDTOList()
                 };
         }
 
-        public static IEnumerable<ProjectUpdateDTO> ToDTOList (this IEnumerable<Project> projects) 
+        public static IEnumerable<ProjectDTO> ToDTOList (this IEnumerable<Project> projects) 
         {
-            var projectsDTO = new List<ProjectUpdateDTO>();
+            var projectsDTO = new List<ProjectDTO>();
             foreach (var proj in projects)
             {
                 projectsDTO.Add(proj.ToDTO());

@@ -119,7 +119,17 @@ namespace Taskter.Tests.Integration.Api
             project.ClientId = clientEntry2.Entity.Id;
             project.Code = "1122";
 
-            await _client.EditProject(project);
+            var editedProject = new ProjectUpdateDTO() {
+                ID = projectEntry.Entity.Id,
+                Name = project.Name,
+                Code = project.Code,
+                UserIds = new List<int>(){1,2},
+                ClientName = project.ClientName,
+                ClientId = project.ClientId,
+                Tasks = null
+            };
+
+            await _client.EditProject(editedProject);
             _dbContext.SaveChanges();
 
             var result = await _client.GetProjectById(project.ID);
@@ -151,9 +161,17 @@ namespace Taskter.Tests.Integration.Api
             
             var project = await _client.GetProjectById(projectEntry.Entity.Id);
 
-            //project.Users = new List<int>(){2};
+            var editedProject = new ProjectUpdateDTO() {
+                ID = projectEntry.Entity.Id,
+                Name = projectEntry.Entity.Name,
+                Code = projectEntry.Entity.Code,
+                UserIds = new List<int>(){2},
+                ClientName = projectEntry.Entity.Client.Name,
+                ClientId = projectEntry.Entity.Client.Id,
+                Tasks = null
+            };
 
-            var result = _client.EditProject(project);
+            var result = await _client.EditProject(editedProject);
             _dbContext.SaveChanges();
             
             var userList = _dbContext.UsersProjects.Where(u => u.ProjectId == projectEntry.Entity.Id).ToList();

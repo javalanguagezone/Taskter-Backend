@@ -12,14 +12,14 @@ namespace Taskter.Tests.Helpers.Extensions
 {
     public static class HTTPProjectExtension
     {
-        public async static Task<ProjectUpdateDTO> GetProjectById(this HttpClient client, int id)
+        public async static Task<ProjectDTO> GetProjectById(this HttpClient client, int id)
         {
             var response = await client.GetAsync("/api/projects/" + id);
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<ProjectUpdateDTO>(jsonResponse);
-            return result as ProjectUpdateDTO;
+            var result = JsonConvert.DeserializeObject<ProjectDTO>(jsonResponse);
+            return result as ProjectDTO;
         }
         public async static Task<HttpResponseMessage> EditProject(this HttpClient client, ProjectUpdateDTO project)
         {

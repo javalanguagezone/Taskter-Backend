@@ -75,6 +75,11 @@ namespace Taskter.Core.Entities
                 throw new ArgumentException("The ID value can not be less than one!");
         }
 
-       
+        public void Edit(string name, string code, int clientId)
+        {
+            Name = name;
+            Code = code;
+            ClientId = clientId;
+        }
     }
 }

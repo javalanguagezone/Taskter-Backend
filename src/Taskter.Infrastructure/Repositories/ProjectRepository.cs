@@ -66,13 +66,23 @@ namespace Taskter.Infrastructure.Repositories
                          .Include(t => t.Tasks).FirstOrDefaultAsync();
         }
 
-        public async void Update(Project project, Project updatedProject)
+        public async void Update(int id, Project updatedProject, List<int> users)
         {
-            project.Name = updatedProject.Name;
-            project.ClientId = updatedProject.ClientId;
-            project.Code = updatedProject.Code;
-            project.Tasks = updatedProject.Tasks;
-            project.UsersProjects = updatedProject.UsersProjects;
+            var project = await _context.Projects.FindAsync(id);
+
+            if (project != null)
+                project.Edit(updatedProject.Name, updatedProject.Code, updatedProject.ClientId);
+            _context.Projects.Update(project);
+
+            var usr = _context.UsersProjects.Where( up => up.ProjectId == id).ToList();
+            _context.UsersProjects.RemoveRange(usr);
+
+            _context.SaveChanges();
+            foreach(int userId in users)
+            {
+                _context.UsersProjects.Add(new UserProject(userId, id));
+            }
+            _context.SaveChanges();
 
             await _context.SaveChangesAsync();
         }
