@@ -13,6 +13,7 @@ using Taskter.Infrastructure.Data;
 using Taskter.Infrastructure.UserContext;
 using Taskter.Tests.Helpers.Extensions;
 using Microsoft.AspNetCore.TestHost;
+using System;
 
 namespace Taskter.Tests.Integration.Api
 {
@@ -22,23 +23,33 @@ namespace Taskter.Tests.Integration.Api
         private HttpClient _client;
         private ICurrentUserContext _currentUserContext;
         private TaskterDbContext _dbContext;
-
+        public ProjectControllerShould(IntegrationWebApplicationFactory<Startup> factory)
+        {
+            _client = factory.CreateClient();
+        }
         [Test]
         public async Task GetProjectsForCurrentUser_AssignedTwoProjects_ReturnsAListOfTwoAssignedProjects()
         {
-            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureTestServices(services =>
-                {
-                    var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
-                    services.Remove(serviceDesc);
-                    _currentUserContext = new CurrentUserContext() { UserId = 3 };
-                    services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
-                    var sp = services.BuildServiceProvider();
-                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
-                });
-            }).CreateClient();
-    
+            // _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            // {
+            //     builder.ConfigureTestServices(services =>
+            //     {
+            //         var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
+            //         services.Remove(serviceDesc);
+            //         _currentUserContext = new CurrentUserContext() { UserId = 3 };
+            //         services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
+            //         var sp = services.BuildServiceProvider();
+            //         _dbContext = sp.GetRequiredService<TaskterDbContext>();
+            //     });
+            // }).CreateClient();
+            IServiceCollection novaKolekcija = new ServiceCollection();
+            novaKolekcija.AddTransient<ICurrentUserContext>(x => new CurrentUserContext(){UserId = 3});
+            Action<IServiceCollection> nesto = Helpers.NekaFinijaFunkcija(novaKolekcija);
+
+            //za specificne implementacije servisa u pojedinim testovima samo uraditi ovo ispod
+            _client = new IntegrationWebApplicationFactory<Startup>(nesto).CreateClient();
+            
+            // naci rjesenje za seedove TODO    
             _dbContext.Users.Add(new User("test1", "test 1", "test lastName", "admin", "http://google.com")
             { Id = _currentUserContext.UserId });
             var clientSeed = new Client("testClient") { Id = 20 };
