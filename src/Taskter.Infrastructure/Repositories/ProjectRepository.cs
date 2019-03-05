@@ -55,5 +55,13 @@ namespace Taskter.Infrastructure.Repositories
                          .Include(c => c.Client)
                          .Include(t => t.Tasks).FirstOrDefaultAsync();
         }
+
+        public IEnumerable<Project> GetProjectsByClient(int clientId)
+        {
+            var PROJECTS = _context.Projects.Where(p=> p.ClientId == clientId)
+            .Include(s => s.Client).Include(s => s.Tasks).ToList();
+
+            return PROJECTS;
+        }
     }
 }

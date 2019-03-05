@@ -48,6 +48,15 @@ namespace Taskter.Api.Controllers
             return Ok(projectsRepo.ToDTO());
         }
 
+        [Route("/api/projectsByClient/{clientId}")]
+        [HttpGet]
+        public  ActionResult<IEnumerable<ProjectDTO>> GetProjectsByClient(int clientId)
+        {
+            var projectsRepo =   _repository.GetProjectsByClient(clientId);
+
+            return Ok(projectsRepo.ToDTOList());
+        }
+
         [Route("/api/projects/{id}/users")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsersByProjectId(int id)
