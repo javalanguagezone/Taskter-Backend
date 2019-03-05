@@ -23,7 +23,7 @@ namespace Taskter.Tests.Integration.Infrastructure
             .UseInMemoryDatabase("InMemoryTaskterDB")
             .Options);
             _context.Database.EnsureCreated();
-            var _userContext = new CurrentUserContext() { UserId = 4 };
+            var _userContext = new FakeCurrentUserContext() { UserId = 4 };
             _repository = new ProjectRepository(_context, _userContext);
         }
 

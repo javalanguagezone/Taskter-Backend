@@ -9,11 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0AB9CA36-424
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7E7AF2FD-7587-429C-A05E-F198441415FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskter.Tests", "tests\Taskter.Tests\Taskter.Tests.csproj", "{6E4F40E3-C2D4-4D94-AEFA-6E75C44E11D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskter.Tests", "tests\Taskter.Tests\Taskter.Tests.csproj", "{6E4F40E3-C2D4-4D94-AEFA-6E75C44E11D2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskter.Core", "src\Taskter.Core\Taskter.Core.csproj", "{769B8008-A44A-4194-BC11-F384E39404F1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskter.Infrastructure", "src\Taskter.Infrastructure\Taskter.Infrastructure.csproj", "{CA6FFDC6-2420-43B5-91E3-BC6950B3D142}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskter.IdentityServer", "src\Taskter.IdentityServer\Taskter.IdentityServer.csproj", "{6F1C7DF1-CD88-420E-A8C4-E694017905DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{CA6FFDC6-2420-43B5-91E3-BC6950B3D142}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA6FFDC6-2420-43B5-91E3-BC6950B3D142}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA6FFDC6-2420-43B5-91E3-BC6950B3D142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F1C7DF1-CD88-420E-A8C4-E694017905DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F1C7DF1-CD88-420E-A8C4-E694017905DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F1C7DF1-CD88-420E-A8C4-E694017905DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F1C7DF1-CD88-420E-A8C4-E694017905DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{6E4F40E3-C2D4-4D94-AEFA-6E75C44E11D2} = {7E7AF2FD-7587-429C-A05E-F198441415FE}
 		{769B8008-A44A-4194-BC11-F384E39404F1} = {0AB9CA36-424E-48F7-B20E-24B7B9D60F47}
 		{CA6FFDC6-2420-43B5-91E3-BC6950B3D142} = {0AB9CA36-424E-48F7-B20E-24B7B9D60F47}
+		{6F1C7DF1-CD88-420E-A8C4-E694017905DA} = {0AB9CA36-424E-48F7-B20E-24B7B9D60F47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {284C0744-E533-480F-80BE-24C32FF7CB5E}

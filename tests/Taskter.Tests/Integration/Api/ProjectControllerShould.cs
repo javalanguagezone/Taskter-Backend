@@ -32,7 +32,7 @@ namespace Taskter.Tests.Integration.Api
                 {
                     var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
                     services.Remove(serviceDesc);
-                    _currentUserContext = new CurrentUserContext() { UserId = 3 };
+                    _currentUserContext = new FakeCurrentUserContext() { UserId = 3 };
                     services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
                     var sp = services.BuildServiceProvider();
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();
@@ -76,7 +76,7 @@ namespace Taskter.Tests.Integration.Api
                 {
                     var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
                     services.Remove(serviceDesc);
-                    _currentUserContext = new CurrentUserContext() { UserId = 4 };
+                    _currentUserContext = new FakeCurrentUserContext() { UserId = 4 };
                     services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
                     var sp = services.BuildServiceProvider();
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();

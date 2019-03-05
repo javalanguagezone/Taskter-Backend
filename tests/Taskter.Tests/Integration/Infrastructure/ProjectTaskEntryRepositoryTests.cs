@@ -16,7 +16,7 @@ namespace Taskter.Tests.Integration.Api
     {
         private ProjectTaskEntryRepository _repository;
         private TaskterDbContext _context;
-        private CurrentUserContext _userContext;
+        private ICurrentUserContext _userContext;
 
         [SetUp]
         public void SetUp()
@@ -25,7 +25,7 @@ namespace Taskter.Tests.Integration.Api
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options);
             _context.Database.EnsureCreated();
-            _userContext = new CurrentUserContext() { UserId = 4 };
+            _userContext = new FakeCurrentUserContext() { UserId = 4 };
             _repository = new ProjectTaskEntryRepository(_context, _userContext);
         }
 
