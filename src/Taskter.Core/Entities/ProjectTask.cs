@@ -18,7 +18,7 @@ namespace Taskter.Core.Entities
             }
         }
         public bool Billable { get; private set; }
-
+        public bool Active { get; set; } = true;
         private int _projectId;
         public int ProjectId
         {
@@ -30,10 +30,8 @@ namespace Taskter.Core.Entities
             }
         }
         public Project Project { get; set; }
-
         public ICollection<ProjectTaskEntry> ProjectsTaskEntries { get; set; } = new List<ProjectTaskEntry>();
-
-
+     
         private ProjectTask()
         {
 

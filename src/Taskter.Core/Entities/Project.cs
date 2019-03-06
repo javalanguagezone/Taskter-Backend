@@ -9,16 +9,15 @@ namespace Taskter.Core.Entities
         private string _name;
         public string Name
         {
-            get => this._name;
+            get => _name;
             set
             {
                 StringIsNullOrHasAWhiteSpace(value, "Project name");
-                this._name = value;
+                _name = value;
             }
         }
 
         private string _code;
-
         public string Code
         {
             get => _code;
@@ -53,6 +52,7 @@ namespace Taskter.Core.Entities
             Code = code;
             ClientId = clientId;
         }
+
         private void StringIsNullOrHasAWhiteSpace(string p, string propName)
         {
             if (string.IsNullOrWhiteSpace(p))
@@ -75,11 +75,11 @@ namespace Taskter.Core.Entities
                 throw new ArgumentException("The ID value can not be less than one!");
         }
 
-        public void Edit(string name, string code, int clientId)
+        public void EditBasicInfo(string name, string code)
         {
             Name = name;
             Code = code;
-            ClientId = clientId;
         }
+       
     }
 }

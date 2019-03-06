@@ -66,25 +66,17 @@ namespace Taskter.Infrastructure.Repositories
                          .Include(t => t.Tasks).FirstOrDefaultAsync();
         }
 
-        public async void Update(int id, Project updatedProject, List<int> users)
+        public async Task UpdateBasic(Project entry, string name, string code)
         {
-            var project = await _context.Projects.FindAsync(id);
-
-            if (project != null)
-                project.Edit(updatedProject.Name, updatedProject.Code, updatedProject.ClientId);
+            var project = await _context.Projects.FindAsync(entry.Id);
+            if (project == null)
+                throw new Exception("Project does not exist!");
+             project.EditBasicInfo(name, code);            
             _context.Projects.Update(project);
-
-            var usr = _context.UsersProjects.Where( up => up.ProjectId == id).ToList();
-            _context.UsersProjects.RemoveRange(usr);
-
-            _context.SaveChanges();
-            foreach(int userId in users)
-            {
-                _context.UsersProjects.Add(new UserProject(userId, id));
-            }
-            _context.SaveChanges();
-
+            //var usr = _context.UsersProjects.Where( up => up.ProjectId == id).ToList();
+            //_context.UsersProjects.RemoveRange(usr);
             await _context.SaveChangesAsync();
         }
+
     }
 }

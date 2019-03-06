@@ -74,19 +74,30 @@ namespace Taskter.Api.Controllers
             return Ok();
         }
 
-        [Route("api/projects/edit")]
+        [Route("api/projects/{id}/edit/basicinfo")]
         [HttpPut]
-        public async Task<ActionResult> EditProject(ProjectUpdateDTO project)
+        public async Task<ActionResult> EditProjectBasicInfo(ProjectUpdateBasicDTO projectUpdateBasic)
         {
-            var entry = await _projectRepository.GetProjectByIdAsync(project.ID); 
+            var entry = await _projectRepository.GetProjectByIdAsync(projectUpdateBasic.ID);
             if (entry == null)
             {
                 return NotFound();
             }
-            var updatedProject = project.ToEntity();
-            _projectRepository.Update(entry.Id, updatedProject, project.UserIds.ToList());
+            await _projectRepository.UpdateBasic(entry, projectUpdateBasic.Name, projectUpdateBasic.Code);
+            return NoContent();
+        }
 
-            return NoContent();            
-        }   
-    }
+        [Route("api/projects/{id}/edit/users")]
+        [HttpPut]
+        public async Task<ActionResult> EditUsersOnProject(ProjectEditUsersDTO projectEditUsers)
+        {
+            var entry = await _userProjectRepository.GetUserByProjectId(projectEditUsers.ProjectId, projectEditUsers.UserId);
+            if (entry == null)
+            {
+                return NotFound();
+            }
+            await _userProjectRepository.UpdateUserOnProject(entry, projectEditUsers.Active);
+            return NoContent();
+        }
+    }    
 }

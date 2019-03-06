@@ -32,10 +32,6 @@ namespace Taskter.Api.Contracts
         {
             return new Project(pidto.ProjectName, pidto.ClientId, pidto.ProjectCode);
         }
-        
-        public static Project ToEntity(this ProjectUpdateDTO prjuDTO)
-        {
-            return new Project(prjuDTO.Name, prjuDTO.ClientId, prjuDTO.Code) { Id = prjuDTO.ID };
-        }
+
     }
 }

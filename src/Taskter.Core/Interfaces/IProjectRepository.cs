@@ -11,6 +11,6 @@ namespace Taskter.Core.Interfaces
         IEnumerable<Project> GetAllProjects();
         Task<Project> GetProjectDetailsById(int id);
         Task<Project> GetProjectByIdAsync(int id);
-        void Update(int id,Project updatedProject, List<int> users);
+        Task UpdateBasic(Project entry, string name, string code);
     }
 }
