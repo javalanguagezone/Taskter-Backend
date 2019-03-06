@@ -32,14 +32,14 @@ namespace Taskter.Api
 
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options => {
-                    options.Authority = "https://localhost:44324";
+                    options.Authority = "http://localhost:5000";
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "api";
                     options.SaveToken = true;
                 });
 
             services.AddDbContext<TaskterDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("TaskterDbConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("TaskterDbConnection"), b => b.MigrationsAssembly("Taskter.Api")));
 
             services.RegisterIoCDependencies();
             services.AddSwaggerGen(c => {

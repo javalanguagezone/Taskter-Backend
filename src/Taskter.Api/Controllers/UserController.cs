@@ -1,30 +1,42 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using IdentityModel.Client;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Taskter.Api.Contracts;
-using Taskter.Core.Entities;
-using Taskter.Core.Interfaces;
-
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Taskter.Infrastructure.UserContext;
 
 namespace Taskter.Api.Controllers
 {
-    [Route("api/users")]
+    [Authorize]
     [ApiController]
+    [Route("api/users")]
     public class UserController : ApplicationControllerBase
     {
-        private readonly IUserRepository _repository;
+        private readonly ICurrentUserContext _currentUserContext;
 
-        public UserController(IUserRepository repository) 
+        public UserController(ICurrentUserContext currentUserContext)
         {
-            _repository = repository;
+            _currentUserContext = currentUserContext;
         }
-        [Route("current")]
+
         [HttpGet]
-        public async Task<ActionResult<UserDTO>> GetCurrentUser() 
+        [Route("current")]
+        public async Task<IActionResult> GetCurrentUser([FromHeader]string authorization)
         {
-            User currentUser = await _repository.GetUser(this.UserID);
-            return Ok(currentUser.ToDTO());
+            HttpClient client = new HttpClient();
+            var disco = await client.GetDiscoveryDocumentAsync("http://localhost:5000");
+            if (disco.IsError)
+            {
+                throw new Exception(disco.Error);
+            }
+
+            var userInfo = await client.GetUserInfoAsync(new UserInfoRequest {
+                Address = disco.UserInfoEndpoint,
+                Token = authorization.Split(' ')[1]
+            });
+            return Ok(userInfo);
         }
     }
 }

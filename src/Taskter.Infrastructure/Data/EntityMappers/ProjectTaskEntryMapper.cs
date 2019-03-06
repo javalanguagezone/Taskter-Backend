@@ -23,13 +23,6 @@ namespace Taskter.Infrastructure.Data
                         .HasOne(up => up.ProjectTask)
                         .WithMany(u => u.ProjectsTaskEntries)
                         .HasForeignKey(up => up.ProjectTaskId);
-
-            modelBuilder.Entity<ProjectTaskEntry>()
-                        .HasOne(up => up.User)
-                        .WithMany(p => p.UsersProjectsTaskEntries)
-                        .HasForeignKey(up => up.UserId);
-
-
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Taskter.Tests.Core
     [TestFixture]
     public class ProjectTaskEntryEntityTests
     {
-        ProjectTaskEntry _entry = new ProjectTaskEntry(1, 1, 20, DateTime.Now, "Notee");
+        ProjectTaskEntry _entry = new ProjectTaskEntry(Guid.NewGuid(), 1, 20, DateTime.Now, "Notee");
 
 
         [TestCase(0)]
@@ -26,7 +26,7 @@ namespace Taskter.Tests.Core
         {
             ProjectTaskEntry _entry1;
 
-            Action act = () => _entry1 = new ProjectTaskEntry(1, 1, durationInMin, DateTime.Now, "Notee");
+            Action act = () => _entry1 = new ProjectTaskEntry(Guid.NewGuid(), 1, durationInMin, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>().WithMessage("Duration can not be <=0!");
         }
 
@@ -35,7 +35,7 @@ namespace Taskter.Tests.Core
         {
             ProjectTaskEntry _entry1;
 
-            Action act = () => _entry1 = new ProjectTaskEntry(1, 1, 2000, DateTime.Now, "Notee");
+            Action act = () => _entry1 = new ProjectTaskEntry(Guid.NewGuid(), 1, 2000, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>();
         }
         [Test]
@@ -45,13 +45,12 @@ namespace Taskter.Tests.Core
             act.Should().Throw<ArgumentException>();
         }
 
-        [TestCase(-10)]
-        [TestCase(0)]
-        public void Constructor_NegativeOrZeroUserId_ThrowArgumentException(int userId)
+        [Test]
+        public void Constructor_NegativeOrZeroUserId_ThrowArgumentException()
         {
             ProjectTaskEntry _entry1;
 
-            Action act = () => _entry1 = new ProjectTaskEntry(userId, 1, 20, DateTime.Now, "Notee");
+            Action act = () => _entry1 = new ProjectTaskEntry(Guid.Empty, 1, 20, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>();
         }
 
@@ -61,7 +60,7 @@ namespace Taskter.Tests.Core
         {
             ProjectTaskEntry _entry1;
 
-            Action act = () => _entry1 = new ProjectTaskEntry(1, projectTaksId, 20, DateTime.Now, "Notee");
+            Action act = () => _entry1 = new ProjectTaskEntry(Guid.NewGuid() , projectTaksId, 20, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>().WithMessage("Id field can not be set to negative value or zero!");
         }
         [TestCase(-10)]

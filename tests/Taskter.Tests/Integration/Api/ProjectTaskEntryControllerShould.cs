@@ -33,15 +33,13 @@ namespace Taskter.Tests.Integration.Api
                 {
                     var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
                     services.Remove(serviceDesc);
-                    _currentUserContext = new FakeCurrentUserContext() { UserId = 3 };
+                    _currentUserContext = new FakeCurrentUserContext() { UserId = Guid.NewGuid() };
                     services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
                     var sp = services.BuildServiceProvider();
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();
                 });
             }).CreateClient();
 
-            _dbContext.Users.Add(new User("test1", "test 1", "test lastName", "admin", "http://google.com")
-            { Id = _currentUserContext.UserId });
             var clientSeed = new Client("testClient") { Id = 20 };
             _dbContext.Clients.Add(clientSeed);
             var seedProjectsList = new List<Project>()
@@ -58,8 +56,8 @@ namespace Taskter.Tests.Integration.Api
             };
             var seedProjectsTaskEntryList = new List<ProjectTaskEntry>()
             {
-                new ProjectTaskEntry(3,20,30,DateTime.Now, "Notee") {Id = 10, ProjectTask=seedProjectsTaskList[0]},
-                new ProjectTaskEntry(3,21,50,DateTime.Now,"Notee") {Id = 11, ProjectTask=seedProjectsTaskList[1]}
+                new ProjectTaskEntry(_currentUserContext.UserId,20,30,DateTime.Now, "Notee") {Id = 10, ProjectTask=seedProjectsTaskList[0]},
+                new ProjectTaskEntry(_currentUserContext.UserId,21,50,DateTime.Now,"Notee") {Id = 11, ProjectTask=seedProjectsTaskList[1]}
             };
             _dbContext.ProjectTaskEntries.AddRange(seedProjectsTaskEntryList);
             _dbContext.SaveChanges();
@@ -79,22 +77,20 @@ namespace Taskter.Tests.Integration.Api
                 {
                     var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
                     services.Remove(serviceDesc);
-                    _currentUserContext = new FakeCurrentUserContext() { UserId = 3 };
+                    _currentUserContext = new FakeCurrentUserContext() { UserId = Guid.NewGuid() };
                     services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
                     var sp = services.BuildServiceProvider();
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();
                 });
             }).CreateClient();
 
-            _dbContext.Users.Add(new User("test", "user1", "user1", "Admin", "http://google.com")
-            { Id = _currentUserContext.UserId });
             _dbContext.Clients.Add(new Client("Client") { Id = 100 });
             _dbContext.Projects.Add(new Project("Project 1", 100, null) { Id = 101 });
             _dbContext.ProjectTasks.Add(new ProjectTask("ProjectTask1", 101, true) { Id = 102 });
             _dbContext.ProjectTaskEntries.RemoveRange(_dbContext.ProjectTaskEntries.ToList());
             _dbContext.SaveChanges();
-            ProjectTaskEntry newEntry = new ProjectTaskEntry(3, 102, 30, DateTime.Now, "Notee");
-            ProjectTaskEntry newEntry2 = new ProjectTaskEntry(3, 102, 55, DateTime.Now, "Notee2");
+            ProjectTaskEntry newEntry = new ProjectTaskEntry(_currentUserContext.UserId, 102, 30, DateTime.Now, "Notee");
+            ProjectTaskEntry newEntry2 = new ProjectTaskEntry(_currentUserContext.UserId, 102, 55, DateTime.Now, "Notee2");
 
             await _client.PostNewTimeEntry(newEntry);
             await _client.PostNewTimeEntry(newEntry2);

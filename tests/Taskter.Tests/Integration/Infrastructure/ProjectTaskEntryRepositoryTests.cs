@@ -25,14 +25,13 @@ namespace Taskter.Tests.Integration.Api
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options);
             _context.Database.EnsureCreated();
-            _userContext = new FakeCurrentUserContext() { UserId = 4 };
+            _userContext = new FakeCurrentUserContext() { UserId = Guid.NewGuid() };
             _repository = new ProjectTaskEntryRepository(_context, _userContext);
         }
 
         [Test]
         public async Task GetProjectTaskEntriesByDate_AddedTimeEntryForGivenDate_ReturnNonEmptyResult()
         {
-            this._context.Users.Add(new User("UserTest", "User2", "User2", "Admin", "jkjkjk") { Id= _userContext.UserId});
             this._context.Clients.Add(new Client("testclient1"){Id = 1});
             this._context.Projects.Add(new Project("testProject1", 1, "examplecode"){Id = 1});
             this._context.ProjectTasks.Add(new ProjectTask("testTask1", 1, true){Id = 1});
@@ -47,7 +46,6 @@ namespace Taskter.Tests.Integration.Api
         [Test]
         public async Task GetProjectTaskEntriesByDate_AddedTimeEntryForGivenDate_ShouldAddOnlyOneEntry()
         {
-            this._context.Users.Add(new User("UserTest", "User2", "User2", "Admin", "jkjkjk") { Id= _userContext.UserId});
             this._context.Clients.Add(new Client("testclient1"){Id = 1});
             this._context.Projects.Add(new Project("testProject1", 1, "examplecode"){Id = 1});
             this._context.ProjectTasks.Add(new ProjectTask("testTask1", 1, true){Id = 1});

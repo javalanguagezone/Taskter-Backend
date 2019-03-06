@@ -13,6 +13,7 @@ using Taskter.Infrastructure.Data;
 using Taskter.Infrastructure.UserContext;
 using Taskter.Tests.Helpers.Extensions;
 using Microsoft.AspNetCore.TestHost;
+using System;
 
 namespace Taskter.Tests.Integration.Api
 {
@@ -32,15 +33,13 @@ namespace Taskter.Tests.Integration.Api
                 {
                     var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
                     services.Remove(serviceDesc);
-                    _currentUserContext = new FakeCurrentUserContext() { UserId = 3 };
+                    _currentUserContext = new FakeCurrentUserContext() { UserId = Guid.NewGuid() };
                     services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
                     var sp = services.BuildServiceProvider();
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();
                 });
             }).CreateClient();
     
-            _dbContext.Users.Add(new User("test1", "test 1", "test lastName", "admin", "http://google.com")
-            { Id = _currentUserContext.UserId });
             var clientSeed = new Client("testClient") { Id = 20 };
             _dbContext.Clients.Add(clientSeed);
             var seedProjectsList = new List<Project>()
@@ -58,8 +57,8 @@ namespace Taskter.Tests.Integration.Api
             };
             _dbContext.Projects.AddRange(seedProjectsList);
             _dbContext.ProjectTasks.AddRange(seedProjectsTaskList);
-            _dbContext.UsersProjects.Add(new UserProject(3, 10));
-            _dbContext.UsersProjects.Add(new UserProject(3, 11));
+            _dbContext.UsersProjects.Add(new UserProject(_currentUserContext.UserId, 10));
+            _dbContext.UsersProjects.Add(new UserProject(_currentUserContext.UserId, 11));
             _dbContext.SaveChanges();
 
             var result = await _client.GetProjectsForCurrentUser();
@@ -76,17 +75,13 @@ namespace Taskter.Tests.Integration.Api
                 {
                     var serviceDesc = services.FirstOrDefault(desc => desc.ServiceType == typeof(ICurrentUserContext));
                     services.Remove(serviceDesc);
-                    _currentUserContext = new FakeCurrentUserContext() { UserId = 4 };
+                    _currentUserContext = new FakeCurrentUserContext() { UserId = Guid.NewGuid() };
                     services.AddTransient<ICurrentUserContext>(x => _currentUserContext);
                     var sp = services.BuildServiceProvider();
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();
                 });
             }).CreateClient();
-
-            _dbContext.Users.Add(new User("test2", "test 2", "test lastName", "admin", "http://google.com")
-            { Id = _currentUserContext.UserId });
-            _dbContext.SaveChanges();
-
+            
             var result = await _client.GetProjectsForCurrentUser();
             result.Count.Should().Be(0);
         }

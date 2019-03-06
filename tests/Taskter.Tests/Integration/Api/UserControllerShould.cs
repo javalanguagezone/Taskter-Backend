@@ -26,7 +26,6 @@ namespace Taskter.Tests.Integration.Api
             var result = await _client.GetCurrentUser();
 
             result.Should().NotBeNull();
-            result.FirstName.Should().Be("Nermin");
 
         }
     }

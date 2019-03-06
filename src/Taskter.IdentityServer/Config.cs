@@ -32,7 +32,8 @@ namespace Taskter.IdentityServer
 
                     Claims = new []
                     {
-                        new Claim("name", "Bob"),
+                        new Claim("name", "Selim"),
+                        new Claim("email", "selim@selim.com"),
                         new Claim("website", "https://bob.com")
                     }
                 }
@@ -68,8 +69,17 @@ namespace Taskter.IdentityServer
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "http://localhost:4200" },
-                    PostLogoutRedirectUris = { "http://localhost:4200" },
+                    RedirectUris =           {
+                        "http://localhost:4200",
+                        "http://localhost:4200/timeSheet",
+                        "http://localhost:4200/silent_renew.html"
+                    },
+                    PostLogoutRedirectUris = {
+                        "http://localhost:4200",
+                        "http://localhost:4200/unauthorized",
+                        "http://localhost:4200/forbidden",
+                        "http://localhost:4200/logout",
+                    },
                     AllowedCorsOrigins =     { "http://localhost:4200" },
 
                     AllowedScopes =

@@ -7,7 +7,7 @@ namespace Taskter.Infrastructure.UserContext
     
         public interface ICurrentUserContext
         {
-            int UserId { get; set; }
+            Guid UserId { get; set; }
         }
     
 }

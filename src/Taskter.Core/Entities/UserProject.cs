@@ -3,8 +3,8 @@ using System;
 namespace Taskter.Core.Entities {
     public class UserProject {
 
-        private int _userId;
-        public int UserId 
+        private Guid _userId;
+        public Guid UserId 
         { 
             get => _userId; 
             private set
@@ -13,9 +13,7 @@ namespace Taskter.Core.Entities {
                 _userId = value;
             } 
         }
-
-        public User User { get; set; }
-
+        
         private int _projectId;
         public int ProjectId 
         { 
@@ -28,17 +26,26 @@ namespace Taskter.Core.Entities {
         }
         public Project Project { get; set; }
 
-        private void ValidateId(int id){
-            if (id <= 0 )
+        private void ValidateId(Guid id){
+            if (id == default(Guid))
             {
                 throw new ArgumentException("Id field can not be set to negative value or zero!");
             }
         }
+
+        private void ValidateId(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Id field can not be set to negative value or zero!");
+            }
+        }
+
         private UserProject()
         {
             
         }
-        public UserProject (int userId, int projectId)
+        public UserProject (Guid userId, int projectId)
         {
             UserId = userId;
             ProjectId = projectId;
