@@ -20,7 +20,8 @@ namespace Taskter.IdentityServerAspNetIdentity
                 new IdentityResources.Email(),
                 new IdentityResources.Address(),
                 new IdentityResources.Phone(),
-                new IdentityResource("role", "role", new List<string> { "role" })
+                new IdentityResource("role", "role", new List<string> { "role" }),
+                new IdentityResource("picture", "picture", new List<string> { "picture" })
             };
         }
 
@@ -40,24 +41,11 @@ namespace Taskter.IdentityServerAspNetIdentity
                 {
                     ClientId = "js",
                     ClientName = "Angular Client",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
-                    RequireConsent = false,
-
-                    RedirectUris =           {
-                        "http://localhost:4200",
-                        "http://localhost:4200/timeSheet",
-                        "http://localhost:4200/silent_renew.html"
-                    },
-                    PostLogoutRedirectUris = {
-                        "http://localhost:4200",
-                        "http://localhost:4200/unauthorized",
-                        "http://localhost:4200/forbidden",
-                        "http://localhost:4200/logout",
-                    },
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RedirectUris = new List<string> { "http://localhost:4200/auth-callback" },
+                    PostLogoutRedirectUris = new List<string> { "http://localhost:4200/" },
                     AllowedCorsOrigins =     { "http://localhost:4200" },
-
+                    AllowAccessTokensViaBrowser = true,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -67,6 +55,7 @@ namespace Taskter.IdentityServerAspNetIdentity
                         IdentityServerConstants.StandardScopes.Phone,
                         "api",
                         "role",
+                        "picture"
                     }
                 }
             };

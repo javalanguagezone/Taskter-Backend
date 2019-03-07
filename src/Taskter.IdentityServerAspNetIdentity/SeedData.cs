@@ -54,7 +54,8 @@ namespace Taskter.IdentityServerAspNetIdentity
                             new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                             new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
                             new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
-                            new Claim(JwtClaimTypes.Role, "Administrator")
+                            new Claim(JwtClaimTypes.Role, "Administrator"),
+                            new Claim(JwtClaimTypes.Picture, "http://media01.money4invest.com/2010/01/faceyourmanga-female-avatar.jpg")
                         }).Result;
                         if (!result.Succeeded)
                         {
@@ -87,7 +88,8 @@ namespace Taskter.IdentityServerAspNetIdentity
                             new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
                             new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
                             new Claim("location", "somewhere"),
-                            new Claim(JwtClaimTypes.Role, "User")
+                            new Claim(JwtClaimTypes.Role, "User"),
+                            new Claim(JwtClaimTypes.Picture, "http://cliparts101.com/files/367/63BA654AECB7FD26A32D08915C923030/avatar_nick.png")
                         }).Result;
                         if (!result.Succeeded)
                         {

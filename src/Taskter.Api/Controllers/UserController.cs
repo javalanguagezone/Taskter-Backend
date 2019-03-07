@@ -36,7 +36,7 @@ namespace Taskter.Api.Controllers
                 Address = disco.UserInfoEndpoint,
                 Token = authorization.Split(' ')[1]
             });
-            return Ok(userInfo);
+            return Ok(userInfo.Json);
         }
     }
 }
