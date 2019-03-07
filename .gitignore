@@ -334,3 +334,4 @@ ASALocalRun/
 
 #appsettingsDev.json
 src/Taskter.Api/appsettings.Development.json
+/src/Taskter.IdentityServerAspNetIdentity/identityserver4_log.txt
