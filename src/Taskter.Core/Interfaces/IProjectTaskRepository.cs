@@ -9,5 +9,6 @@ namespace Taskter.Core.Interfaces
         Task AddProjectTasks(List<ProjectTask> tasks);
         Task AddProjectTask(ProjectTask task);
         Task UpdateProjectTask(ProjectTask task);
+        Task SaveChanges();
     }
 }

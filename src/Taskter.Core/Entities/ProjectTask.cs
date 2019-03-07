@@ -57,5 +57,12 @@ namespace Taskter.Core.Entities
         {
             Active = active;
         }
+
+        public void UpdateInfo(string name, bool billable, bool active)
+        {
+            Name = name;
+            Billable = billable;
+            Active = active;
+        }
     }
 }
