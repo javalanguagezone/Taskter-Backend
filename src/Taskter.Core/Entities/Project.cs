@@ -49,7 +49,6 @@ namespace Taskter.Core.Entities
         }
         public Project(string name, int clientId, string code = null)
         {
-
             Name = name;
             Code = code;
             ClientId = clientId;

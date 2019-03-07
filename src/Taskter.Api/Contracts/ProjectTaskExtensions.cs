@@ -24,5 +24,16 @@ namespace Taskter.Api.Contracts
             }
             return tasksDTO;
         }
+
+        public static List<ProjectTask> ToProjectTaskList (this IEnumerable<ProjectTaskInsertDTO> tasksDTO, int projectId){
+            var tasks = new List<ProjectTask>();
+
+            foreach(var tsk in tasksDTO)
+            {
+                tasks.Add(new ProjectTask(tsk.Name, projectId, tsk.Billable));
+            }
+
+            return tasks;
+        }
     }
 }
