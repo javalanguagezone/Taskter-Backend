@@ -7,8 +7,8 @@ namespace Taskter.Api.Contracts
 {
     public class ProjectEditTaskDTO
     {
-        public int ProjectId { get; set; }
         public int ProjectTaskId { get; set; }
+        public bool Billable {get; set;} 
         public bool Active { get; set; }
     }
 }
