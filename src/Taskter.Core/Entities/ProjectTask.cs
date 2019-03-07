@@ -53,5 +53,9 @@ namespace Taskter.Core.Entities
             if (key < 1)
                 throw new ArgumentException("Project Id cannot be less than 1");
         }
+        public void EditStatus(bool active)
+        {
+            Active = active;
+        }
     }
 }

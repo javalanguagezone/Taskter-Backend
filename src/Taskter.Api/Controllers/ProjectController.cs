@@ -99,5 +99,17 @@ namespace Taskter.Api.Controllers
             await _userProjectRepository.UpdateUserOnProject(entry, projectEditUsers.Active);
             return NoContent();
         }
-    }    
+        [Route("api/projects/{id}/edit/task")]
+        [HttpPut]
+        public async Task<ActionResult> EditTasksOnProject(ProjectEditTaskDTO projectEditTask)
+        {
+            var entry = await _projectRepository.GetProjectTaskByIdAsync(projectEditTask.ProjectId, projectEditTask.ProjectTaskId);
+            if (entry == null)
+            {
+                return NotFound();
+            }
+            await _projectRepository.UpdateProjectTask(entry, projectEditTask.Active);
+            return NoContent();
+        }
+    }
 }

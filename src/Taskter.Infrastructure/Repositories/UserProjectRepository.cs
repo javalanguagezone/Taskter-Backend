@@ -47,7 +47,6 @@ namespace Taskter.Infrastructure.Repositories
             UserProject.EditStatus(active);
             _context.UsersProjects.Update(UserProject);
             await _context.SaveChangesAsync();
-            var test = "Vitinka";
         }
     }
 }
