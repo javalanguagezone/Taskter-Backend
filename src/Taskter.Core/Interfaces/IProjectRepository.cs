@@ -13,6 +13,5 @@ namespace Taskter.Core.Interfaces
         Task<Project> GetProjectByIdAsync(int id);
         Task UpdateBasic(Project entry, string name, string code);
         Task<ProjectTask> GetProjectTaskByIdAsync(int projectId, int projectTaskId);
-        Task UpdateProjectTask(ProjectTask projectTask, bool active);
     }
 }

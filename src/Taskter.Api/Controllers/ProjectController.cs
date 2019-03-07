@@ -99,28 +99,27 @@ namespace Taskter.Api.Controllers
             await _userProjectRepository.UpdateUserOnProject(entry, projectEditUsers.Active);
             return NoContent();
         }
-        [Route("api/projects/{id}/edit/task")]
+        [Route("api/projects/{id}/edit/tasks")]
         [HttpPut]
-        public async Task<ActionResult> EditTasksOnProject(List<ProjectEditTaskDTO> projectEditTasks)
+        public async Task<ActionResult> EditTasksOnProject(List<ProjectEditTaskDTO> tasks)
         {
-            int projectId = int.Parse(RouteData.Values["id"].ToString());
             // 1. da li postoji ovaj projekat sa id-em iz rute 
             // 1. da li postoji svaki od taskova
             // 2. ako postoji, onda samo promjeniti stanja od active i billable
             // 3. ako ne postoji, dodati novi
-            foreach (var task in projectEditTasks)
+            foreach (var task in tasks)
             {
-                var entry = await _projectRepository.GetProjectTaskByIdAsync(projectId, task.ProjectTaskId);
+                var entry = await _projectRepository.GetProjectTaskByIdAsync(task.ProjectId, task.ProjectTaskId);
                 if (entry == null)
                 {
                     // return NotFound();
                     // dodaj novi (na projekat takodjer)
-                    await _projectTaskRepository.AddProjectTask(task.ToDto());
+                    await _projectTaskRepository.AddProjectTask(task.ToEntity());
                 }
                 else 
                 {
                     // update starog
-                    await _projectRepository.UpdateProjectTask()
+                    await _projectTaskRepository.UpdateProjectTask(task.ToEntity());
                 }
             }
             return NoContent();

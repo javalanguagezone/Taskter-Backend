@@ -19,16 +19,22 @@ namespace Taskter.Infrastructure.Repositories
             var niz = _context.ProjectTasks.Local;
             foreach(var x in niz)
             {
-                if(x.Name == newTask.Name && x.Billable == newTask.Billable)
+                if(x.Name == newTask.Name && x.Billable == newTask.Billable && x.ProjectId == newTask.ProjectId)
                 throw new Exception("Cannot add the same project twice");
             }
             await _context.ProjectTasks.AddAsync(newTask);
             _context.SaveChanges();
+        }
+        public async Task UpdateProjectTask(ProjectTask task)
+        {
+            _context.ProjectTasks.Update(task);
+            await _context.SaveChangesAsync();
         }
         public async Task AddProjectTasks(List<ProjectTask> tasks)
         {
             await _context.ProjectTasks.AddRangeAsync(tasks);
             _context.SaveChanges();
         }
+                
     }
 }

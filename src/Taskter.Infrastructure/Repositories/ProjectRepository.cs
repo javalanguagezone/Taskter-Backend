@@ -85,15 +85,5 @@ namespace Taskter.Infrastructure.Repositories
 
             return ProjectTask;
         }
-
-        public async Task UpdateProjectTask(ProjectTask projectTask, bool active)
-        {
-            var ProjectTask = await _context.ProjectTasks.FindAsync(projectTask.Id);
-            if (ProjectTask == null)
-                throw new Exception("Task not found!");
-            ProjectTask.EditStatus(active);
-            _context.ProjectTasks.Update(projectTask);
-            await _context.SaveChangesAsync();
-        }
     }
 }
