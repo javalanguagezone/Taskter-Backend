@@ -94,7 +94,7 @@ namespace Taskter.Tests.Integration.Api
         }
 
         [Test]
-        public async Task AddProject_AddOneProject_AddGivenProjectToDB()
+        public async Task EditProject_ChangeNameCodeClient_EditedProject()
         {
             _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
             {
@@ -102,21 +102,45 @@ namespace Taskter.Tests.Integration.Api
                 {
                     var sp = services.BuildServiceProvider();
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();
-                    _projectRepository = sp.GetRequiredService<IProjectRepository>();
+
                 });
             }).CreateClient();
 
-            var seed = new Project("Test1", 1);
+            var clientEntry1 = _dbContext.Clients.Add(new Client("ClientTest1"));
+            var clientEntry2 = _dbContext.Clients.Add(new Client("ClientTest2"));
 
-            var id = await _projectRepository.AddProject(seed);
+            var projectEntry = _dbContext.Projects.Add(new Project("TestProject", clientEntry1.Entity.Id, "2211"));
+            var task = _dbContext.ProjectTasks.Add(new ProjectTask("TestTask", projectEntry.Entity.Id, true));
             
             _dbContext.SaveChanges();
+            var project = await _client.GetProjectById(projectEntry.Entity.Id);
+            
+            project.Name = "ProjectTest";
+            project.ClientId = clientEntry2.Entity.Id;
+            project.Code = "1122";
 
-            _dbContext.Projects.Find(id).Should().NotBeNull();
+            var editedProject = new ProjectUpdateDTO() {
+                ID = projectEntry.Entity.Id,
+                Name = project.Name,
+                Code = project.Code,
+                UserIds = new List<int>(){1,2},
+                ClientName = project.ClientName,
+                ClientId = project.ClientId,
+                Tasks = null
+            };
+
+            await _client.EditProject(editedProject);
+            _dbContext.SaveChanges();
+
+            var result = await _client.GetProjectById(project.ID);
+
+            result.Name.Should().Be("ProjectTest");
+            result.ClientId.Should().Be(clientEntry2.Entity.Id);
+            result.Code.Should().Be("1122");
         }
 
         [Test]
-        public async Task AddProject_AddMultipleProjects_AddGivenNumberOfProjects()
+        public async Task EditProject_ChangeProjectUsers_EditedProject()
         {
             _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
             {
@@ -124,23 +148,36 @@ namespace Taskter.Tests.Integration.Api
                 {
                     var sp = services.BuildServiceProvider();
                     _dbContext = sp.GetRequiredService<TaskterDbContext>();
-                    _projectRepository = sp.GetRequiredService<IProjectRepository>();
+
                 });
             }).CreateClient();
 
-            var seeds = new List<Project>() {
-                new Project("Test1", 1),
-                new Project("Test2", 1),
-                new Project("Test3", 1)
+            var clientEntry1 = _dbContext.Clients.Add(new Client("ClientTest1"));
+
+            var projectEntry = _dbContext.Projects.Add(new Project("TestProject", clientEntry1.Entity.Id, "2211"));
+            _dbContext.ProjectTasks.Add(new ProjectTask("TestTask", projectEntry.Entity.Id, true));
+            _dbContext.UsersProjects.Add(new UserProject(1, projectEntry.Entity.Id));
+            _dbContext.SaveChanges();
+            
+            var project = await _client.GetProjectById(projectEntry.Entity.Id);
+
+            var editedProject = new ProjectUpdateDTO() {
+                ID = projectEntry.Entity.Id,
+                Name = projectEntry.Entity.Name,
+                Code = projectEntry.Entity.Code,
+                UserIds = new List<int>(){2},
+                ClientName = projectEntry.Entity.Client.Name,
+                ClientId = projectEntry.Entity.Client.Id,
+                Tasks = null
             };
 
-            foreach(var project in seeds){
-                await _projectRepository.AddProject(project);
-            }
-            
+            var result = await _client.EditProject(editedProject);
             _dbContext.SaveChanges();
-
-            _dbContext.Projects.ToList().Count.Should().Be(3);
+            
+            var userList = _dbContext.UsersProjects.Where(u => u.ProjectId == projectEntry.Entity.Id).ToList();
+            
+            userList.Count.Should().Be(1);
+            userList[0].UserId.Should().Be(2);
         }
     }
 }

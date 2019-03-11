@@ -13,9 +13,7 @@ namespace Taskter.Core.Entities {
                 _userId = value;
             } 
         }
-
         public User User { get; set; }
-
         private int _projectId;
         public int ProjectId 
         { 
@@ -27,7 +25,7 @@ namespace Taskter.Core.Entities {
             } 
         }
         public Project Project { get; set; }
-
+        public bool Active { get; set; } = true;
         private void ValidateId(int id){
             if (id <= 0 )
             {
@@ -36,12 +34,16 @@ namespace Taskter.Core.Entities {
         }
         private UserProject()
         {
-            
+        
         }
         public UserProject (int userId, int projectId)
         {
             UserId = userId;
             ProjectId = projectId;
+        }
+        public void EditStatus(bool active)
+        {
+            Active = active;
         }
     }
 
