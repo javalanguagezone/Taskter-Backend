@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Taskter.Infrastructure.Migrations
 {
-    public partial class Migration1 : Migration
+    public partial class AddedActivePropToUserProjectAndProjectTask : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,6 +67,7 @@ namespace Taskter.Infrastructure.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     Billable = table.Column<bool>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
                     ProjectId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -85,7 +86,8 @@ namespace Taskter.Infrastructure.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    ProjectId = table.Column<int>(nullable: false)
+                    ProjectId = table.Column<int>(nullable: false),
+                    Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

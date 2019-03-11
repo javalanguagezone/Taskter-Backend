@@ -11,7 +11,8 @@ namespace Taskter.Api.Contracts
                 {
                     TaskID = task.Id,
                     Name = task.Name,
-                    Billable = task.Billable
+                    Billable = task.Billable,
+                    Active = task.Active
                  };
         }
 
