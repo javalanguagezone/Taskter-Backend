@@ -9,10 +9,11 @@ namespace Taskter.Api.Contracts
         {
             return new ProjectDTO() 
                 {
-                    ProjectID = project.Id,
-                    ProjectName = project.Name,
+                    ID = project.Id,
+                    Name = project.Name,
                     ClientName = project.Client.Name,
-                    ProjectCode = project.Code,
+                    ClientId = project.Client.Id,
+                    Code = project.Code,
                     Tasks = project.Tasks.ToDTOList()
                 };
         }
@@ -25,6 +26,11 @@ namespace Taskter.Api.Contracts
                 projectsDTO.Add(proj.ToDTO());
             }
             return projectsDTO;
+        }
+
+        public static Project ToEntity(this ProjectInsertDTO pidto)
+        {
+            return new Project(pidto.ProjectName, pidto.ClientId, pidto.ProjectCode);
         }
     }
 }

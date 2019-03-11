@@ -60,6 +60,8 @@ namespace Taskter.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active");
+
                     b.Property<bool>("Billable");
 
                     b.Property<string>("Name")
@@ -148,6 +150,8 @@ namespace Taskter.Infrastructure.Migrations
                     b.Property<int>("UserId");
 
                     b.Property<int>("ProjectId");
+
+                    b.Property<bool>("Active");
 
                     b.HasKey("UserId", "ProjectId");
 

@@ -11,7 +11,8 @@ namespace Taskter.Api.Contracts
                 {
                     TaskID = task.Id,
                     Name = task.Name,
-                    Billable = task.Billable
+                    Billable = task.Billable,
+                    Active = task.Active
                  };
         }
 
@@ -23,6 +24,17 @@ namespace Taskter.Api.Contracts
                 tasksDTO.Add(tsk.ToDTO());
             }
             return tasksDTO;
+        }
+
+        public static List<ProjectTask> ToProjectTaskList (this IEnumerable<ProjectTaskInsertDTO> tasksDTO, int projectId){
+            var tasks = new List<ProjectTask>();
+
+            foreach(var tsk in tasksDTO)
+            {
+                tasks.Add(new ProjectTask(tsk.Name, projectId, tsk.Billable));
+            }
+
+            return tasks;
         }
     }
 }

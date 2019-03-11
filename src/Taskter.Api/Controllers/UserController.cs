@@ -26,5 +26,12 @@ namespace Taskter.Api.Controllers
             User currentUser = await _repository.GetUser(this.UserID);
             return Ok(currentUser.ToDTO());
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+        {
+            IEnumerable<User> users = await _repository.GetAllUsers();
+            return Ok(users.ToDTOList());
+        }
     }
 }

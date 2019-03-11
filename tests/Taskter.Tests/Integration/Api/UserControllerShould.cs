@@ -29,5 +29,12 @@ namespace Taskter.Tests.Integration.Api
             result.FirstName.Should().Be("Nermin");
 
         }
+
+        public async Task ReturnNonEmptyListWhenReturningAllUsers()
+        {
+            var result = await _client.GetAllUsers();
+
+            result.Should().NotBeNull();
+        }
     }
 }

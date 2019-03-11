@@ -21,5 +21,10 @@ namespace Taskter.Infrastructure.Repositories
             return await _context.Users.FindAsync(userId);
         }
 
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
     }
 }

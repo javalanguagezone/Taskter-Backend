@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Taskter.Core.Entities;
 using Taskter.Core.Interfaces;
@@ -30,5 +31,59 @@ namespace Taskter.Infrastructure.Repositories
             return USER_PROJECTS;
         }
 
+        public IEnumerable<Project> GetAllProjects()
+        {
+            var PROJECTS = _context.Projects
+                          .Include(s => s.Client)
+                          .Include(s => s.Tasks).ToList();
+
+            return PROJECTS;
+        }
+
+        public async Task<int> AddProject(Project project)
+        {
+            var proj = await _context.Projects.AddAsync(project);
+            _context.SaveChanges();
+
+            return proj.Entity.Id;
+        }
+
+        public async Task<Project> GetProjectByIdAsync(int id)
+        {
+            return await _context.Projects
+               .Where(prj => prj.Id == id)
+               .Include(prj => prj.Tasks)
+               .Include(prj => prj.UsersProjects)
+               .Include(prj => prj.Client)
+               .FirstOrDefaultAsync();
+        }
+
+        public async Task<Project> GetProjectDetailsById(int id)
+        {
+            return await _context.Projects
+                         .Where(x => x.Id == id)
+                         .Include(c => c.Client)
+                         .Include(t => t.Tasks).FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateBasic(Project entry, string name, string code)
+        {
+            var project = await _context.Projects.FindAsync(entry.Id);
+            if (project == null)
+                throw new Exception("Project does not exist!");
+             project.EditBasicInfo(name, code);            
+            _context.Projects.Update(project);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<ProjectTask> GetProjectTaskByIdAsync(int projectId, int projectTaskid)
+        {
+            var  ProjectTask = await _context.Projects
+                .Where(pr => pr.Id == projectId)
+                .Include(pr => pr.Tasks)
+                .SelectMany(x => x.Tasks)
+                .Where(x => x.Id == projectTaskid).FirstOrDefaultAsync();
+
+            return ProjectTask;
+        }
     }
 }

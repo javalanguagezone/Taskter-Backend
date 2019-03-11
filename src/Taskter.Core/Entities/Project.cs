@@ -9,20 +9,19 @@ namespace Taskter.Core.Entities
         private string _name;
         public string Name
         {
-            get => this._name;
-            private set
+            get => _name;
+            set
             {
                 StringIsNullOrHasAWhiteSpace(value, "Project name");
-                this._name = value;
+                _name = value;
             }
         }
 
         private string _code;
-
         public string Code
         {
             get => _code;
-            private set
+            set
             {
                 StringHasMoreThan15CharactersOrHasWhiteSpaces(value);
                 _code = value;
@@ -35,7 +34,7 @@ namespace Taskter.Core.Entities
         public int ClientId
         {
             get => _clientId;
-            private set
+            set
             {
                 ForeignKeyValueValidaton(value);
                 _clientId = value;
@@ -49,11 +48,11 @@ namespace Taskter.Core.Entities
         }
         public Project(string name, int clientId, string code = null)
         {
-
             Name = name;
             Code = code;
             ClientId = clientId;
         }
+
         private void StringIsNullOrHasAWhiteSpace(string p, string propName)
         {
             if (string.IsNullOrWhiteSpace(p))
@@ -75,5 +74,12 @@ namespace Taskter.Core.Entities
             if (key < 1)
                 throw new ArgumentException("The ID value can not be less than one!");
         }
+
+        public void EditBasicInfo(string name, string code)
+        {
+            Name = name;
+            Code = code;
+        }
+       
     }
 }
