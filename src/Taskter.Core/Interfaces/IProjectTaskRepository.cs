@@ -7,5 +7,8 @@ namespace Taskter.Core.Interfaces
     public interface IProjectTaskRepository
     {
         Task AddProjectTasks(List<ProjectTask> tasks);
+        Task AddProjectTask(ProjectTask task);
+        Task UpdateProjectTask(ProjectTask task);
+        Task SaveChanges();
     }
 }

@@ -48,6 +48,16 @@ namespace Taskter.Infrastructure.Repositories
             return proj.Entity.Id;
         }
 
+        public async Task<Project> GetProjectByIdAsync(int id)
+        {
+            return await _context.Projects
+               .Where(prj => prj.Id == id)
+               .Include(prj => prj.Tasks)
+               .Include(prj => prj.UsersProjects)
+               .Include(prj => prj.Client)
+               .FirstOrDefaultAsync();
+        }
+
         public async Task<Project> GetProjectDetailsById(int id)
         {
             return await _context.Projects
@@ -62,6 +72,25 @@ namespace Taskter.Infrastructure.Repositories
             .Include(s => s.Client).Include(s => s.Tasks).ToList();
 
             return PROJECTS;
+        }
+        public async Task UpdateBasic(Project entry, string name, string code)
+        {
+            var project = await _context.Projects.FindAsync(entry.Id);
+            if (project == null)
+                throw new Exception("Project does not exist!");
+             project.EditBasicInfo(name, code);            
+            _context.Projects.Update(project);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<ProjectTask> GetProjectTaskByIdAsync(int projectId, int projectTaskid)
+        {
+            var  ProjectTask = await _context.Projects
+                .Where(pr => pr.Id == projectId)
+                .Include(pr => pr.Tasks)
+                .SelectMany(x => x.Tasks)
+                .Where(x => x.Id == projectTaskid).FirstOrDefaultAsync();
+
+            return ProjectTask;
         }
     }
 }

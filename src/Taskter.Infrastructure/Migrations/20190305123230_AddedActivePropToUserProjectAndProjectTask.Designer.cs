@@ -10,8 +10,8 @@ using Taskter.Infrastructure.Data;
 namespace Taskter.Infrastructure.Migrations
 {
     [DbContext(typeof(TaskterDbContext))]
-    [Migration("20190208134709_Migration1")]
-    partial class Migration1
+    [Migration("20190305123230_AddedActivePropToUserProjectAndProjectTask")]
+    partial class AddedActivePropToUserProjectAndProjectTask
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,6 +61,8 @@ namespace Taskter.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
 
                     b.Property<bool>("Billable");
 
@@ -150,6 +152,8 @@ namespace Taskter.Infrastructure.Migrations
                     b.Property<int>("UserId");
 
                     b.Property<int>("ProjectId");
+
+                    b.Property<bool>("Active");
 
                     b.HasKey("UserId", "ProjectId");
 

@@ -20,6 +20,19 @@ namespace Taskter.Api.Contracts
             };
         }
 
+        public static ProjectTaskEntryUpdateDTO ToUpdateDTO(this ProjectTaskEntry pte)
+        {
+            return new ProjectTaskEntryUpdateDTO()
+            {
+                Id = pte.Id,
+                ProjectId = pte.ProjectTask.ProjectId,
+                ProjectTaskId = pte.ProjectTaskId,
+                durationInMin = pte.DurationInMin,
+                Note = pte.Note
+
+            };
+        }
+
         public static IEnumerable<ProjectTaskEntryDTO> ToDTOList(this IEnumerable<ProjectTaskEntry> projectTaskEntries)
         {
             var projectsTaskEntriesDTO = new List<ProjectTaskEntryDTO>();
