@@ -66,6 +66,13 @@ namespace Taskter.Infrastructure.Repositories
                          .Include(t => t.Tasks).FirstOrDefaultAsync();
         }
 
+        public IEnumerable<Project> GetProjectsByClient(int clientId)
+        {
+            var PROJECTS = _context.Projects.Where(p=> p.ClientId == clientId)
+            .Include(s => s.Client).Include(s => s.Tasks).ToList();
+
+            return PROJECTS;
+        }
         public async Task UpdateBasic(Project entry, string name, string code)
         {
             var project = await _context.Projects.FindAsync(entry.Id);

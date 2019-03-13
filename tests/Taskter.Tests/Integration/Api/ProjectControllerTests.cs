@@ -92,5 +92,55 @@ namespace Taskter.Tests.Integration.Api
             var result = await _client.GetProjectsForCurrentUser();
             result.Count.Should().Be(0);
         }
+
+        [Test]
+        public async Task AddProject_AddOneProject_AddGivenProjectToDB()
+        {
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+                    _projectRepository = sp.GetRequiredService<IProjectRepository>();
+                });
+            }).CreateClient();
+
+            var seed = new Project("Test1", 1);
+
+            var id = await _projectRepository.AddProject(seed);
+            
+            _dbContext.SaveChanges();
+
+            _dbContext.Projects.Find(id).Should().NotBeNull();
+        }
+
+        [Test]
+        public async Task AddProject_AddMultipleProjects_AddGivenNumberOfProjects()
+        {
+            _client = new IntegrationWebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var sp = services.BuildServiceProvider();
+                    _dbContext = sp.GetRequiredService<TaskterDbContext>();
+                    _projectRepository = sp.GetRequiredService<IProjectRepository>();
+                });
+            }).CreateClient();
+
+            var seeds = new List<Project>() {
+                new Project("Test1", 1),
+                new Project("Test2", 1),
+                new Project("Test3", 1)
+            };
+
+            foreach(var project in seeds){
+                await _projectRepository.AddProject(project);
+            }
+            
+            _dbContext.SaveChanges();
+
+            _dbContext.Projects.ToList().Count.Should().Be(3);
+        }
     }
 }
