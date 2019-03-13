@@ -9,7 +9,7 @@ using Taskter.Tests.Helpers.Factories;
 namespace Taskter.Tests.Integration.Api
 {
     [TestFixture]
-    public class UserControllerShould
+    public class UserControllerTests
     {
         private HttpClient _client;
 
@@ -20,7 +20,7 @@ namespace Taskter.Tests.Integration.Api
         }
 
         [Test]
-        public async Task GetCurrentUser_ReturnsCurrentlyLoggedInUser()
+        public async Task GetCurrentUser_InvokeFuncition_ReturnsCurrentlyLoggedInUser()
         {
 
             var result = await _client.GetCurrentUser();
@@ -30,7 +30,7 @@ namespace Taskter.Tests.Integration.Api
 
         }
 
-        public async Task ReturnNonEmptyListWhenReturningAllUsers()
+        public async Task GetAllUsers_InvokeFunction_ReturnNonEmptyListWhenReturningAllUsers()
         {
             var result = await _client.GetAllUsers();
 

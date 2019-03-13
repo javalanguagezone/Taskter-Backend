@@ -14,7 +14,7 @@ using Taskter.Tests.Helpers.Factories;
 namespace Taskter.Tests.Integration.Api
 {
     [TestFixture]
-    public class ClientControllerShould
+    public class ClientControllerTests
     {
         private HttpClient _client;
         private IClientRepository _clientRepository;
