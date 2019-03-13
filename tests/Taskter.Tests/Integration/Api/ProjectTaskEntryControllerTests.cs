@@ -19,7 +19,7 @@ using System.Net;
 namespace Taskter.Tests.Integration.Api
 {
     [TestFixture]
-    class ProjectTaskEntryControllerShould
+    class ProjectTaskEntryControllerTests
     {
         private HttpClient _client;
         private ICurrentUserContext _currentUserContext;
