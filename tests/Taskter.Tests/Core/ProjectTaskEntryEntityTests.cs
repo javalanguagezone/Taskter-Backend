@@ -38,6 +38,7 @@ namespace Taskter.Tests.Core
             Action act = () => _entry1 = new ProjectTaskEntry(1, 1, 2000, DateTime.Now, "Notee");
             act.Should().Throw<ArgumentException>();
         }
+
         [Test]
         public void DurationInMinSetter_OverOneDayMinutes_ThrowArgumentException()
         {
